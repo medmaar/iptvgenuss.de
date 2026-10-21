@@ -11,7 +11,7 @@ The IPTV Genuss website: a fast, dependency-free static site in German, built fo
 | `src/pages/` | Page content: home, pricing, guides, devices, IPTV explainer, FAQ, contact, free trial, legal pages, 404. |
 | `src/layout.mjs`, `src/blocks.mjs` | Page shell (head, header, footer, structured data) and shared sections. |
 | `public/` | Copied as-is: CSS, JS, self-hosted fonts, logo/icons, `_headers`, `_redirects`. |
-| `build.mjs` | Builds every page into `dist/`, plus `sitemap.xml` and `robots.txt`. |
+| `build.mjs` | Builds every page into `dist/`, plus `sitemap.xml` and `robots.txt`. `dist/` is committed (the **Build site** action rebuilds it on every push to `main`), so Cloudflare can deploy it with or without a build command. |
 
 ```sh
 npm run build   # writes dist/ and checks links, anchors, <h1>, JSON-LD, title and description lengths
