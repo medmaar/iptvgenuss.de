@@ -63,8 +63,8 @@ before presenting them as real customer testimonials.
 
 ## Hero photograph
 
-`public/images/hero-fans.webp` is a landscape adaptation of the owner-supplied
-football-supporters photograph. It is preloaded and served locally, with
+`public/images/hero-goalkeeper.webp` is a landscape adaptation of the owner-supplied
+goalkeeper photograph. It is preloaded and served locally, with
 responsive cover positioning and a teal overlay in `public/css/home.css`.
 The overlay is darker on phones to keep the heading, description and enquiry
 links readable. The image is included in the asset fingerprint used for cache
