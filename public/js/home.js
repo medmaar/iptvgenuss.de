@@ -71,3 +71,80 @@ document.querySelectorAll('[data-enquiry]').forEach(link => {
     });
   });
 });
+
+// Native horizontal scrolling works without JavaScript; enhancement adds controls
+// and visible-only autoplay, with motion, focus, hover and page visibility guards.
+const reviewMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+document.querySelectorAll('[data-review-platform]').forEach(platform => {
+  const viewport = platform.querySelector('[data-review-viewport]');
+  const cards = [...viewport.querySelectorAll('[data-review-card]')];
+  const controls = platform.querySelector('[data-review-controls]');
+  const dots = platform.querySelector('[data-review-dots]');
+  const position = platform.querySelector('[data-review-position]');
+  const playback = platform.querySelector('[data-review-playback]');
+  let stops = [], active = 0, visible = false, hovering = false;
+  let userPaused = false, timer, scrollFrame;
+  const isPaused = () => userPaused || reviewMotion.matches;
+  function schedule() {
+    clearTimeout(timer);
+    if (!visible || hovering || document.hidden || isPaused() || platform.contains(document.activeElement) || stops.length < 2) return;
+    timer = setTimeout(() => goTo(active + 1), 5000);
+  }
+  function renderPosition() {
+    const current = Math.min(stops.length - 1, stops.reduce((best, stop, i) => Math.abs(stop - viewport.scrollLeft) < Math.abs(stops[best] - viewport.scrollLeft) ? i : best, 0));
+    active = Math.max(0, current);
+    [...dots.children].forEach((dot, i) => dot.setAttribute('aria-current', String(i === active)));
+    position.textContent = `${active + 1} / ${stops.length}`;
+    const dot = dots.children[active];
+    if (dot) dots.scrollTo({ left: dot.offsetLeft - dots.offsetLeft - dots.clientWidth / 2 + dot.clientWidth / 2, behavior: reviewMotion.matches ? 'instant' : 'smooth' });
+  }
+  function goTo(index) {
+    const wrapped = (index + stops.length) % stops.length;
+    viewport.scrollTo({ left: stops[wrapped], behavior: reviewMotion.matches || index >= stops.length || index < 0 ? 'instant' : 'smooth' });
+    schedule();
+  }
+  function measure() {
+    const max = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+    const origin = cards[0].offsetLeft;
+    stops = [...new Set(cards.map(card => Math.min(max, card.offsetLeft - origin)))];
+    dots.replaceChildren(...stops.map((_, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button'; dot.className = 'review-dot';
+      dot.setAttribute('aria-label', `Position ${i + 1} von ${stops.length}`);
+      dot.setAttribute('aria-controls', viewport.id);
+      dot.addEventListener('click', () => goTo(i));
+      return dot;
+    }));
+    controls.hidden = stops.length < 2;
+    renderPosition(); schedule();
+  }
+  function updatePlayback() {
+    playback.textContent = isPaused() ? 'Abspielen' : 'Pause';
+    playback.setAttribute('aria-label', `${isPaused() ? 'Automatisches Blättern starten' : 'Automatisches Blättern pausieren'}: ${platform.querySelector('h3').textContent}`);
+    // Reduced-motion users retain manual navigation without automatic movement.
+    playback.hidden = reviewMotion.matches;
+    schedule();
+  }
+  platform.querySelector('[data-review-prev]').addEventListener('click', () => goTo(active - 1));
+  platform.querySelector('[data-review-next]').addEventListener('click', () => goTo(active + 1));
+  playback.addEventListener('click', () => { userPaused = !userPaused; updatePlayback(); });
+  viewport.addEventListener('scroll', () => {
+    cancelAnimationFrame(scrollFrame);
+    scrollFrame = requestAnimationFrame(renderPosition);
+    schedule();
+  }, { passive: true });
+  viewport.addEventListener('keydown', event => {
+    if (event.target !== viewport) return;
+    const target = { ArrowRight: active + 1, ArrowLeft: active - 1, Home: 0, End: stops.length - 1 }[event.key];
+    if (target !== undefined) { event.preventDefault(); goTo(target); }
+  });
+  platform.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') { hovering = true; schedule(); } });
+  platform.addEventListener('pointerleave', () => { hovering = false; schedule(); });
+  platform.addEventListener('focusin', () => { clearTimeout(timer); });
+  platform.addEventListener('focusout', () => { requestAnimationFrame(schedule); });
+  document.addEventListener('visibilitychange', schedule);
+  reviewMotion.addEventListener('change', updatePlayback);
+  new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; schedule(); }, { threshold: 0.15 }).observe(platform);
+  new ResizeObserver(measure).observe(viewport);
+  updatePlayback();
+});

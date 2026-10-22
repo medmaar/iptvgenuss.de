@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { site, plans, included, nav, euro, waHref, devicePrices, homeContent as content } from '../site.mjs';
+import { site, plans, included, nav, euro, waHref, devicePrices, reviewExamples, homeContent as content } from '../site.mjs';
 import { esc } from '../layout.mjs';
 
 const icons = {
@@ -30,6 +30,13 @@ export default () => {
     __PLANS__: plans.map((p, index) => `<article data-plan-index="${index}" class="plan${p.featured ? ' featured' : ''}">${p.featured ? '<p class="plan-badge">Unser Jahrespaket</p>' : ''}<h3>${esc(p.label)}</h3><p class="plan-device"><span data-device-label>${p.devices} Gerät gleichzeitig</span></p><p class="plan-price"><b data-plan-price>${euro(p.price)}</b><span>einmalig für ${p.months === 1 ? 'einen Monat' : `${p.months} Monate`}</span></p><ul>${included.map(i => `<li>${esc(i)}</li>`).join('')}</ul><a class="button ${p.featured ? 'button-yellow' : 'button-teal'}" href="#kontakt" data-plan="${esc(p.label)}" data-price="${euro(p.price)}" data-count="1">Paket anfragen <span aria-hidden="true">→</span></a><p class="plan-renewal">Keine automatische Verlängerung</p></article>`).join(''),
     __PRICE_DATA__: JSON.stringify(devicePrices),
     __DEVICE_SWITCH__: Object.keys(devicePrices).map((n, i) => `<button type="button" data-devices="${n}" aria-pressed="${i === 0}">${n} ${i === 0 ? 'Gerät' : 'Geräte'}</button>`).join(''),
+    __REVIEWS__: reviewExamples.map(group => `<section class="review-platform review-platform--${group.id}" data-review-platform="${group.id}" aria-labelledby="${group.id}-reviews-title">
+      <header class="review-platform-heading"><div class="review-platform-name"><span class="review-platform-icon" aria-hidden="true">${group.id === 'whatsapp' ? icon('chat') : group.id === 'google' ? 'G' : '★'}</span><div><h3 id="${group.id}-reviews-title">${esc(group.title)}</h3><p>${esc(group.style)} · Beispieltexte</p></div></div><span class="review-example-badge">Beispiele</span></header>
+      <div class="platform-review-viewport" id="${group.id}-review-viewport" data-review-viewport tabindex="0" role="region" aria-roledescription="Karussell" aria-label="${esc(group.title)}: 20 Beispiele horizontal durchblättern">
+      ${group.reviews.map((r, i) => `<article class="platform-review-card" data-review-card aria-label="Beispiel ${i + 1} von ${group.reviews.length}">${group.id === 'whatsapp' ? '<p class="message-card-label">Beispielnachricht</p>' : '<div class="platform-review-stars" aria-label="Beispielbewertung: 5 von 5 Sternen">★★★★★</div>'}${r.title ? `<h4>${esc(r.title)}</h4>` : ''}<blockquote><p>${esc(r.text)}</p></blockquote><footer class="platform-review-author"><span>${esc(r.name)}</span><span class="review-author-country">${esc(r.country)} <span class="review-country-flag" aria-hidden="true">🇩🇪</span></span></footer></article>`).join('')}
+      </div>
+      <div class="review-platform-controls" data-review-controls hidden><button class="review-arrow" type="button" data-review-prev aria-label="Vorherige Beispiele: ${esc(group.title)}" aria-controls="${group.id}-review-viewport">←</button><div class="review-dots" data-review-dots role="group" aria-label="Beispiel auswählen"></div><span class="review-position" data-review-position aria-live="off"></span><button class="review-arrow" type="button" data-review-next aria-label="Nächste Beispiele: ${esc(group.title)}" aria-controls="${group.id}-review-viewport">→</button><button class="review-playback" type="button" data-review-playback aria-label="Automatisches Blättern pausieren: ${esc(group.title)}">Pause</button></div>
+    </section>`).join(''),
     __STEPS__: content.steps.map(([title, text], i) => `<li><span class="step-number">0${i + 1}</span><h3>${esc(title)}</h3><p>${esc(text)}</p></li>`).join(''),
     __DEVICES__: content.devices.map((d, i) => `<li>${icon(i < 2 ? 'tv' : i < 4 ? 'devices' : 'screen')}<span>${esc(d)}</span></li>`).join(''),
     __APPS__: esc(content.apps),

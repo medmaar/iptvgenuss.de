@@ -33,8 +33,7 @@ simultaneous devices. Choosing a package prepares an email to
 free-test links prepare a test enquiry. The site does not process payments or
 send email itself. The supplied WhatsApp number is a placeholder and is not
 published. The homepage uses no tracking scripts, cookies or browser storage.
-Source-site reviews, contact details and unverifiable catalogue counts were not
-imported.
+Source-site contact details and unverifiable catalogue counts were not imported.
 
 ## Deployment
 
@@ -46,3 +45,18 @@ commits `dist/` after source changes on `main`.
 crawlers. Complete the business identity, licensed offer and legal content,
 then obtain the owner's launch approval before enabling indexing. Legal pages
 can be added in the later multipage phase.
+
+## Review slider examples
+
+`reviewExamples` in `src/site.mjs` contains all 60 owner-supplied example texts,
+with their original sample author names: 20 detailed reviews, 20 chat messages,
+and 20 short reviews. The three rows follow the supplied IPTVkanal layout,
+with horizontally scrolling cards, position dots, previous/next controls and
+five-second automatic advancement while visible. Hover, keyboard focus, the
+pause control, background tabs and reduced-motion preferences stop autoplay.
+Native scrolling and all texts remain available without JavaScript.
+
+The homepage and each row explicitly label these as examples. They are not
+attributed as genuine Google/Trustpilot reviews, and no review/rating structured
+data is emitted. Replace them with verifiable, consented customer feedback
+before presenting them as real customer testimonials.
