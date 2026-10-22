@@ -49,7 +49,7 @@ can be added in the later multipage phase.
 ## Review slider examples
 
 `reviewExamples` in `src/site.mjs` contains all 60 owner-supplied example texts,
-with their original sample author names: 20 detailed reviews, 20 chat messages,
+without sample author names: 20 detailed reviews, 20 chat messages,
 and 20 short reviews. The three rows follow the supplied IPTVkanal layout,
 with horizontally scrolling cards, position dots, previous/next controls and
 five-second automatic advancement while visible. Hover, keyboard focus, the
