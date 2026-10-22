@@ -23,7 +23,7 @@ await writeFile(join(out, 'css/site.css'), css
 
 // Cache-busting version from the asset contents.
 const hash = createHash('sha1');
-for (const f of ['public/css/home.css', 'public/js/home.js', 'public/brand/genuss-iptv.svg']) hash.update(await readFile(f));
+for (const f of ['public/css/home.css', 'public/js/home.js', 'public/brand/genuss-iptv.svg', 'public/favicon.svg']) hash.update(await readFile(f));
 const version = hash.digest('hex').slice(0, 10);
 
 const pages = [home()];
