@@ -68,7 +68,8 @@ const footerContact = () => {
   return items.join('');
 };
 
-export function page({ path, title, description, body, schema = [], crumb, parents = [], noindex = false, preload = '' }) {
+export function page({ document, path, title, description, body, schema = [], crumb, parents = [], noindex = false, preload = '' }) {
+  if (document) return document;
   const url = site.url + path;
   const index = site.live && !noindex;
   const trail = crumb && path !== '/';

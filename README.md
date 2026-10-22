@@ -40,3 +40,18 @@ npm run dev     # builds, then serves dist/ on http://localhost:8788
 
 - German (`de-DE`), formal "Sie", prices in euros.
 - Only describe what the business actually has the rights to offer. No third-party channel or brand claims, no channel/film counts, uptime figures, ratings or testimonials unless they are real and verifiable.
+
+## Imported design reference
+
+The homepage currently preserves the user-supplied deutsch.info HTML in
+`src/pages/reference.html`, with the local white **genuss** / yellow **iptv**
+logo at `public/brand/genuss-iptv.svg`. The existing IPTV subpages remain available.
+
+The source stylesheet and illustration URLs still point to deutsch.info because
+asset downloads returned HTTP 403 in the cloud environment. The local
+`public/css/reference.css` supplies a responsive fallback; visual parity depends
+on the original external assets loading. Source course, registration and login
+links deliberately lead to deutsch.info; this import does not provide their
+backend. Source analytics, session/CSRF data and application scripts are omitted.
+Local `public/js/reference.js` handles the menus, language dialog and dismissible
+cookie notice. The homepage remains noindex while it is being adapted.
