@@ -1,57 +1,48 @@
 # iptvgenuss.de
 
-The IPTV Genuss website: a fast, dependency-free static site in German, built for Cloudflare Pages.
+A single German homepage for IPTV Genuss, built with Node 22 and deployed to
+Cloudflare Pages from `main`. The teal, white and yellow theme is self-hosted;
+there are no external fonts, stylesheets, scripts or image dependencies.
 
-## What's here
-
-| Path | What it is |
-| --- | --- |
-| `src/site.mjs` | **Edit this first.** Business details (Impressum), contact, prices, included features, the licensed offer, analytics IDs and the `live` switch. |
-| `src/content.mjs` | Device list with setup steps, and the FAQ. |
-| `src/pages/` | Page content: home, pricing, guides, devices, IPTV explainer, FAQ, contact, free trial, legal pages, 404. |
-| `src/layout.mjs`, `src/blocks.mjs` | Page shell (head, header, footer, structured data) and shared sections. |
-| `public/` | Copied as-is: CSS, JS, self-hosted fonts, logo/icons, `_headers`, `_redirects`. |
-| `build.mjs` | Builds every page into `dist/`, plus `sitemap.xml` and `robots.txt`. `dist/` is committed (the **Build site** action rebuilds it on every push to `main`), so Cloudflare can deploy it with or without a build command. |
+## Development
 
 ```sh
-npm run build   # writes dist/ and checks links, anchors, <h1>, JSON-LD, title and description lengths
-npm run dev     # builds, then serves dist/ on http://localhost:8788
+npm run build   # rebuilds dist/ and validates links, anchors, h1 and JSON-LD
+npm run dev     # builds and serves dist/ on port 8788
 ```
 
-## Before launch
+The build publishes only the homepage. Earlier content modules remain in `src/`
+for later work but are not built or included in the sitemap. Old service-page
+URLs redirect to the corresponding homepage sections via `public/_redirects`.
+`dist/` is committed so Cloudflare can deploy with or without a build step.
 
-`npm run build` and the yellow preview bar on every page list what is still missing. While `site.live` is `false`, every page is `noindex` and `robots.txt` blocks crawlers.
+## Files
 
-1. Fill in `email`, `whatsapp` and `company` (Impressum) in `src/site.mjs`.
-2. Set the `price` of each package (`null` shows "Preis folgt").
-3. Describe the licensed offer in `offer` — only what the business has the rights to distribute.
-4. Have AGB, Widerrufsbelehrung and Datenschutzerklärung checked by a lawyer; add the AGB text in `src/pages/legal.mjs`.
-5. Optional: add `ga4` / `metaPixel` IDs. They load only after consent in the cookie banner.
-6. Set `live: true`, push, and submit `https://iptvgenuss.de/sitemap.xml` in Google Search Console.
+- `src/site.mjs`: business details, contact email, packages, all 20 device/duration
+  prices and homepage information adapted from the supplied IPTVkanal reference.
+- `src/pages/home.mjs`: renders the homepage using `src/pages/home.html`.
+- `public/css/home.css`: responsive theme and logo sizing.
+- `public/js/home.js`: mobile menu, device selector and email enquiry selection.
+- `public/brand/genuss-iptv.svg`: white genuss / yellow iptv logo, with a padded
+  viewBox to keep the text descenders inside the image.
+- `build.mjs`: static build and validation.
 
-## Deploy on Cloudflare Pages
+Prices and contact email were supplied by the owner. Packages support 1–5
+simultaneous devices. Choosing a package prepares an email to
+`kontakt@iptvgenuss.de` with the chosen duration, total price and device count;
+free-test links prepare a test enquiry. The site does not process payments or
+send email itself. The supplied WhatsApp number is a placeholder and is not
+published. The homepage uses no tracking scripts, cookies or browser storage.
+Source-site reviews, contact details and unverifiable catalogue counts were not
+imported.
 
-1. Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git** → `medmaar/iptvgenuss.de`.
-2. Build command `npm run build`, output directory `dist`, framework preset None, production branch `main`.
-3. Every other branch gets its own preview URL (`<branch>.<project>.pages.dev`); `_headers` marks `*.pages.dev` as `noindex`.
-4. **Custom domains → iptvgenuss.de** (and `www`) when ready to launch.
+## Deployment
 
-## Content rules
+Cloudflare Pages: production branch `main`, build command `npm run build`, output
+`dist`, framework preset None. The Build site GitHub action also rebuilds and
+commits `dist/` after source changes on `main`.
 
-- German (`de-DE`), formal "Sie", prices in euros.
-- Only describe what the business actually has the rights to offer. No third-party channel or brand claims, no channel/film counts, uptime figures, ratings or testimonials unless they are real and verifiable.
-
-## Imported design reference
-
-The homepage currently preserves the user-supplied deutsch.info HTML in
-`src/pages/reference.html`, with the local white **genuss** / yellow **iptv**
-logo at `public/brand/genuss-iptv.svg`. The existing IPTV subpages remain available.
-
-The source stylesheet and illustration URLs still point to deutsch.info because
-asset downloads returned HTTP 403 in the cloud environment. The local
-`public/css/reference.css` supplies a responsive fallback; visual parity depends
-on the original external assets loading. Source course, registration and login
-links deliberately lead to deutsch.info; this import does not provide their
-backend. Source analytics, session/CSRF data and application scripts are omitted.
-Local `public/js/reference.js` handles the menus, language dialog and dismissible
-cookie notice. The homepage remains noindex while it is being adapted.
+`site.live` remains `false`: the homepage is noindex and robots.txt blocks
+crawlers. Complete the business identity, licensed offer and legal content,
+then obtain the owner's launch approval before enabling indexing. Legal pages
+can be added in the later multipage phase.

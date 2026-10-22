@@ -1,5 +1,19 @@
-# Short, memorable paths
-/test           /kostenlos-testen/  301
-/preis          /preise/            301
-/anleitung      /anleitungen/       301
-/geraete        /iptv-geraete/      301
+# Retired subpages now lead to sections of the single homepage.
+/preise             /#preise        301
+/preise/            /#preise        301
+/preis              /#preise        301
+/test               /#kontakt       301
+/kostenlos-testen   /#kontakt       301
+/kostenlos-testen/  /#kontakt       301
+/kontakt            /#kontakt       301
+/kontakt/           /#kontakt       301
+/faq                /#faq           301
+/faq/               /#faq           301
+/anleitungen        /#geraete        301
+/anleitungen/       /#geraete        301
+/anleitung          /#geraete        301
+/geraete            /#geraete        301
+/iptv-geraete       /#geraete        301
+/iptv-geraete/      /#geraete        301
+/was-ist-iptv       /#faq           301
+/was-ist-iptv/      /#faq           301

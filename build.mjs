@@ -7,9 +7,6 @@ import { dirname, join } from 'node:path';
 import { page } from './src/layout.mjs';
 import { site, missing } from './src/site.mjs';
 import home from './src/pages/home.mjs';
-import info from './src/pages/info.mjs';
-import forms from './src/pages/forms.mjs';
-import legal from './src/pages/legal.mjs';
 
 const out = 'dist';
 await rm(out, { recursive: true, force: true });
@@ -26,10 +23,10 @@ await writeFile(join(out, 'css/site.css'), css
 
 // Cache-busting version from the asset contents.
 const hash = createHash('sha1');
-for (const f of ['public/css/site.css', 'public/js/site.js', 'public/favicon.svg']) hash.update(await readFile(f));
+for (const f of ['public/css/home.css', 'public/js/home.js', 'public/brand/genuss-iptv.svg']) hash.update(await readFile(f));
 const version = hash.digest('hex').slice(0, 10);
 
-const pages = [home(), ...info(), ...forms(), ...legal()];
+const pages = [home()];
 const fileFor = (p) => (p.endsWith('.html') ? join(out, p) : join(out, p, 'index.html'));
 const warnings = [];
 const errors = [];
@@ -78,4 +75,4 @@ if (errors.length) {
   for (const e of errors) console.error(`error: ${e}`);
   process.exit(1);
 }
-console.log(`Built ${pages.length} pages into ${out}/ (assets v=${version})`);
+console.log(`Built ${pages.length} ${pages.length === 1 ? 'page' : 'pages'} into ${out}/ (assets v=${version})`);
