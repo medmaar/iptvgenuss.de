@@ -60,3 +60,12 @@ The homepage and each row explicitly label these as examples. They are not
 attributed as genuine Google/Trustpilot reviews, and no review/rating structured
 data is emitted. Replace them with verifiable, consented customer feedback
 before presenting them as real customer testimonials.
+
+## Hero photograph
+
+`public/images/hero-fans.webp` is a landscape adaptation of the owner-supplied
+football-supporters photograph. It is preloaded and served locally, with
+responsive cover positioning and a teal overlay in `public/css/home.css`.
+The overlay is darker on phones to keep the heading, description and enquiry
+links readable. The image is included in the asset fingerprint used for cache
+refreshes.
