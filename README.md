@@ -48,15 +48,18 @@ can be added in the later multipage phase.
 
 ## Customer reviews
 
-All previous sample reviews and their labels have been removed from the public
-homepage. `customerReviewGroups` in `src/site.mjs` is empty, so neither an empty
-reviews section nor its navigation link is rendered. The reusable carousel
-renderer and controls remain available for genuine, source-backed feedback.
+`customerReviewGroups` in `src/site.mjs` contains the 60 historical reviews from
+`Reviews german.txt`: 20 Trustpilot reviews, 20 WhatsApp messages and 20 Google
+reviews. The owner confirmed that these are genuine reviews retrieved before
+closing the former platforms and explicitly authorized their publication.
+Their provenance has not been independently verified; no verified badges,
+platform links or aggregate-rating structured data are added.
 
-The replacement attachment repeats all 60 previous sample texts word for word
-with author names added. Original review links or platform exports are needed
-to clarify their source before they are published as customer testimonials.
-No review or aggregate-rating structured data is emitted.
+Review wording, author abbreviations, countries and supplied star ratings are
+preserved. Trailing list numbers on author names are omitted from display.
+WhatsApp messages have no invented ratings. The former sample labels are gone.
+The existing responsive carousels retain swipe, arrow and dot controls, visible-
+only autoplay, hover/focus pause and reduced-motion support.
 
 ## Hero photograph
 
