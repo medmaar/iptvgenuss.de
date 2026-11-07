@@ -58,8 +58,14 @@ platform links or aggregate-rating structured data are added.
 Review wording, author abbreviations, countries and supplied star ratings are
 preserved. Trailing list numbers on author names are omitted from display.
 WhatsApp messages have no invented ratings. The former sample labels are gone.
-The existing responsive carousels retain swipe, arrow and dot controls, visible-
-only autoplay, hover/focus pause and reduced-motion support.
+The responsive carousels use only a compact seven-dot indicator, with no
+arrows, pause button, counter or visible scrollbar. Each row loops seamlessly
+through all 20 reviews; offscreen, inert clones provide the wrap while the
+original content appears once to assistive technology. Swiping and keyboard
+navigation remain available. The most visible platform row begins advancing
+after 1.6 seconds, then advances every 4.2 seconds after settling; other rows
+wait until scrolled into view. Hover, focus, hidden tabs and reduced-motion
+preferences suspend automatic movement. Larger gaps separate the platform rows.
 
 ## Hero photograph
 

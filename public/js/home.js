@@ -72,79 +72,149 @@ document.querySelectorAll('[data-enquiry]').forEach(link => {
   });
 });
 
-// Native horizontal scrolling works without JavaScript; enhancement adds controls
-// and visible-only autoplay, with motion, focus, hover and page visibility guards.
+// Each platform loops independently; only the most visible row advances itself.
 const reviewMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const reviewControllers = new Map();
+const reviewVisibility = new Map();
+const reviewObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => reviewVisibility.set(entry.target, entry.intersectionRatio));
+  let chosen = null, bestRatio = 0.35;
+  reviewControllers.forEach((controller, platform) => {
+    const ratio = reviewVisibility.get(platform) || 0;
+    if (ratio > bestRatio) { chosen = platform; bestRatio = ratio; }
+  });
+  reviewControllers.forEach((controller, platform) => controller.setActive(platform === chosen));
+}, { threshold: [0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1] });
+
 document.querySelectorAll('[data-review-platform]').forEach(platform => {
   const viewport = platform.querySelector('[data-review-viewport]');
   const cards = [...viewport.querySelectorAll('[data-review-card]')];
   const controls = platform.querySelector('[data-review-controls]');
   const dots = platform.querySelector('[data-review-dots]');
-  const position = platform.querySelector('[data-review-position]');
-  const playback = platform.querySelector('[data-review-playback]');
-  let stops = [], active = 0, visible = false, hovering = false;
-  let userPaused = false, timer, scrollFrame;
-  const isPaused = () => userPaused || reviewMotion.matches;
-  function schedule() {
+  const count = cards.length;
+  if (!count) return;
+  let current = 0, origin = 0, step = 0, lastWidth = 0;
+  let active = false, hovering = false, rebuilding = false, rebuildFrame, timer, settling, scrollFrame;
+  const normalize = index => (index % count + count) % count;
+  function schedule(delay = 4200) {
     clearTimeout(timer);
-    if (!visible || hovering || document.hidden || isPaused() || platform.contains(document.activeElement) || stops.length < 2) return;
-    timer = setTimeout(() => goTo(active + 1), 5000);
+    if (rebuilding || !active || hovering || document.hidden || reviewMotion.matches || platform.contains(document.activeElement) || count < 2) return;
+    timer = setTimeout(() => goTo(current + 1), delay);
   }
-  function renderPosition() {
-    const current = Math.min(stops.length - 1, stops.reduce((best, stop, i) => Math.abs(stop - viewport.scrollLeft) < Math.abs(stops[best] - viewport.scrollLeft) ? i : best, 0));
-    active = Math.max(0, current);
-    [...dots.children].forEach((dot, i) => dot.setAttribute('aria-current', String(i === active)));
-    position.textContent = `${active + 1} / ${stops.length}`;
-    const dot = dots.children[active];
-    if (dot) dots.scrollTo({ left: dot.offsetLeft - dots.offsetLeft - dots.clientWidth / 2 + dot.clientWidth / 2, behavior: reviewMotion.matches ? 'instant' : 'smooth' });
+  function renderDots() {
+    viewport.dataset.reviewIndex = String(current);
+    const middle = Math.floor(dots.children.length / 2);
+    [...dots.children].forEach((dot, i) => {
+      const target = normalize(current + i - middle);
+      dot.dataset.reviewTarget = String(target);
+      dot.setAttribute('aria-label', `Bewertung ${target + 1} von ${count}`);
+      dot.setAttribute('aria-current', String(i === middle));
+    });
   }
-  function goTo(index) {
-    const wrapped = (index + stops.length) % stops.length;
-    viewport.scrollTo({ left: stops[wrapped], behavior: reviewMotion.matches || index >= stops.length || index < 0 ? 'instant' : 'smooth' });
-    schedule();
+  function readPosition() {
+    if (rebuilding || !step) return;
+    current = normalize(Math.round((viewport.scrollLeft - origin) / step));
+    renderDots();
+  }
+  function settle() {
+    clearTimeout(settling);
+    if (rebuilding || !step) return;
+    const padding = parseFloat(getComputedStyle(viewport).paddingLeft) || 0;
+    origin = cards[0].getBoundingClientRect().left - viewport.getBoundingClientRect().left + viewport.scrollLeft - padding;
+    const index = Math.round((viewport.scrollLeft - origin) / step);
+    current = normalize(index);
+    const target = origin + current * step;
+    if (Math.abs(viewport.scrollLeft - target) > 1) {
+      viewport.scrollTo({ left: target, behavior: 'instant' });
+    }
+    renderDots(); schedule();
+  }
+  function goTo(index, instant = false) {
+    clearTimeout(timer);
+    const left = origin + index * step;
+    if (Math.abs(viewport.scrollLeft - left) < 1) { settle(); return; }
+    viewport.scrollTo({ left, behavior: reviewMotion.matches || instant ? 'instant' : 'smooth' });
+  }
+  function cloneCard(card) {
+    const clone = card.cloneNode(true);
+    clone.removeAttribute('data-review-card');
+    clone.setAttribute('data-review-clone', '');
+    clone.setAttribute('aria-hidden', 'true');
+    clone.removeAttribute('aria-label');
+    clone.inert = true;
+    return clone;
   }
   function measure() {
-    const max = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
-    const origin = cards[0].offsetLeft;
-    stops = [...new Set(cards.map(card => Math.min(max, card.offsetLeft - origin)))];
-    dots.replaceChildren(...stops.map((_, i) => {
-      const dot = document.createElement('button');
-      dot.type = 'button'; dot.className = 'review-dot';
-      dot.setAttribute('aria-label', `Position ${i + 1} von ${stops.length}`);
-      dot.setAttribute('aria-controls', viewport.id);
-      dot.addEventListener('click', () => goTo(i));
-      return dot;
-    }));
-    controls.hidden = stops.length < 2;
-    renderPosition(); schedule();
+    if (viewport.clientWidth === lastWidth) return;
+    lastWidth = viewport.clientWidth;
+    rebuilding = true;
+    clearTimeout(timer); clearTimeout(settling);
+    cancelAnimationFrame(scrollFrame); cancelAnimationFrame(rebuildFrame);
+    viewport.style.scrollSnapType = 'none';
+    viewport.style.scrollBehavior = 'auto';
+    viewport.querySelectorAll('[data-review-clone]').forEach(clone => clone.remove());
+    if (count > 1) {
+      const gap = parseFloat(getComputedStyle(viewport).columnGap) || 0;
+      const visible = Math.ceil(viewport.clientWidth / (cards[0].getBoundingClientRect().width + gap));
+      const buffer = Math.min(count, Math.max(3, visible + 1));
+      viewport.prepend(...cards.slice(-buffer).map(cloneCard));
+      viewport.append(...cards.slice(0, buffer).map(cloneCard));
+    }
+    const padding = parseFloat(getComputedStyle(viewport).paddingLeft) || 0;
+    origin = cards[0].getBoundingClientRect().left - viewport.getBoundingClientRect().left + viewport.scrollLeft - padding;
+    step = count > 1 ? cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left : 0;
+    viewport.scrollTo({ left: origin + current * step, behavior: 'instant' });
+    controls.hidden = count < 2;
+    renderDots();
+    rebuildFrame = requestAnimationFrame(() => {
+      viewport.style.scrollSnapType = '';
+      viewport.style.scrollBehavior = '';
+      viewport.scrollTo({ left: origin + current * step, behavior: 'instant' });
+      rebuildFrame = requestAnimationFrame(() => { rebuilding = false; settle(); });
+    });
   }
-  function updatePlayback() {
-    playback.textContent = isPaused() ? 'Abspielen' : 'Pause';
-    playback.setAttribute('aria-label', `${isPaused() ? 'Automatisches Blättern starten' : 'Automatisches Blättern pausieren'}: ${platform.querySelector('h3').textContent}`);
-    // Reduced-motion users retain manual navigation without automatic movement.
-    playback.hidden = reviewMotion.matches;
-    schedule();
-  }
-  platform.querySelector('[data-review-prev]').addEventListener('click', () => goTo(active - 1));
-  platform.querySelector('[data-review-next]').addEventListener('click', () => goTo(active + 1));
-  playback.addEventListener('click', () => { userPaused = !userPaused; updatePlayback(); });
+  dots.replaceChildren(...Array.from({ length: Math.min(7, count) }, () => {
+    const dot = document.createElement('button');
+    dot.type = 'button'; dot.className = 'review-dot';
+    dot.setAttribute('aria-controls', viewport.id);
+    dot.addEventListener('click', () => {
+      const target = Number(dot.dataset.reviewTarget);
+      let delta = normalize(target - current);
+      if (delta > count / 2) delta -= count;
+      goTo(current + delta);
+    });
+    return dot;
+  }));
   viewport.addEventListener('scroll', () => {
+    if (rebuilding) return;
+    clearTimeout(timer); clearTimeout(settling);
     cancelAnimationFrame(scrollFrame);
-    scrollFrame = requestAnimationFrame(renderPosition);
-    schedule();
+    scrollFrame = requestAnimationFrame(readPosition);
+    settling = setTimeout(settle, 160);
   }, { passive: true });
   viewport.addEventListener('keydown', event => {
     if (event.target !== viewport) return;
-    const target = { ArrowRight: active + 1, ArrowLeft: active - 1, Home: 0, End: stops.length - 1 }[event.key];
-    if (target !== undefined) { event.preventDefault(); goTo(target); }
+    const target = { ArrowRight: current + 1, ArrowLeft: current - 1, Home: 0, End: count - 1 }[event.key];
+    if (target !== undefined) {
+      event.preventDefault(); goTo(target, event.key === 'Home' || event.key === 'End');
+    }
   });
   platform.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') { hovering = true; schedule(); } });
   platform.addEventListener('pointerleave', () => { hovering = false; schedule(); });
-  platform.addEventListener('focusin', () => { clearTimeout(timer); });
-  platform.addEventListener('focusout', () => { requestAnimationFrame(schedule); });
-  document.addEventListener('visibilitychange', schedule);
-  reviewMotion.addEventListener('change', updatePlayback);
-  new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; schedule(); }, { threshold: 0.15 }).observe(platform);
+  platform.addEventListener('focusin', () => clearTimeout(timer));
+  platform.addEventListener('focusout', () => requestAnimationFrame(() => schedule()));
+  document.addEventListener('visibilitychange', () => schedule());
+  reviewMotion.addEventListener('change', () => schedule());
+  reviewControllers.set(platform, {
+    setActive(value) {
+      if (active === value) return;
+      active = value;
+      platform.dataset.reviewActive = String(value);
+      schedule(1600);
+    },
+  });
+  window.addEventListener('resize', measure);
+  measure();
   new ResizeObserver(measure).observe(viewport);
-  updatePlayback();
+  reviewObserver.observe(platform);
 });
