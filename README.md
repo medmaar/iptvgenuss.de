@@ -46,20 +46,17 @@ crawlers. Complete the business identity, licensed offer and legal content,
 then obtain the owner's launch approval before enabling indexing. Legal pages
 can be added in the later multipage phase.
 
-## Review slider examples
+## Customer reviews
 
-`reviewExamples` in `src/site.mjs` contains all 60 owner-supplied example texts,
-without sample author names: 20 detailed reviews, 20 chat messages,
-and 20 short reviews. The three rows follow the supplied IPTVkanal layout,
-with horizontally scrolling cards, position dots, previous/next controls and
-five-second automatic advancement while visible. Hover, keyboard focus, the
-pause control, background tabs and reduced-motion preferences stop autoplay.
-Native scrolling and all texts remain available without JavaScript.
+All previous sample reviews and their labels have been removed from the public
+homepage. `customerReviewGroups` in `src/site.mjs` is empty, so neither an empty
+reviews section nor its navigation link is rendered. The reusable carousel
+renderer and controls remain available for genuine, source-backed feedback.
 
-The homepage and each row explicitly label these as examples. They are not
-attributed as genuine Google/Trustpilot reviews, and no review/rating structured
-data is emitted. Replace them with verifiable, consented customer feedback
-before presenting them as real customer testimonials.
+The replacement attachment repeats all 60 previous sample texts word for word
+with author names added. Original review links or platform exports are needed
+to clarify their source before they are published as customer testimonials.
+No review or aggregate-rating structured data is emitted.
 
 ## Hero photograph
 
