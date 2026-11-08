@@ -29,9 +29,9 @@ document.querySelectorAll('[data-devices]').forEach(button => {
   button.addEventListener('click', () => {
     const count = Number(button.dataset.devices);
     document.querySelectorAll('[data-devices]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-    document.querySelector('[data-device-hint]').textContent = `Preise für ${count} ${count === 1 ? 'Gerät' : 'Geräte'} gleichzeitig`;
-    document.querySelectorAll('[data-plan-index]').forEach(card => {
-      const price = formatPrice(priceData[count][Number(card.dataset.planIndex)]);
+    document.querySelector('[data-device-hint]').textContent = `Monats- und Jahrespreise für ${count} ${count === 1 ? 'Gerät' : 'Geräte'} gleichzeitig · Kostenloser Test für 1 Gerät`;
+    document.querySelectorAll('[data-paid-plan]').forEach(card => {
+      const price = formatPrice(priceData[count][card.dataset.planId]);
       card.querySelector('[data-plan-price]').textContent = price;
       card.querySelector('[data-device-label]').textContent = `${count} ${count === 1 ? 'Gerät' : 'Geräte'} gleichzeitig`;
       const link = card.querySelector('[data-plan]');
@@ -46,7 +46,7 @@ document.querySelectorAll('.contact-actions a').forEach(contact => { contact.dat
 document.querySelectorAll('[data-plan]').forEach(link => {
   link.addEventListener('click', () => {
     const selected = document.querySelector('[data-selected-plan]');
-    const choice = `${link.dataset.plan} – ${link.dataset.price} · ${link.dataset.count} ${link.dataset.count === '1' ? 'Gerät' : 'Geräte'}`;
+    const choice = `${link.dataset.plan} – ${link.dataset.price} · ${link.dataset.count} ${link.dataset.count === '1' ? 'Gerät' : 'Geräte'}${link.dataset.bonus ? ` · inkl. ${link.dataset.bonus}` : ''}`;
     selected.textContent = `Ihr Wunschpaket: ${choice}`;
     selected.hidden = false;
     document.querySelectorAll('.contact-actions a').forEach(contact => {

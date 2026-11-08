@@ -44,37 +44,38 @@ export const site = {
   googleSiteVerification: '',
 };
 
-// Packages. price: in euros, null = not decided yet (shown as "Preis folgt").
-// devices: number of screens that can watch at the same time.
+// Homepage packages and inclusions supplied by the owner.
+// A free test has no advertised duration and uses one simultaneous device.
 export const plans = [
-  { id: '1-monat', label: '1 Monat', months: 1, devices: 1, price: 9 },
-  { id: '3-monate', label: '3 Monate', months: 3, devices: 1, price: 29 },
-  { id: '6-monate', label: '6 Monate', months: 6, devices: 1, price: 39 },
-  { id: '12-monate', label: '12 Monate', months: 12, devices: 1, price: 49, featured: true },
+  { id: 'kostenlos-testen', label: 'Kostenloser Test', trial: true, months: 0, devices: 1, price: 0, priceNote: 'Alle Leistungen kennenlernen', footer: 'Erst testen, dann entscheiden.', cta: 'Kostenlos testen', enquiry: 'Kostenloser Test' },
+  { id: '1-monat', label: '1 Monat', months: 1, devices: 1, price: 9, priceNote: 'einmalig für einen Monat', footer: 'Keine automatische Verlängerung', cta: 'Monatspaket anfragen' },
+  { id: '12-monate', label: '1 Jahr', months: 12, devices: 1, price: 49, priceNote: 'einmalig für 12 Monate', footer: 'Keine automatische Verlängerung', cta: 'Jahrespaket anfragen', featured: true, badge: 'Jahrespaket + IBO Player Pro', bonus: 'IBO Player Abo kostenlos inklusive', bonusName: 'IBO Player Pro' },
 ];
 
-// Full price matrix supplied by the owner; column order matches plans above.
+// Previously supplied monthly/yearly totals for 1–5 simultaneous devices.
+// Trial access remains free for one device; paid package selection is independent.
 export const devicePrices = {
-  1: [9, 29, 39, 49],
-  2: [18, 50, 69, 89],
-  3: [27, 75, 105, 135],
-  4: [36, 99, 140, 180],
-  5: [45, 120, 175, 225],
+  1: { '1-monat': 9, '12-monate': 49 },
+  2: { '1-monat': 18, '12-monate': 89 },
+  3: { '1-monat': 27, '12-monate': 135 },
+  4: { '1-monat': 36, '12-monate': 180 },
+  5: { '1-monat': 45, '12-monate': 225 },
 };
 
-// What every package includes. Only list what the service really provides.
 export const included = [
-  'Live-TV, Filme & Serien auf Abruf',
-  'HD, Full HD & bis zu 4K UHD',
-  'EPG & Catch-Up, je nach Programm',
-  'Persönliche Hilfe bei der Einrichtung',
+  '50.000+ Live-Kanäle',
+  '120.000+ Filme & Serien (VOD)',
+  '4K Ultra HD Qualität',
+  'Bundesliga · Sky · DAZN',
+  'PPV Events inklusive',
+  'EPG & Catch-Up TV',
+  'Alle Geräte',
+  '24/7 Deutscher Support',
 ];
 
-// The licensed offer: which channels/content the business has the rights to
-// distribute. Empty until confirmed in writing; pages then show a neutral text.
 export const offer = {
-  summary: '',
-  channels: [],
+  summary: '50.000+ Live-Kanäle und 120.000+ Filme & Serien (VOD), 4K Ultra HD, Bundesliga, Sky und DAZN, PPV Events, EPG & Catch-Up TV, alle Geräte und 24/7 deutscher Support.',
+  channels: ['Bundesliga', 'Sky', 'DAZN'],
 };
 
 // Navigation (header and mobile menu).
@@ -104,29 +105,38 @@ export function missing() {
   return out;
 }
 
-// Homepage offer details adapted from the owner-supplied IPTVkanal reference.
-// No source-site contact details, testimonials or unverified catalogue counts.
+// Homepage copy uses the current offer and feature counts supplied by the owner.
 export const homeContent = {
   title: 'Fernsehen mit Genuss.',
-  lead: 'Ihr Fernsehen. Ihre Freiheit. Live-TV, Filme und Serien auf Ihren Lieblingsgeräten – zu Hause und unterwegs. Wählen Sie Ihre Laufzeit und genießen Sie Unterhaltung, die in Ihren Alltag passt.',
+  lead: '50.000+ Live-Kanäle, 120.000+ Filme & Serien und Fernsehen in 4K Ultra HD – auf all Ihren Geräten. Entdecken Sie Ihre Lieblingsprogramme mit IPTV Genuss.',
   billing: 'Einmal zahlen. Keine automatische Verlängerung.',
   maxDevices: 5,
+  pricingIntro: 'Kostenlos testen, einen Monat genießen oder ein Jahr mit IBO Player Pro wählen.',
+  pricingDetail: 'Alle Angebote enthalten dieselben Leistungen – das Jahrespaket bietet einen zusätzlichen Bonus.',
   features: [
-    { icon: 'tv', title: 'Live-TV', text: 'Deutsches und internationales Fernsehen. Entdecken Sie Ihr Programm und finden Sie Ihre nächsten Lieblingsmomente.', color: 'orange' },
-    { icon: 'play', title: 'Filme & Serien', text: 'Ein Filmabend oder noch eine Folge? Unterhaltung auf Abruf, wann es Ihnen passt.', color: 'coral' },
-    { icon: 'screen', title: 'Bis zu 4K UHD', text: 'HD, Full HD und Ultra HD – abhängig vom Inhalt, Ihrem Gerät und Ihrer Internetverbindung.', color: 'aqua' },
-    { icon: 'calendar', title: 'EPG & Catch-Up', text: 'Mit dem Programmführer den Überblick behalten und verfügbare Sendungen später ansehen.', color: 'green' },
-    { icon: 'devices', title: 'Ihre Geräte', text: 'Smart-TV, TV-Stick, Smartphone, Tablet oder Computer. Nutzen Sie die Geräte, die Sie bereits besitzen.', color: 'purple' },
-    { icon: 'chat', title: 'Persönliche Hilfe', text: 'Von der passenden App bis zum ersten Start: Wir helfen Ihnen Schritt für Schritt bei der Einrichtung.', color: 'gold' },
+    { icon: 'tv', title: '50.000+ Live-Kanäle', text: 'Deutsches und internationales Live-TV. Finden Sie Ihr Lieblingsprogramm und entdecken Sie jeden Tag Neues.', color: 'orange' },
+    { icon: 'play', title: '120.000+ Filme & Serien', text: 'Ihre VOD-Mediathek für den Filmabend oder die nächste Serienfolge – schauen Sie, wann es Ihnen passt.', color: 'coral' },
+    { icon: 'screen', title: '4K Ultra HD Qualität', text: 'Fernsehen in hoher Auflösung. Genießen Sie 4K-Inhalte mit einem geeigneten Gerät und Internetanschluss.', color: 'aqua' },
+    { icon: 'sport', title: 'Bundesliga · Sky · DAZN', text: 'Fußball, Sport und Unterhaltung in Ihrem Paket. Erleben Sie Ihre Lieblingsübertragungen live.', color: 'green' },
+    { icon: 'event', title: 'PPV Events inklusive', text: 'Große Events sind in Ihrem Zugang enthalten. Seien Sie bei den nächsten Live-Momenten dabei.', color: 'purple' },
+    { icon: 'calendar', title: 'EPG & Catch-Up TV', text: 'Mit dem Programmführer den Überblick behalten und verfügbare Sendungen nachträglich ansehen.', color: 'gold' },
+    { icon: 'devices', title: 'Alle Geräte', text: 'Smart-TV, TV-Stick, Smartphone, Tablet oder Computer – Ihr Zugang passt auf Ihre Lieblingsbildschirme.', color: 'aqua' },
+    { icon: 'chat', title: '24/7 Deutscher Support', text: 'Persönliche Hilfe auf Deutsch, rund um die Uhr. Wir unterstützen Sie bei der Einrichtung und bei Fragen.', color: 'green' },
   ],
+  devicesLead: 'Alle Geräte, ein Zugang: Smart-TV, Smartphone, Tablet und Computer. Nutzen Sie einfach die Bildschirme, die Sie bereits besitzen.',
+  supportNote: 'EPG & Catch-Up TV begleiten Ihr Programm. Unser deutscher Support hilft Ihnen 24/7 bei der Einrichtung und bei Fragen.',
+  annualBonusTitle: 'Ein Jahr IPTV. IBO Player Pro inklusive.',
+  annualBonusText: 'Nur im Jahrespaket: Sie erhalten das IBO Player Abo kostenlos dazu – zusätzlich zu allen enthaltenen Leistungen.',
   steps: [
-    ['Paket wählen', 'Wählen Sie die Laufzeit, die zu Ihnen passt. Entscheiden Sie, ob Sie auf einem oder bis zu fünf Geräten gleichzeitig schauen möchten.'],
+    ['Test oder Paket wählen', 'Starten Sie mit einem kostenlosen Test oder wählen Sie einen Monat beziehungsweise ein Jahr. Bei den bezahlten Paketen entscheiden Sie, auf wie vielen Geräten Sie gleichzeitig schauen.'],
     ['Zugang einrichten', 'Sie erhalten Ihre Zugangsdaten und eine verständliche Anleitung für Ihre IPTV-App.'],
     ['Zurücklehnen & genießen', 'App öffnen, Zugangsdaten eingeben und Ihr Programm entdecken. Bei Fragen helfen wir Ihnen weiter.'],
   ],
   devices: ['Smart-TV', 'Fire TV & TV-Stick', 'Android & iPhone', 'Tablet & iPad', 'PC & Mac', 'Android-Box & MAG'],
   apps: 'Kompatibel mit gängigen IPTV-Apps wie IPTV Smarters, TiviMate, IBO Player und VLC. Die passende App hängt von Ihrem Gerät ab.',
   faqs: [
+    ['Was ist in den Paketen enthalten?', 'Alle drei Angebote enthalten 50.000+ Live-Kanäle, 120.000+ Filme & Serien (VOD), 4K Ultra HD Qualität, Bundesliga, Sky und DAZN, PPV Events, EPG & Catch-Up TV, die Unterstützung aller Geräte und 24/7 deutschen Support.'],
+    ['Bei welchem Paket ist IBO Player inklusive?', 'Das IBO Player Abo erhalten Sie ausschließlich beim Jahrespaket kostenlos dazu. Dieser IBO Player Pro Bonus ist nicht im kostenlosen Test oder im Monatspaket enthalten.'],
     ['Was ist IPTV?', 'IPTV bedeutet Fernsehen über das Internet. Statt Satellitenschüssel oder Kabelanschluss benötigen Sie eine Internetverbindung, ein kompatibles Gerät und eine passende IPTV-App.'],
     ['Welche Internetgeschwindigkeit brauche ich?', 'Als Richtwert empfehlen wir mindestens 10 Mbit/s für HD und 25 Mbit/s für 4K pro gleichzeitig genutztem Gerät. Die verfügbare Bildqualität hängt auch vom Inhalt und Ihrem Gerät ab.'],
     ['Gibt es eine automatische Verlängerung?', 'Nein. Sie zahlen einmalig für die gewählte Laufzeit. Ihr Paket verlängert sich nicht automatisch.'],

@@ -18,8 +18,8 @@ URLs redirect to the corresponding homepage sections via `public/_redirects`.
 
 ## Files
 
-- `src/site.mjs`: business details, contact email, packages, all 20 device/duration
-  prices and homepage information adapted from the supplied IPTVkanal reference.
+- `src/site.mjs`: business details, contact email, the free trial, the 10 monthly/yearly device-price combinations and the
+  current homepage offer supplied by the owner.
 - `src/pages/home.mjs`: renders the homepage using `src/pages/home.html`.
 - `public/css/home.css`: responsive theme and logo sizing.
 - `public/js/home.js`: mobile menu, device selector and email enquiry selection.
@@ -27,13 +27,17 @@ URLs redirect to the corresponding homepage sections via `public/_redirects`.
   viewBox to keep the text descenders inside the image.
 - `build.mjs`: static build and validation.
 
-Prices and contact email were supplied by the owner. Packages support 1–5
-simultaneous devices. Choosing a package prepares an email to
+Prices, catalogue counts, named programme features and contact email were
+supplied by the owner. The homepage has exactly three cards: a free trial for
+one device, one month, and one year. The paid plans support 1–5 simultaneous
+devices. Choosing a package prepares an email to
 `kontakt@iptvgenuss.de` with the chosen duration, total price and device count;
 free-test links prepare a test enquiry. The site does not process payments or
 send email itself. The supplied WhatsApp number is a placeholder and is not
 published. The homepage uses no tracking scripts, cookies or browser storage.
-Source-site contact details and unverifiable catalogue counts were not imported.
+The annual plan alone includes the free IBO Player subscription / IBO Player Pro
+bonus. The eight common features appear on all three cards and throughout the
+hero, feature grid, device section and FAQ. No trial duration is invented.
 
 ## Deployment
 
