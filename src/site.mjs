@@ -64,7 +64,7 @@ export const devicePrices = {
 
 export const included = [
   '50.000+ Live-Kanäle',
-  '120.000+ Filme & Serien (VOD)',
+  '+300.000 Filme & Serien (VOD)',
   '4K Ultra HD Qualität',
   'Bundesliga · Sky · DAZN',
   'PPV Events inklusive',
@@ -74,7 +74,7 @@ export const included = [
 ];
 
 export const offer = {
-  summary: '50.000+ Live-Kanäle und 120.000+ Filme & Serien (VOD), 4K Ultra HD, Bundesliga, Sky und DAZN, PPV Events, EPG & Catch-Up TV, alle Geräte und 24/7 deutscher Support.',
+  summary: '50.000+ Live-Kanäle und +300.000 Filme & Serien (VOD), 4K Ultra HD, Bundesliga, Sky und DAZN, PPV Events, EPG & Catch-Up TV, alle Geräte und 24/7 deutscher Support.',
   channels: ['Bundesliga', 'Sky', 'DAZN'],
 };
 
@@ -108,20 +108,20 @@ export function missing() {
 // Homepage copy uses the current offer and feature counts supplied by the owner.
 export const homeContent = {
   title: 'Fernsehen mit Genuss.',
-  lead: '50.000+ Live-Kanäle, 120.000+ Filme & Serien und Fernsehen in 4K Ultra HD – auf all Ihren Geräten. Entdecken Sie Ihre Lieblingsprogramme mit IPTV Genuss.',
+  lead: '50.000+ Live-Kanäle, +300.000 Filme & Serien und Fernsehen in 4K Ultra HD – auf all Ihren Geräten. Entdecken Sie Ihre Lieblingsprogramme mit IPTV Genuss.',
   billing: 'Einmal zahlen. Keine automatische Verlängerung.',
   maxDevices: 5,
   pricingIntro: 'Kostenlos testen, einen Monat genießen oder ein Jahr mit IBO Player Pro wählen.',
   pricingDetail: 'Alle Angebote enthalten dieselben Leistungen – das Jahrespaket bietet einen zusätzlichen Bonus.',
   features: [
     { icon: 'tv', title: '50.000+ Live-Kanäle', text: 'Deutsches und internationales Live-TV. Finden Sie Ihr Lieblingsprogramm und entdecken Sie jeden Tag Neues.', color: 'orange' },
-    { icon: 'play', title: '120.000+ Filme & Serien', text: 'Ihre VOD-Mediathek für den Filmabend oder die nächste Serienfolge – schauen Sie, wann es Ihnen passt.', color: 'coral' },
+    { icon: 'play', title: '+300.000 Filme & Serien', text: 'Ihre VOD-Mediathek für den Filmabend oder die nächste Serienfolge – schauen Sie, wann es Ihnen passt.', color: 'coral' },
     { icon: 'screen', title: '4K Ultra HD Qualität', text: 'Fernsehen in hoher Auflösung. Genießen Sie 4K-Inhalte mit einem geeigneten Gerät und Internetanschluss.', color: 'aqua' },
     { icon: 'sport', title: 'Bundesliga · Sky · DAZN', text: 'Fußball, Sport und Unterhaltung in Ihrem Paket. Erleben Sie Ihre Lieblingsübertragungen live.', color: 'green' },
     { icon: 'event', title: 'PPV Events inklusive', text: 'Große Events sind in Ihrem Zugang enthalten. Seien Sie bei den nächsten Live-Momenten dabei.', color: 'purple' },
     { icon: 'calendar', title: 'EPG & Catch-Up TV', text: 'Mit dem Programmführer den Überblick behalten und verfügbare Sendungen nachträglich ansehen.', color: 'gold' },
-    { icon: 'devices', title: 'Alle Geräte', text: 'Smart-TV, TV-Stick, Smartphone, Tablet oder Computer – Ihr Zugang passt auf Ihre Lieblingsbildschirme.', color: 'aqua' },
-    { icon: 'chat', title: '24/7 Deutscher Support', text: 'Persönliche Hilfe auf Deutsch, rund um die Uhr. Wir unterstützen Sie bei der Einrichtung und bei Fragen.', color: 'green' },
+    { icon: 'devices', title: 'Alle Geräte', text: 'Smart-TV, TV-Stick, Smartphone, Tablet oder Computer – Ihr Zugang passt auf Ihre Lieblingsbildschirme.', color: 'blue' },
+    { icon: 'chat', title: '24/7 Deutscher Support', text: 'Persönliche Hilfe auf Deutsch, rund um die Uhr. Wir unterstützen Sie bei der Einrichtung und bei Fragen.', color: 'rose' },
   ],
   devicesLead: 'Alle Geräte, ein Zugang: Smart-TV, Smartphone, Tablet und Computer. Nutzen Sie einfach die Bildschirme, die Sie bereits besitzen.',
   supportNote: 'EPG & Catch-Up TV begleiten Ihr Programm. Unser deutscher Support hilft Ihnen 24/7 bei der Einrichtung und bei Fragen.',
@@ -135,7 +135,7 @@ export const homeContent = {
   devices: ['Smart-TV', 'Fire TV & TV-Stick', 'Android & iPhone', 'Tablet & iPad', 'PC & Mac', 'Android-Box & MAG'],
   apps: 'Kompatibel mit gängigen IPTV-Apps wie IPTV Smarters, TiviMate, IBO Player und VLC. Die passende App hängt von Ihrem Gerät ab.',
   faqs: [
-    ['Was ist in den Paketen enthalten?', 'Alle drei Angebote enthalten 50.000+ Live-Kanäle, 120.000+ Filme & Serien (VOD), 4K Ultra HD Qualität, Bundesliga, Sky und DAZN, PPV Events, EPG & Catch-Up TV, die Unterstützung aller Geräte und 24/7 deutschen Support.'],
+    ['Was ist in den Paketen enthalten?', 'Alle drei Angebote enthalten 50.000+ Live-Kanäle, +300.000 Filme & Serien (VOD), 4K Ultra HD Qualität, Bundesliga, Sky und DAZN, PPV Events, EPG & Catch-Up TV, die Unterstützung aller Geräte und 24/7 deutschen Support.'],
     ['Bei welchem Paket ist IBO Player inklusive?', 'Das IBO Player Abo erhalten Sie ausschließlich beim Jahrespaket kostenlos dazu. Dieser IBO Player Pro Bonus ist nicht im kostenlosen Test oder im Monatspaket enthalten.'],
     ['Was ist IPTV?', 'IPTV bedeutet Fernsehen über das Internet. Statt Satellitenschüssel oder Kabelanschluss benötigen Sie eine Internetverbindung, ein kompatibles Gerät und eine passende IPTV-App.'],
     ['Welche Internetgeschwindigkeit brauche ich?', 'Als Richtwert empfehlen wir mindestens 10 Mbit/s für HD und 25 Mbit/s für 4K pro gleichzeitig genutztem Gerät. Die verfügbare Bildqualität hängt auch vom Inhalt und Ihrem Gerät ab.'],
