@@ -72,19 +72,14 @@ document.querySelectorAll('[data-enquiry]').forEach(link => {
   });
 });
 
-// Each platform loops independently; only the most visible row advances itself.
+// Every visible review row advances independently, including under the pointer.
 const reviewMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const reviewControllers = new Map();
-const reviewVisibility = new Map();
 const reviewObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => reviewVisibility.set(entry.target, entry.intersectionRatio));
-  let chosen = null, bestRatio = 0.35;
-  reviewControllers.forEach((controller, platform) => {
-    const ratio = reviewVisibility.get(platform) || 0;
-    if (ratio > bestRatio) { chosen = platform; bestRatio = ratio; }
+  entries.forEach(entry => {
+    reviewControllers.get(entry.target)?.setActive(entry.isIntersecting && entry.intersectionRatio >= 0.1);
   });
-  reviewControllers.forEach((controller, platform) => controller.setActive(platform === chosen));
-}, { threshold: [0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1] });
+}, { threshold: [0, 0.1] });
 
 document.querySelectorAll('[data-review-platform]').forEach(platform => {
   const viewport = platform.querySelector('[data-review-viewport]');
@@ -96,8 +91,6 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
   const autoplayDelay = Number.isFinite(configuredDelay) && configuredDelay > 0 ? configuredDelay : 1400;
   if (!count) return;
   const visibleDots = Math.min(7, count);
-  const dotStride = Math.max(1, visibleDots - 2);
-  const dotPadding = visibleDots > 2 ? 1 : 0;
   const dotBuffer = visibleDots;
   const dotTrack = document.createElement('span');
   dotTrack.className = 'review-dots-track';
@@ -107,26 +100,32 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
   dots.style.setProperty('--review-dot-count', String(visibleDots));
   dots.replaceChildren(dotTrack, dotIndicator);
   let current = 0, origin = 0, step = 0, lastWidth = 0, lastScrollAt = 0;
-  let active = false, hovering = false, rebuilding = false, rebuildFrame, timer, settling, scrollFrame;
+  let active = false, rebuilding = false, rebuildFrame, timer, settling, scrollFrame;
   const normalize = index => (index % count + count) % count;
   function schedule(delay = autoplayDelay) {
     clearTimeout(timer);
-    if (rebuilding || !active || hovering || document.hidden || reviewMotion.matches || platform.contains(document.activeElement) || count < 2) return;
+    if (rebuilding || !active || document.hidden || reviewMotion.matches || platform.querySelector(':focus-visible') || count < 2) return;
     timer = setTimeout(() => goTo(current + 1), delay);
   }
-  function renderDots(rawIndex = current, instant = false) {
+  function renderDots(position = current, instant = false) {
     viewport.dataset.reviewIndex = String(current);
-    const windowStart = Math.floor(rawIndex / dotStride) * dotStride - dotPadding;
+    const middle = Math.floor(visibleDots / 2);
+    const rawIndex = Math.round(position);
+    const windowStart = position - middle;
     const focused = dots.contains(document.activeElement) ? document.activeElement : null;
     dots.classList.toggle('is-resetting', instant || rebuilding || reviewMotion.matches);
     dotTrack.style.transform = `translateX(${-(windowStart + dotBuffer) * 24}px)`;
-    dotIndicator.style.transform = `translateX(${(rawIndex - windowStart) * 24}px)`;
+    dotIndicator.style.transform = `translateX(${middle * 24}px)`;
     [...dotTrack.children].forEach(dot => {
       const index = Number(dot.dataset.reviewRaw);
       const visible = index >= windowStart && index < windowStart + visibleDots;
-      dot.tabIndex = visible ? 0 : -1;
-      dot.setAttribute('aria-hidden', String(!visible));
-      dot.setAttribute('aria-current', String(index === rawIndex));
+      const strength = Math.max(0, 1 - Math.abs(index - position) / (middle + 1));
+      dot.style.setProperty('--dot-opacity', (0.1 + 0.72 * Math.pow(strength, 1.4)).toFixed(3));
+      dot.style.setProperty('--dot-scale', (0.55 + 0.45 * strength).toFixed(3));
+      const tabIndex = visible ? 0 : -1;
+      if (dot.tabIndex !== tabIndex) dot.tabIndex = tabIndex;
+      if (dot.getAttribute('aria-hidden') !== String(!visible)) dot.setAttribute('aria-hidden', String(!visible));
+      if (dot.getAttribute('aria-current') !== String(index === rawIndex)) dot.setAttribute('aria-current', String(index === rawIndex));
     });
     // Preserve keyboard focus when an infinite-loop copy rebases to the original.
     if (focused?.getAttribute('aria-hidden') === 'true') {
@@ -136,9 +135,9 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
   }
   function readPosition() {
     if (rebuilding || !step) return;
-    const index = Math.round((viewport.scrollLeft - origin) / step);
-    current = normalize(index);
-    renderDots(index);
+    const position = (viewport.scrollLeft - origin) / step;
+    current = normalize(Math.round(position));
+    renderDots(position);
   }
   function settle() {
     clearTimeout(settling);
@@ -231,13 +230,15 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
       event.preventDefault(); goTo(target, event.key === 'Home' || event.key === 'End');
     }
   });
-  platform.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') { hovering = true; schedule(); } });
-  platform.addEventListener('pointerleave', () => { hovering = false; schedule(); });
-  platform.addEventListener('focusin', () => clearTimeout(timer));
+  platform.addEventListener('pointerdown', () => {
+    lastScrollAt = performance.now();
+    requestAnimationFrame(() => schedule());
+  });
+  platform.addEventListener('focusin', () => schedule());
   platform.addEventListener('focusout', () => requestAnimationFrame(() => schedule()));
   document.addEventListener('visibilitychange', () => schedule());
   reviewMotion.addEventListener('change', () => schedule());
-  reviewControllers.set(platform, {
+  reviewControllers.set(viewport, {
     setActive(value) {
       if (active === value) return;
       active = value;
@@ -248,5 +249,5 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
   window.addEventListener('resize', measure);
   measure();
   new ResizeObserver(measure).observe(viewport);
-  reviewObserver.observe(platform);
+  reviewObserver.observe(viewport);
 });

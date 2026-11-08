@@ -64,19 +64,22 @@ preserved. Country flags use a local black/red/gold SVG rather than emoji, so
 Windows browsers display the German flag consistently. Trailing list numbers
 on author names are omitted from display.
 WhatsApp messages have no invented ratings. The former sample labels are gone.
-The responsive carousels use only a compact seven-visible-dot strip, with no
-arrows, pause button, counter or visible scrollbar. A gold marker moves across
-the dots as reviews advance, then the dot track slides to reveal the next
-positions. Both stay synchronized with autoplay, swipes and keyboard navigation;
-the track rebases without animation at an infinite-loop boundary. Offscreen dot
-controls are excluded from the tab order and accessibility tree. Each row loops seamlessly
-through all 20 reviews; offscreen, inert clones provide the wrap while the
-original content appears once to assistive technology. Swiping and keyboard
-navigation remain available. The most visible platform row starts and pauses
-between slides using its configured gap: Trustpilot 0.8 seconds, WhatsApp 1.2
-seconds and Google 1.4 seconds. Gaps are measured from the final scroll movement,
-including snap debounce time; other rows wait until scrolled into view. Hover, focus, hidden tabs and reduced-motion
-preferences suspend automatic movement. Larger gaps separate the platform rows.
+The responsive carousels use a compact seven-visible-dot strip, with no arrows,
+pause button, counter or visible scrollbar. The gold highlight stays centered
+while the surrounding dots glide with the card scroll position, smoothly
+shrinking and fading toward both edges. There is no full-width sweep or animated
+return to the start; infinite-loop rebasing preserves the same visual pattern.
+Offscreen dot controls are excluded from the tab order and accessibility tree.
+Each row loops through all 20 reviews; offscreen, inert clones provide the wrap
+while original content appears once to assistive technology. Swiping, dot clicks
+and keyboard navigation remain available.
+
+Each visible row autoplays independently: Trustpilot pauses 0.8 seconds between
+slides, WhatsApp 1.2 seconds, and Google 1.4 seconds. Gaps are measured from the
+final scroll movement, including snap debounce time. A resting pointer and
+pointer-clicked dots do not freeze playback. Deliberate keyboard focus, hidden
+tabs and reduced-motion preferences still suspend automatic movement. Offscreen
+rows wait until their cards are visible. Larger gaps separate the platform rows.
 
 ## Hero photograph
 
