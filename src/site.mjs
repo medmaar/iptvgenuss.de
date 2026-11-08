@@ -152,6 +152,7 @@ export const homeContent = {
 export const customerReviewGroups = [
   {
     "id": "trustpilot",
+    "autoplayDelay": 800,
     "title": "Trustpilot",
     "style": "Kundenbewertungen",
     "reviews": [
@@ -299,6 +300,7 @@ export const customerReviewGroups = [
   },
   {
     "id": "whatsapp",
+    "autoplayDelay": 1200,
     "title": "WhatsApp",
     "style": "Kundennachrichten",
     "reviews": [
@@ -426,6 +428,7 @@ export const customerReviewGroups = [
   },
   {
     "id": "google",
+    "autoplayDelay": 1400,
     "title": "Google",
     "style": "Kundenbewertungen",
     "reviews": [

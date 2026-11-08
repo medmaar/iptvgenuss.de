@@ -92,6 +92,8 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
   const controls = platform.querySelector('[data-review-controls]');
   const dots = platform.querySelector('[data-review-dots]');
   const count = cards.length;
+  const configuredDelay = Number(platform.dataset.reviewDelay);
+  const autoplayDelay = Number.isFinite(configuredDelay) && configuredDelay > 0 ? configuredDelay : 1400;
   if (!count) return;
   const visibleDots = Math.min(7, count);
   const dotStride = Math.max(1, visibleDots - 2);
@@ -104,10 +106,10 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
   dotIndicator.setAttribute('aria-hidden', 'true');
   dots.style.setProperty('--review-dot-count', String(visibleDots));
   dots.replaceChildren(dotTrack, dotIndicator);
-  let current = 0, origin = 0, step = 0, lastWidth = 0;
+  let current = 0, origin = 0, step = 0, lastWidth = 0, lastScrollAt = 0;
   let active = false, hovering = false, rebuilding = false, rebuildFrame, timer, settling, scrollFrame;
   const normalize = index => (index % count + count) % count;
-  function schedule(delay = 4200) {
+  function schedule(delay = autoplayDelay) {
     clearTimeout(timer);
     if (rebuilding || !active || hovering || document.hidden || reviewMotion.matches || platform.contains(document.activeElement) || count < 2) return;
     timer = setTimeout(() => goTo(current + 1), delay);
@@ -149,7 +151,9 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
     if (Math.abs(viewport.scrollLeft - target) > 1) {
       viewport.scrollTo({ left: target, behavior: 'instant' });
     }
-    renderDots(current, index !== current); schedule();
+    renderDots(current, index !== current);
+    // Count the requested gap from the last movement, including snap debounce time.
+    schedule(lastScrollAt ? Math.max(0, autoplayDelay - (performance.now() - lastScrollAt)) : autoplayDelay);
   }
   function goTo(index, instant = false) {
     clearTimeout(timer);
@@ -169,6 +173,7 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
   function measure() {
     if (viewport.clientWidth === lastWidth) return;
     lastWidth = viewport.clientWidth;
+    lastScrollAt = performance.now();
     rebuilding = true;
     clearTimeout(timer); clearTimeout(settling);
     cancelAnimationFrame(scrollFrame); cancelAnimationFrame(rebuildFrame);
@@ -213,6 +218,7 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
   }));
   viewport.addEventListener('scroll', () => {
     if (rebuilding) return;
+    lastScrollAt = performance.now();
     clearTimeout(timer); clearTimeout(settling);
     cancelAnimationFrame(scrollFrame);
     scrollFrame = requestAnimationFrame(readPosition);
@@ -236,7 +242,7 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
       if (active === value) return;
       active = value;
       platform.dataset.reviewActive = String(value);
-      schedule(1600);
+      schedule();
     },
   });
   window.addEventListener('resize', measure);

@@ -60,7 +60,9 @@ Their provenance has not been independently verified; no verified badges,
 platform links or aggregate-rating structured data are added.
 
 Review wording, author abbreviations, countries and supplied star ratings are
-preserved. Trailing list numbers on author names are omitted from display.
+preserved. Country flags use a local black/red/gold SVG rather than emoji, so
+Windows browsers display the German flag consistently. Trailing list numbers
+on author names are omitted from display.
 WhatsApp messages have no invented ratings. The former sample labels are gone.
 The responsive carousels use only a compact seven-visible-dot strip, with no
 arrows, pause button, counter or visible scrollbar. A gold marker moves across
@@ -70,9 +72,10 @@ the track rebases without animation at an infinite-loop boundary. Offscreen dot
 controls are excluded from the tab order and accessibility tree. Each row loops seamlessly
 through all 20 reviews; offscreen, inert clones provide the wrap while the
 original content appears once to assistive technology. Swiping and keyboard
-navigation remain available. The most visible platform row begins advancing
-after 1.6 seconds, then advances every 4.2 seconds after settling; other rows
-wait until scrolled into view. Hover, focus, hidden tabs and reduced-motion
+navigation remain available. The most visible platform row starts and pauses
+between slides using its configured gap: Trustpilot 0.8 seconds, WhatsApp 1.2
+seconds and Google 1.4 seconds. Gaps are measured from the final scroll movement,
+including snap debounce time; other rows wait until scrolled into view. Hover, focus, hidden tabs and reduced-motion
 preferences suspend automatic movement. Larger gaps separate the platform rows.
 
 ## Hero photograph
