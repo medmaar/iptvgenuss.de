@@ -93,6 +93,17 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
   const dots = platform.querySelector('[data-review-dots]');
   const count = cards.length;
   if (!count) return;
+  const visibleDots = Math.min(7, count);
+  const dotStride = Math.max(1, visibleDots - 2);
+  const dotPadding = visibleDots > 2 ? 1 : 0;
+  const dotBuffer = visibleDots;
+  const dotTrack = document.createElement('span');
+  dotTrack.className = 'review-dots-track';
+  const dotIndicator = document.createElement('span');
+  dotIndicator.className = 'review-dot-indicator';
+  dotIndicator.setAttribute('aria-hidden', 'true');
+  dots.style.setProperty('--review-dot-count', String(visibleDots));
+  dots.replaceChildren(dotTrack, dotIndicator);
   let current = 0, origin = 0, step = 0, lastWidth = 0;
   let active = false, hovering = false, rebuilding = false, rebuildFrame, timer, settling, scrollFrame;
   const normalize = index => (index % count + count) % count;
@@ -101,20 +112,31 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
     if (rebuilding || !active || hovering || document.hidden || reviewMotion.matches || platform.contains(document.activeElement) || count < 2) return;
     timer = setTimeout(() => goTo(current + 1), delay);
   }
-  function renderDots() {
+  function renderDots(rawIndex = current, instant = false) {
     viewport.dataset.reviewIndex = String(current);
-    const middle = Math.floor(dots.children.length / 2);
-    [...dots.children].forEach((dot, i) => {
-      const target = normalize(current + i - middle);
-      dot.dataset.reviewTarget = String(target);
-      dot.setAttribute('aria-label', `Bewertung ${target + 1} von ${count}`);
-      dot.setAttribute('aria-current', String(i === middle));
+    const windowStart = Math.floor(rawIndex / dotStride) * dotStride - dotPadding;
+    const focused = dots.contains(document.activeElement) ? document.activeElement : null;
+    dots.classList.toggle('is-resetting', instant || rebuilding || reviewMotion.matches);
+    dotTrack.style.transform = `translateX(${-(windowStart + dotBuffer) * 24}px)`;
+    dotIndicator.style.transform = `translateX(${(rawIndex - windowStart) * 24}px)`;
+    [...dotTrack.children].forEach(dot => {
+      const index = Number(dot.dataset.reviewRaw);
+      const visible = index >= windowStart && index < windowStart + visibleDots;
+      dot.tabIndex = visible ? 0 : -1;
+      dot.setAttribute('aria-hidden', String(!visible));
+      dot.setAttribute('aria-current', String(index === rawIndex));
     });
+    // Preserve keyboard focus when an infinite-loop copy rebases to the original.
+    if (focused?.getAttribute('aria-hidden') === 'true') {
+      const replacement = [...dotTrack.children].find(dot => dot.dataset.reviewTarget === focused.dataset.reviewTarget && dot.getAttribute('aria-hidden') === 'false');
+      replacement?.focus({ preventScroll: true });
+    }
   }
   function readPosition() {
     if (rebuilding || !step) return;
-    current = normalize(Math.round((viewport.scrollLeft - origin) / step));
-    renderDots();
+    const index = Math.round((viewport.scrollLeft - origin) / step);
+    current = normalize(index);
+    renderDots(index);
   }
   function settle() {
     clearTimeout(settling);
@@ -127,7 +149,7 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
     if (Math.abs(viewport.scrollLeft - target) > 1) {
       viewport.scrollTo({ left: target, behavior: 'instant' });
     }
-    renderDots(); schedule();
+    renderDots(current, index !== current); schedule();
   }
   function goTo(index, instant = false) {
     clearTimeout(timer);
@@ -165,7 +187,7 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
     step = count > 1 ? cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left : 0;
     viewport.scrollTo({ left: origin + current * step, behavior: 'instant' });
     controls.hidden = count < 2;
-    renderDots();
+    renderDots(current, true);
     rebuildFrame = requestAnimationFrame(() => {
       viewport.style.scrollSnapType = '';
       viewport.style.scrollBehavior = '';
@@ -173,9 +195,13 @@ document.querySelectorAll('[data-review-platform]').forEach(platform => {
       rebuildFrame = requestAnimationFrame(() => { rebuilding = false; settle(); });
     });
   }
-  dots.replaceChildren(...Array.from({ length: Math.min(7, count) }, () => {
+  dotTrack.replaceChildren(...Array.from({ length: count + dotBuffer * 2 }, (_, i) => {
     const dot = document.createElement('button');
     dot.type = 'button'; dot.className = 'review-dot';
+    const index = i - dotBuffer;
+    dot.dataset.reviewRaw = String(index);
+    dot.dataset.reviewTarget = String(normalize(index));
+    dot.setAttribute('aria-label', `Bewertung ${normalize(index) + 1} von ${count}`);
     dot.setAttribute('aria-controls', viewport.id);
     dot.addEventListener('click', () => {
       const target = Number(dot.dataset.reviewTarget);

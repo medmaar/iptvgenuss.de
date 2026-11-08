@@ -62,8 +62,12 @@ platform links or aggregate-rating structured data are added.
 Review wording, author abbreviations, countries and supplied star ratings are
 preserved. Trailing list numbers on author names are omitted from display.
 WhatsApp messages have no invented ratings. The former sample labels are gone.
-The responsive carousels use only a compact seven-dot indicator, with no
-arrows, pause button, counter or visible scrollbar. Each row loops seamlessly
+The responsive carousels use only a compact seven-visible-dot strip, with no
+arrows, pause button, counter or visible scrollbar. A gold marker moves across
+the dots as reviews advance, then the dot track slides to reveal the next
+positions. Both stay synchronized with autoplay, swipes and keyboard navigation;
+the track rebases without animation at an infinite-loop boundary. Offscreen dot
+controls are excluded from the tab order and accessibility tree. Each row loops seamlessly
 through all 20 reviews; offscreen, inert clones provide the wrap while the
 original content appears once to assistive technology. Swiping and keyboard
 navigation remain available. The most visible platform row begins advancing
