@@ -40,7 +40,8 @@ bonus. The eight common features appear on all three cards and throughout the
 hero, feature cards, device section and FAQ. The four feature cards combine
 live TV/sport/PPV, VOD/4K, devices/EPG/catch-up, and 24/7 German support, with
 working links to packages, trial enquiries, devices and personal help. They
-share one desktop row and remain a single swipeable row on smaller screens.
+share one desktop row, remain swipeable at intermediate tablet widths, and
+stack vertically on screens 800px wide or narrower.
 No trial duration is invented.
 
 ## Deployment
