@@ -28,7 +28,7 @@ URLs redirect to the corresponding homepage sections via `public/_redirects`.
 - `build.mjs`: static build and validation.
 
 Prices, catalogue counts, named programme features and contact email were
-supplied by the owner. The homepage has exactly three cards: a free trial for
+supplied by the owner. The pricing section has exactly three cards: a free trial for
 one device, one month, and one year. The paid plans support 1–5 simultaneous
 devices. Choosing a package prepares an email to
 `kontakt@iptvgenuss.de` with the chosen duration, total price and device count;
@@ -37,7 +37,11 @@ send email itself. The supplied WhatsApp number is a placeholder and is not
 published. The homepage uses no tracking scripts, cookies or browser storage.
 The annual plan alone includes the free IBO Player subscription / IBO Player Pro
 bonus. The eight common features appear on all three cards and throughout the
-hero, feature grid, device section and FAQ. No trial duration is invented.
+hero, feature cards, device section and FAQ. The four feature cards combine
+live TV/sport/PPV, VOD/4K, devices/EPG/catch-up, and 24/7 German support, with
+working links to packages, trial enquiries, devices and personal help. They
+share one desktop row and remain a single swipeable row on smaller screens.
+No trial duration is invented.
 
 ## Deployment
 
