@@ -14,7 +14,7 @@ export const site = {
 
   // false: every page is noindex, robots.txt blocks crawlers and a preview
   // banner lists what is still missing. Set to true only for the launch.
-  live: false,
+  live: true,
 
   // Contact. whatsapp: international number, digits only (e.g. '4915112345678').
   email: 'kontakt@iptvgenuss.de',
