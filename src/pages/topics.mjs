@@ -122,7 +122,7 @@ ${cta()}
     <nav class="footer-col" aria-label="Angebot"><p class="footer-h">Angebot</p><a href="/#preise">Preise</a><a href="/iptv-testen/">Kostenlos testen</a><a href="/iptv-kaufen/">IPTV kaufen</a><a href="/iptv-anbieter/">IPTV-Anbieter wählen</a><a href="/#faq">Häufige Fragen</a></nav>
     <nav class="footer-col" aria-label="Apps"><p class="footer-h">Apps</p><a href="/iptv-apps/">IPTV-Apps</a><a href="/iptv-smarters-pro/">IPTV Smarters Pro</a><a href="/tivimate/">TiviMate</a><a href="/ibo-player/">IBO Player</a><a href="/smart-iptv/">Smart IPTV</a><a href="/m3u-playlist/">M3U-Playlist</a></nav>
     <nav class="footer-col" aria-label="Geräte"><p class="footer-h">Geräte</p><a href="/iptv-geraete/">IPTV-Geräte</a><a href="/iptv-fire-tv-stick/">Fire TV Stick</a><a href="/iptv-samsung-tv/">Samsung TV</a><a href="/iptv-smart-tv/">Smart-TV</a><a href="/iptv-box/">IPTV-Box</a></nav>
-    <nav class="footer-col" aria-label="Ratgeber"><p class="footer-h">Ratgeber</p><a href="/ratgeber/">Alle Ratgeber</a><a href="/was-ist-iptv/">Was ist IPTV?</a><a href="/iptv-deutschland/">IPTV in Deutschland</a><a href="/iptv-senderliste/">Senderliste &amp; EPG</a><a href="/iptv-probleme/">Probleme lösen</a></nav>
+    <nav class="footer-col" aria-label="Ratgeber"><p class="footer-h">Ratgeber</p><a href="/ratgeber/">Alle Ratgeber</a><a href="/was-ist-iptv/">Was ist IPTV?</a><a href="/iptv-deutschland/">IPTV in Deutschland</a><a href="/iptv-regionen/">IPTV in Ihrer Region</a><a href="/iptv-senderliste/">Senderliste &amp; EPG</a><a href="/iptv-probleme/">Probleme lösen</a></nav>
   </div>
   <div class="container footer-bottom"><span>© ${new Date().getFullYear()} ${site.name}</span><span>Einmal zahlen. Keine automatische Verlängerung.</span><a href="#inhalt">Nach oben ↑</a></div>
 </footer>
@@ -202,6 +202,7 @@ const ratgeber = () => {
 ${group('wissen', 'Kauf und Wissen', 'IPTV verstehen und richtig kaufen', cardsFor(['/iptv-kaufen/', ...childrenOf('ratgeber').map((t) => t.path)]), false)}
 ${group('apps', 'Apps', 'IPTV-Apps einrichten', cardsFor(['/iptv-apps/', ...childrenOf('apps').map((t) => t.path)]), true)}
 ${group('geraete', 'Geräte', 'IPTV auf Ihrem Gerät', cardsFor(['/iptv-geraete/', ...childrenOf('geraete').map((t) => t.path)]), false)}
+${group('regionen', 'Regionen', 'IPTV in Ihrer Stadt und Region', cardsFor(['/iptv-regionen/', '/iptv-berlin/', '/iptv-hamburg/', '/iptv-muenchen/', '/iptv-koeln/', '/iptv-frankfurt-am-main/', '/iptv-nordrhein-westfalen/', '/iptv-bayern/', '/iptv-ruhrgebiet/']), true)}
 ${faqBlock('Häufige Fragen zum Ratgeber', faq)}`,
     }),
   };

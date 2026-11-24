@@ -70,3 +70,4 @@ a,button,summary{touch-action:manipulation}.device-switch button{min-height:44px
 @media(max-width:480px){.trust-list{flex-direction:column;align-items:flex-start;max-width:320px;font-size:14px}}
 .hero h1 .eyebrow{display:block;letter-spacing:2.4px;margin-bottom:20px;line-height:1.4;text-shadow:none}
 .home-seo .eyebrow{text-align:center;color:var(--teal)}
+.article .link-columns{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));list-style:none;padding-left:0;gap:8px 20px}

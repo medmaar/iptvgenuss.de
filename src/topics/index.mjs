@@ -8,11 +8,17 @@ import appsMore from './apps-more.mjs';
 import devicesMore from './devices-more.mjs';
 import extend from './extend.mjs';
 import deepen from './deepen.mjs';
+import local from './local.mjs';
+import models from './models.mjs';
+import devicesTv from './devices-tv.mjs';
+import devicesStream from './devices-stream.mjs';
+import appsPlayers from './apps-players.mjs';
+import appsClusters from './apps-clusters.mjs';
 
 // Merge extra sections, FAQs, keywords, sources and schema from the extension
 // maps (extend.mjs, deepen.mjs) into a page. `sections` are inserted before the
 // section named in `before` (or appended), everything else is appended.
-const extensions = [extend, deepen];
+const extensions = [extend, deepen, models];
 const withExtras = (t) => {
   let page = t;
   for (const ext of extensions) {
@@ -39,7 +45,7 @@ const withExtras = (t) => {
   return page;
 };
 
-export const topics = [...guides, ...guidesMore, ...apps, ...appsMore, ...devices, ...devicesMore].map(withExtras);
+export const topics = [...guides, ...guidesMore, ...apps, ...appsMore, ...appsPlayers, ...appsClusters, ...devices, ...devicesMore, ...devicesTv, ...devicesStream, ...local].map(withExtras);
 
 for (const ext of extensions) {
   for (const path of Object.keys(ext)) {
@@ -64,6 +70,7 @@ export const hubs = {
   apps: { label: 'IPTV-Apps', path: '/iptv-apps/' },
   geraete: { label: 'IPTV-Geräte', path: '/iptv-geraete/' },
   ratgeber: { label: 'Ratgeber', path: '/ratgeber/' },
+  regionen: { label: 'IPTV in Ihrer Region', path: '/iptv-regionen/' },
 };
 
 const core = [
