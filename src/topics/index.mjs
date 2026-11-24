@@ -3,8 +3,30 @@
 import guides from './guides.mjs';
 import apps from './apps.mjs';
 import devices from './devices.mjs';
+import guidesMore from './guides-more.mjs';
+import appsMore from './apps-more.mjs';
+import devicesMore from './devices-more.mjs';
+import extend from './extend.mjs';
 
-export const topics = [...guides, ...apps, ...devices];
+// Merge the extra sections, FAQs and keywords from extend.mjs into a page.
+const withExtras = (t) => {
+  const x = extend[t.path];
+  if (!x) return t;
+  const sections = [...t.sections];
+  for (const s of x.sections || []) {
+    const i = s.before ? sections.findIndex((o) => o.id === s.before) : -1;
+    sections.splice(i < 0 ? sections.length : i, 0, s);
+  }
+  const drop = new Set(x.keywords?.remove || []);
+  const keywords = [...(t.keywords || []).filter((k) => !drop.has(k)), ...(x.keywords?.add || [])];
+  return { ...t, sections, faq: [...t.faq, ...(x.faq || [])], keywords, schema: [...(t.schema || []), ...(x.schema || [])] };
+};
+
+export const topics = [...guides, ...guidesMore, ...apps, ...appsMore, ...devices, ...devicesMore].map(withExtras);
+
+for (const path of Object.keys(extend)) {
+  if (!topics.some((t) => t.path === path)) throw new Error(`extend.mjs: unknown page ${path}`);
+}
 
 // Hubs: breadcrumb parent and the page that lists all children.
 export const hubs = {

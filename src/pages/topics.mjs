@@ -15,6 +15,29 @@ const topicGrid = (items) => `<ul class="topic-grid">${items.map((t) => `<li><a 
 
 const faqBlock = (title, list) => `<section class="section faq-section" id="fragen" aria-labelledby="fragen-title"><div class="container faq-layout"><div class="faq-heading"><p class="eyebrow">Gut zu wissen</p><h2 id="fragen-title">${title}</h2><p>Weitere Antworten finden Sie in den <a class="text-link" href="/#faq">häufigen Fragen</a> und im <a class="text-link" href="/ratgeber/">IPTV-Ratgeber</a>.</p></div><div class="faq-list">${list.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</div></div></section>`;
 
+const orgRef = { '@id': `${site.url}/#organization` };
+const organization = {
+  '@type': 'Organization',
+  '@id': `${site.url}/#organization`,
+  name: site.company.name || site.name,
+  ...(site.company.name && site.company.name !== site.name && { alternateName: site.name }),
+  url: `${site.url}/`,
+  logo: { '@type': 'ImageObject', url: `${site.url}/brand/icon-512.png`, width: 512, height: 512 },
+  ...(site.email && {
+    email: site.email,
+    contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', email: site.email, availableLanguage: ['de'], areaServed: ['DE', 'AT', 'CH'] },
+  }),
+};
+
+// Third-party apps get a SoftwareApplication node (no ratings or prices: those are the app makers').
+const appSchema = (t) => ({
+  '@type': 'SoftwareApplication',
+  name: t.app.name,
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: t.app.os,
+  url: `${site.url}${t.path}`,
+});
+
 const faqSchema = (list) => ({
   '@type': 'FAQPage',
   mainEntity: list.map(([q, a]) => ({ '@type': 'Question', name: text(q), acceptedAnswer: { '@type': 'Answer', text: text(a) } })),
@@ -27,7 +50,8 @@ function shell({ path, title, description, crumb, parents = [], schema = [], bod
   const url = site.url + path;
   const trail = [['Start', '/'], ...parents, [crumb, path]];
   const graph = [
-    { '@type': 'WebSite', '@id': `${site.url}/#website`, name: site.name, url: `${site.url}/`, inLanguage: site.lang },
+    organization,
+    { '@type': 'WebSite', '@id': `${site.url}/#website`, name: site.name, url: `${site.url}/`, inLanguage: site.lang, publisher: { '@id': `${site.url}/#organization` } },
     { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: title, description, inLanguage: site.lang, isPartOf: { '@id': `${site.url}/#website` }, breadcrumb: { '@id': `${url}#breadcrumb` } },
     { '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`, itemListElement: trail.map(([name, href], i) => ({ '@type': 'ListItem', position: i + 1, name: text(name), item: site.url + href })) },
     ...schema,
@@ -49,7 +73,9 @@ function shell({ path, title, description, crumb, parents = [], schema = [], bod
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${url}">
 <meta property="og:locale" content="${site.locale}">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="${site.url}${site.ogImage}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${site.url}${site.ogImage}">
 <link rel="icon" href="/favicon.svg?v=__V__" type="image/svg+xml" sizes="any">
 <link rel="stylesheet" href="/css/home.css?v=__V__">
 <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replaceAll('<', '\\u003c')}</script>
@@ -71,10 +97,10 @@ ${cta}
 <footer class="site-footer">
   <div class="container footer-columns">
     <div class="footer-col footer-col--brand"><a class="brand footer-brand" href="/" aria-label="${site.name} – Startseite"><img src="/brand/genuss-iptv.svg?v=__V__" alt="genuss iptv" width="210" height="76" loading="lazy"></a><p>Live-TV, Filme und Serien.<br>Fernsehen mit Genuss.</p></div>
-    <nav class="footer-col" aria-label="Angebot"><p class="footer-h">Angebot</p><a href="/#preise">Preise</a><a href="/#kontakt">Kostenlos testen</a><a href="/iptv-kaufen/">IPTV kaufen</a><a href="/iptv-anbieter/">IPTV-Anbieter wählen</a><a href="/#faq">Häufige Fragen</a></nav>
-    <nav class="footer-col" aria-label="Apps"><p class="footer-h">Apps</p><a href="/iptv-apps/">IPTV-Apps</a><a href="/iptv-smarters-pro/">IPTV Smarters Pro</a><a href="/tivimate/">TiviMate</a><a href="/smart-iptv/">Smart IPTV</a><a href="/m3u-playlist/">M3U-Playlist</a></nav>
+    <nav class="footer-col" aria-label="Angebot"><p class="footer-h">Angebot</p><a href="/#preise">Preise</a><a href="/iptv-testen/">Kostenlos testen</a><a href="/iptv-kaufen/">IPTV kaufen</a><a href="/iptv-anbieter/">IPTV-Anbieter wählen</a><a href="/#faq">Häufige Fragen</a></nav>
+    <nav class="footer-col" aria-label="Apps"><p class="footer-h">Apps</p><a href="/iptv-apps/">IPTV-Apps</a><a href="/iptv-smarters-pro/">IPTV Smarters Pro</a><a href="/tivimate/">TiviMate</a><a href="/ibo-player/">IBO Player</a><a href="/smart-iptv/">Smart IPTV</a><a href="/m3u-playlist/">M3U-Playlist</a></nav>
     <nav class="footer-col" aria-label="Geräte"><p class="footer-h">Geräte</p><a href="/iptv-geraete/">IPTV-Geräte</a><a href="/iptv-fire-tv-stick/">Fire TV Stick</a><a href="/iptv-samsung-tv/">Samsung TV</a><a href="/iptv-smart-tv/">Smart-TV</a><a href="/iptv-box/">IPTV-Box</a></nav>
-    <nav class="footer-col" aria-label="Ratgeber"><p class="footer-h">Ratgeber</p><a href="/ratgeber/">Alle Ratgeber</a><a href="/was-ist-iptv/">Was ist IPTV?</a><a href="/iptv-deutschland/">IPTV in Deutschland</a><a href="/iptv-probleme/">Probleme lösen</a></nav>
+    <nav class="footer-col" aria-label="Ratgeber"><p class="footer-h">Ratgeber</p><a href="/ratgeber/">Alle Ratgeber</a><a href="/was-ist-iptv/">Was ist IPTV?</a><a href="/iptv-deutschland/">IPTV in Deutschland</a><a href="/iptv-senderliste/">Senderliste &amp; EPG</a><a href="/iptv-probleme/">Probleme lösen</a></nav>
   </div>
   <div class="container footer-bottom"><span>© ${new Date().getFullYear()} ${site.name}</span><span>Einmal zahlen. Keine automatische Verlängerung.</span><a href="#inhalt">Nach oben ↑</a></div>
 </footer>
@@ -110,7 +136,9 @@ const render = (t) => {
     parents,
     schema: [
       faqSchema(t.faq),
-      { '@type': 'Article', headline: text(t.h1), description: t.description, inLanguage: site.lang, dateModified: reviewed, author: { '@type': 'Organization', name: site.name, url: `${site.url}/` }, publisher: { '@type': 'Organization', name: site.name, url: `${site.url}/` }, mainEntityOfPage: `${site.url}${t.path}` },
+      { '@type': 'Article', headline: text(t.h1), description: t.description, inLanguage: site.lang, dateModified: reviewed, image: `${site.url}${site.ogImage}`, author: orgRef, publisher: orgRef, mainEntityOfPage: { '@id': `${site.url}${t.path}#webpage` }, about: { '@type': 'Thing', name: text(t.name) } },
+      ...(t.app ? [appSchema(t)] : []),
+      ...(t.schema || []),
       ...(kids.length ? [{ '@type': 'ItemList', name: text(t.h1), itemListElement: kids.map((k, i) => ({ '@type': 'ListItem', position: i + 1, url: `${site.url}${k.path}`, name: text(k.name) })) }] : []),
     ],
     body: `${pageHero({ crumb: t.name, parents, kicker: t.kicker, h1: t.h1, lead: t.lead })}

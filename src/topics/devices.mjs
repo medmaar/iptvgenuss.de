@@ -91,7 +91,7 @@ ${ol([
   'Unter <em>Entwickleroptionen › Apps unbekannter Herkunft installieren</em> erlauben Sie es für Downloader.',
   'Geben Sie in Downloader die Download-Adresse von der <strong>offiziellen Website des App-Entwicklers</strong> ein und installieren Sie die App.',
 ])}
-<p>Laden Sie Apps nie von unbekannten Seiten oder über Kurzcodes aus Foren – dort kursieren manipulierte Versionen.</p>` },
+<p>Laden Sie Apps nie von unbekannten Seiten oder über Kurzcodes aus Foren – dort kursieren manipulierte Versionen. Ausführlich: ${L('/iptv-downloader/', 'Downloader-App Schritt für Schritt')}.</p>` },
       { id: 'einrichten', h: 'Anmelden und loslegen', html: ol(xtreamSteps) },
       { id: 'ruckeln', h: 'Fire TV Stick ruckelt? Fünf Tipps', html: `
 <ul>
@@ -111,7 +111,7 @@ ${ol([
       ['Was ist die Downloader-App?', 'Eine App aus dem Amazon Appstore, mit der Sie Dateien aus dem Internet laden und Apps von der Website des Entwicklers installieren können. Sie funktioniert nur auf Geräten mit Fire OS.'],
       ['Brauche ich Amazon Prime für IPTV?', 'Nein. Für IPTV brauchen Sie nur ein Amazon-Konto, um Apps zu installieren, und Ihre IPTV-Zugangsdaten.'],
     ],
-    related: ['/tivimate/', '/iptv-smarters-pro/', '/xciptv/', '/iptv-stick/', '/iptv-4k/', '/iptv-geraete/'],
+    related: ['/tivimate/', '/iptv-smarters-pro/', '/iptv-downloader/', '/xciptv/', '/iptv-stick/', '/iptv-4k/'],
     keywords: ['fire tv iptv', 'fire tv stick iptv', 'iptv fire stick', 'iptv fire tv', 'iptv firestick', 'iptv for firestick', 'amazon fire stick iptv', 'iptv amazon', 'iptv amazon stick', 'iptv box amazon', 'firestick ly73pr'],
   },
 
@@ -158,7 +158,7 @@ ${ol([
       ['Warum finde ich Smart IPTV nicht im Samsung-Store?', 'Smart IPTV ist auf vielen neueren Samsung-Fernsehern nicht mehr gelistet. Nutzen Sie eine der Alternativen oder einen Streaming-Stick.'],
       ['Funktioniert IPTV auf älteren Samsung-Fernsehern?', 'Ältere Modelle bieten oft keine passenden Apps mehr. Ein Streaming-Stick am HDMI-Anschluss ist dann die einfachste Lösung.'],
     ],
-    related: ['/iptv-lg-tv/', '/iptv-smart-tv/', '/flix-iptv/', '/set-iptv/', '/smart-iptv/', '/iptv-fire-tv-stick/'],
+    related: ['/ibo-player/', '/iptv-lg-tv/', '/iptv-smart-tv/', '/flix-iptv/', '/set-iptv/', '/iptv-fire-tv-stick/'],
     keywords: ['iptv samsung', 'iptv samsung tv', 'iptv for samsung tv', 'iptv samsung smart tv', 'iptv samsung tizen', 'iptv tizen'],
   },
 
@@ -203,7 +203,7 @@ ${ol([
       ['Wo finde ich die MAC-Adresse für die IPTV-App?', 'Die App zeigt sie beim Start an. Sie kann von der MAC-Adresse in den Netzwerkeinstellungen abweichen.'],
       ['Brauche ich für IPTV auf dem LG TV eine Box?', 'In der Regel nicht. Nur bei älteren Modellen ohne passende App lohnt sich ein Streaming-Stick.'],
     ],
-    related: ['/iptv-samsung-tv/', '/iptv-smart-tv/', '/smart-iptv/', '/ss-iptv/', '/flix-iptv/', '/iptv-fire-tv-stick/'],
+    related: ['/ibo-player/', '/iptv-samsung-tv/', '/iptv-smart-tv/', '/smart-iptv/', '/ss-iptv/', '/iptv-fire-tv-stick/'],
     keywords: ['iptv lg', 'iptv lg tv', 'iptv lg smart', 'iptv lg webos', 'iptv for lg webos'],
   },
 
@@ -250,7 +250,7 @@ ${ol([
       ['Gibt es IPTV-Apps für Roku?', 'Im Roku-Store gibt es kaum Player für Xtream Codes oder M3U. Ein anderer Streaming-Stick ist die bessere Wahl.'],
       ['Wie finde ich heraus, welches System mein Fernseher hat?', 'In den Einstellungen unter „Info“ oder „Über dieses Gerät“. Auch die Bedienungsanleitung nennt das Betriebssystem.'],
     ],
-    related: ['/iptv-samsung-tv/', '/iptv-lg-tv/', '/iptv-android/', '/iptv-stick/', '/iptv-apps/', '/iptv-geraete/'],
+    related: ['/iptv-samsung-tv/', '/iptv-lg-tv/', '/iptv-android/', '/iptv-chromecast/', '/iptv-stick/', '/iptv-apps/'],
     keywords: ['iptv smart tv', 'ip tv smart tv', 'smart tv ip tv', 'iptv hisense', 'iptv hisense vidaa', 'iptv philips', 'iptv sony', 'iptv sony bravia', 'iptv panasonic', 'iptv toshiba', 'iptv roku', 'iptv roku tv', 'iptv on roku tv', 'iptv google tv'],
   },
 
@@ -278,7 +278,7 @@ ${ol([
         ...xtreamSteps,
       ]) },
       { id: 'chromecast', h: 'IPTV per Chromecast auf den Fernseher', html: `
-<p>Geräte wie Chromecast mit Google TV oder der Google TV Streamer haben ein vollwertiges Google TV – dort installieren Sie die App direkt, statt vom Handy zu streamen. Ältere Chromecast-Modelle ohne eigene Oberfläche empfangen nur Streams, die eine App per „Cast“ sendet; das unterstützen nicht alle IPTV-Apps und es ist meist weniger stabil.</p>` },
+<p>Geräte wie Chromecast mit Google TV oder der Google TV Streamer haben ein vollwertiges Google TV – dort installieren Sie die App direkt, statt vom Handy zu streamen. Ältere Chromecast-Modelle ohne eigene Oberfläche empfangen nur Streams, die eine App per „Cast“ sendet; das unterstützen nicht alle IPTV-Apps und es ist meist weniger stabil. Details unter ${L('/iptv-chromecast/', 'IPTV auf Chromecast und Google TV Streamer')}.</p>` },
       { id: 'boxen', h: 'Android-TV-Boxen', html: `
 <p>Wer mehr Leistung als ein Stick möchte, greift zu einer Android-TV-Box. Worauf es dabei ankommt, lesen Sie unter ${L('/iptv-box/', 'IPTV-Box kaufen')}. Für unterwegs: Rechnen Sie im Mobilfunknetz mit rund 2 bis 4 GB Datenvolumen pro Stunde in HD.</p>
 <p class="muted">${note}</p>` },
@@ -289,7 +289,7 @@ ${ol([
       ['Läuft TiviMate auf dem Android-Handy?', 'TiviMate ist für Fernsehgeräte gedacht. Auf dem Handy dient die Companion-App nur zur Verwaltung von Premium.'],
       ['Verbraucht IPTV viel mobiles Datenvolumen?', 'Ja, in HD etwa 2 bis 4 GB pro Stunde. Schauen Sie unterwegs möglichst im WLAN.'],
     ],
-    related: ['/tivimate/', '/iptv-smarters-pro/', '/iptv-box/', '/iptv-stick/', '/stbemu/', '/iptv-smart-tv/'],
+    related: ['/tivimate/', '/iptv-smarters-pro/', '/iptv-chromecast/', '/iptv-box/', '/ott-navigator/', '/iptv-smart-tv/'],
     keywords: ['iptv android', 'iptv tv box android', 'iptv chromecast', 'iptv smarters pro android tv', 'tivimate android tv'],
   },
 
@@ -327,7 +327,7 @@ ${ol([
       ['Kann ich IPTV vom iPhone auf den Fernseher bringen?', 'Ja, per AirPlay, sofern die App es unterstützt. Am stabilsten läuft die App direkt auf einem Apple TV.'],
       ['Sind die IPTV-Apps im App Store kostenlos?', 'Manche sind kostenlos, andere verlangen einen Kauf oder ein Abo beim App-Anbieter. Sender enthalten sie nicht.'],
     ],
-    related: ['/iptv-smarters-pro/', '/iptv-pc/', '/iptv-4k/', '/vlc-iptv/', '/iptv-apps/', '/iptv-geraete/'],
+    related: ['/iptv-smarters-pro/', '/iptvx/', '/gse-smart-iptv/', '/iptv-pc/', '/iptv-4k/', '/iptv-apps/'],
     keywords: ['iptv apple tv', 'iptv ipad', 'iptv iphone'],
   },
 
@@ -368,7 +368,7 @@ ${ol([
       ['Gibt es TiviMate für den PC?', 'Nein, TiviMate ist nur für Android-basierte TV-Geräte verfügbar.'],
       ['Kann ich IPTV auf dem MacBook schauen?', 'Ja, mit VLC, Kodi oder der Mac-Version von IPTV Smarters.'],
     ],
-    related: ['/vlc-iptv/', '/kodi-iptv/', '/iptv-smarters-pro/', '/m3u-playlist/', '/iptv-apple-tv/', '/iptv-apps/'],
+    related: ['/vlc-iptv/', '/kodi-iptv/', '/iptv-smarters-pro/', '/perfect-player/', '/m3u-playlist/', '/iptv-apps/'],
     keywords: ['iptv pc', 'iptv laptop', 'iptv macbook', 'iptv player win', 'iptv mac'],
   },
 

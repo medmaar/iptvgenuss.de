@@ -94,7 +94,7 @@ ${priceTable}
   <li><strong>Internet:</strong> Ihr bestehender Anschluss reicht, wenn er rund 10 Mbit/s pro HD-Stream schafft.</li>
 </ul>` },
       { id: 'ablauf', h: 'So läuft die Bestellung ab', html: ol([
-        `Wählen Sie bei den ${L('/#preise', 'Paketen')} Laufzeit und Geräteanzahl oder fordern Sie zuerst einen ${L('/#kontakt', 'kostenlosen Test')} an.`,
+        `Wählen Sie bei den ${L('/#preise', 'Paketen')} Laufzeit und Geräteanzahl oder fordern Sie zuerst einen ${L('/iptv-testen/', 'kostenlosen Test')} an.`,
         `Senden Sie uns Ihre Anfrage per E-Mail an ${site.email} – mit Paket und Gerät. Wir stimmen die Bestellung mit Ihnen ab.`,
         'Sie erhalten Ihre Zugangsdaten zusammen mit der passenden Anleitung.',
         `Installieren Sie die App, melden Sie sich an und schauen Sie los. Hilfe gibt es in den ${L('/iptv-geraete/', 'Geräte-Anleitungen')} und persönlich.`,
@@ -117,7 +117,7 @@ ${priceTable}
       ['Kann ich vor dem Kauf testen?', 'Ja. Fordern Sie einen <a href="/#kontakt">kostenlosen Test</a> an und probieren Sie die Einrichtung auf Ihrem eigenen Gerät aus.'],
       ['Auf wie vielen Geräten kann ich schauen?', `Bei den bezahlten Paketen wählen Sie zwischen 1 und ${maxDevices} gleichzeitig genutzten Geräten. Der kostenlose Test gilt für ein Gerät.`],
     ],
-    related: ['/#preise', '/#kontakt', '/iptv-anbieter/', '/iptv-apps/', '/iptv-geraete/', '/iptv-deutschland/'],
+    related: ['/#preise', '/iptv-testen/', '/iptv-anbieter/', '/iptv-apps/', '/iptv-geraete/', '/iptv-deutschland/'],
     keywords: ['iptv kaufen', 'ip tv kaufen', 'iptv kaufe', 'buy iptv', 'iptv buy', 'iptv abo', 'iptv kosten', 'ip tv kosten', 'iptv subscription', 'ip tv subscription', 'iptv subscribe', 'iptv sub', 'iptv account', 'iptv line', 'iptv lines', 'iptv linie', 'iptv 12 monate', 'iptv 12 months', 'iptv angebote', 'iptv deals', 'iptv sale', 'iptv promotions', 'iptv shop', 'iptv packages', 'iptv plans', 'iptv premium subscription', 'iptv m3u kaufen', 'iptv m3u 1 jahr', 'iptv cena', 'iptv one', 'my iptv', 'iptv service', 'premium ip tv', 'ip tv premium', 'iptv live', 'iptv stream', 'stream iptv', 'ip tv streaming', 'iptv tv', 'iptv ip', 'iptv'],
   },
 
@@ -161,7 +161,7 @@ ${priceTable}
       ['Woran erkenne ich ein unseriöses IPTV-Angebot?', 'Typische Warnzeichen sind fehlendes Impressum, „Lebenszeit-Zugänge“, versteckte automatische Verlängerungen und Zahlung nur per Gutscheinkarte oder Kryptowährung.'],
       ['Kann ich einen IPTV-Anbieter vor dem Kauf testen?', 'Bei seriösen Anbietern ja. Bei uns können Sie einen <a href="/#kontakt">kostenlosen Test</a> anfragen.'],
     ],
-    related: ['/iptv-kaufen/', '/iptv-deutschland/', '/#kontakt', '/was-ist-iptv/', '/iptv-apps/', '/#preise'],
+    related: ['/iptv-kaufen/', '/iptv-testen/', '/iptv-deutschland/', '/was-ist-iptv/', '/iptv-senderliste/', '/#preise'],
     keywords: ['iptv anbieter', 'ip tv anbieter', 'anbieter iptv', 'anbieteriptv', 'bester iptv anbieter', 'iptv anbieter vergleich', 'iptv-anbieter vergleich', 'iptv vergleich', 'iptv preisvergleich', 'iptv bestenliste', 'iptv stream anbieter', 'best iptv', 'best iptv provider', 'best iptv provider reddit', 'best iptv reddit', 'reddit best iptv', 'iptv reddit', 'iptv anbieter forum', 'iptv forum', 'iptvforum', 'iptv trustpilot', 'iptv best', 'ip tv best', 'beste iptv', 'bester iptv', 'bestes iptv', 'bes iptv', 'besser iptv', 'iptv provider', 'iptv providers', 'provider iptv', 'internet protocol tv providers', 'iptv site', 'iptv website', 'iptv com'],
   },
 
@@ -281,7 +281,7 @@ ${priceTable}
       { id: 'epg', h: 'Programmführer (EPG) fehlt', html: `
 <p>Der elektronische Programmführer wird oft erst einige Minuten nach dem ersten Login geladen. Aktualisieren Sie ihn in den App-Einstellungen manuell und prüfen Sie, ob Datum, Uhrzeit und Zeitzone des Geräts stimmen. Bei M3U-Apps muss die EPG-Adresse (XMLTV) separat eingetragen werden.</p>` },
       { id: 'checker', h: 'IPTV-Checker und Online-Tester: Vorsicht', html: `
-<p>Websites, die versprechen, Ihre IPTV-Zugangsdaten online zu „checken“, erhalten dabei Ihren vollständigen Zugang. Geben Sie Ihre Daten dort nicht ein. Ob Ihr Zugang funktioniert, prüfen Sie sicherer direkt in der App – oder Sie fragen uns.</p>` },
+<p>Websites, die versprechen, Ihre IPTV-Zugangsdaten online zu „checken“, erhalten dabei Ihren vollständigen Zugang. Geben Sie Ihre Daten dort nicht ein. Ob Ihr Zugang funktioniert, prüfen Sie sicherer direkt in der App – oder Sie fragen uns. Wie Sie erkennen, ob der Server erreichbar ist, zeigt ${L('/iptv-server/', 'IPTV-Server erklärt')}.</p>` },
       { id: 'support', h: 'Wann Sie uns schreiben sollten', html: `
 <p>Hat nichts geholfen, ${L('/#kontakt', 'schreiben Sie uns')} mit Gerät, App, Fehlermeldung und – falls möglich – einem Foto des Bildschirms. Gerätespezifische Hilfe finden Sie auch unter ${L('/iptv-fire-tv-stick/', 'Fire TV Stick')}, ${L('/iptv-samsung-tv/', 'Samsung TV')} und ${L('/iptv-smarters-pro/', 'IPTV Smarters Pro')}.</p>` },
     ],
@@ -292,7 +292,7 @@ ${priceTable}
       ['Hilft ein VPN gegen Ruckeln?', 'In der Regel nicht – ein VPN kann die Verbindung sogar verlangsamen. Schalten Sie es testweise aus.'],
       ['Wie erreiche ich den Kundenservice?', 'Über unser <a href="/#kontakt">Kontaktformular</a>. Nennen Sie Gerät, App und Fehlermeldung, dann können wir schneller helfen.'],
     ],
-    related: ['/iptv-geraete/', '/iptv-4k/', '/xtream-codes/', '/m3u-playlist/', '/iptv-fire-tv-stick/', '/#kontakt'],
+    related: ['/iptv-server/', '/iptv-geraete/', '/iptv-4k/', '/xtream-codes/', '/m3u-playlist/', '/#kontakt'],
     keywords: ['iptv checker', 'iptv checker online', 'iptv tester', 'iptv customer service', 'iptv box wifi', 'iptv server', 'iptv servers', 'iptv smarters customer service'],
   },
 
@@ -390,7 +390,7 @@ http://server.example:8080/live/benutzer/passwort/1.ts</code></pre>
       ['Kann ich Xtream-Zugangsdaten in eine M3U-Liste umwandeln?', 'Ja, aber das ist selten nötig: Kunden von IPTV Genuss erhalten beide Varianten per E-Mail.'],
       ['Ist XCIPTV dasselbe wie Xtream Codes?', 'Nein. XCIPTV ist eine App, Xtream Codes die Anmeldeart, die diese und viele andere Apps nutzen.'],
     ],
-    related: ['/m3u-playlist/', '/iptv-smarters-pro/', '/tivimate/', '/xciptv/', '/iptv-apps/', '/iptv-probleme/'],
+    related: ['/m3u-playlist/', '/iptv-server/', '/iptv-smarters-pro/', '/tivimate/', '/iptv-apps/', '/iptv-probleme/'],
     keywords: ['xtream iptv', 'xtream iptv m3u', 'iptvportal', 'iptv smart net', 'setting iptv'],
   },
 ];

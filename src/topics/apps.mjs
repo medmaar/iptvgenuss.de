@@ -46,9 +46,9 @@ export default [
   <li><strong>Portal-Zugang wie bei der MAG-Box:</strong> ${L('/stbemu/', 'STBEmu')} auf Android.</li>
 </ul>` },
       { id: 'weitere', h: 'Weitere IPTV-Apps', html: `
-<p>Neben den Apps oben gibt es viele weitere Player, die nach demselben Prinzip arbeiten – etwa <strong>IBO Player</strong> für Fernseher mit Aktivierung per MAC-Adresse, <strong>iMPlayer</strong> und <strong>OTT Navigator</strong> für Android-Geräte, <strong>GSE Smart IPTV</strong> und <strong>IPTVX</strong> vor allem für Apple-Geräte sowie <strong>MyIPTV Player</strong> für Windows. Entscheidend ist, dass die App <strong>Xtream Codes</strong> oder <strong>M3U</strong> unterstützt – dann funktioniert sie auch mit ${site.name}. Die Anmeldearten erklären wir unter ${L('/xtream-codes/', 'Xtream Codes')} und ${L('/m3u-playlist/', 'M3U-Playlist')}.</p>` },
+<p>Neben den Apps oben gibt es viele weitere Player, die nach demselben Prinzip arbeiten – etwa ${L('/ibo-player/', 'IBO Player')} für Fernseher mit Aktivierung per MAC-Adresse, ${L('/implayer/', 'iMPlayer')} und ${L('/ott-navigator/', 'OTT Navigator')} für Android-Geräte, ${L('/gse-smart-iptv/', 'GSE Smart IPTV')} und ${L('/iptvx/', 'IPTVX')} vor allem für Apple-Geräte sowie <strong>MyIPTV Player</strong> für Windows. Entscheidend ist, dass die App <strong>Xtream Codes</strong> oder <strong>M3U</strong> unterstützt – dann funktioniert sie auch mit ${site.name}. Die Anmeldearten erklären wir unter ${L('/xtream-codes/', 'Xtream Codes')} und ${L('/m3u-playlist/', 'M3U-Playlist')}.</p>` },
       { id: 'ibo-player', h: 'IBO Player Pro im Jahrespaket', html: `
-<p>Der <strong>IBO Player</strong> ist eine IPTV-App für Smart-TVs, Android und weitere Geräte, die per MAC-Adresse eingerichtet wird. Beim Jahrespaket von ${site.name} ist das IBO Player Abo (IBO Player Pro) kostenlos inklusive – Sie sparen sich damit die Aktivierungsgebühr des App-Anbieters. Alle Pakete finden Sie bei den ${L('/#preise', 'Preisen')}.</p>` },
+<p>Der ${L('/ibo-player/', 'IBO Player')} ist eine IPTV-App für Smart-TVs, Android und weitere Geräte, die per MAC-Adresse eingerichtet wird. Beim Jahrespaket von ${site.name} ist das IBO Player Abo (IBO Player Pro) kostenlos inklusive – Sie sparen sich damit die Aktivierungsgebühr des App-Anbieters. Alle Pakete finden Sie bei den ${L('/#preise', 'Preisen')}.</p>` },
       { id: 'sicherheit', h: 'Apps sicher installieren', html: `
 <p>Installieren Sie IPTV-Apps nach Möglichkeit aus dem offiziellen App-Store Ihres Geräts oder von der Website des Entwicklers. Vorsicht bei „Premium-Versionen“ von Download-Seiten Dritter: Sie können Schadsoftware enthalten. Beachten Sie außerdem: Keine seriöse App liefert von sich aus Sender mit – Inhalte kommen immer von Ihrem IPTV-Anbieter.</p>` },
     ],
@@ -59,7 +59,7 @@ export default [
       ['Kann ich mehrere IPTV-Apps parallel nutzen?', 'Ja, Sie können Ihre Zugangsdaten in mehreren Apps eintragen. Wie viele Geräte gleichzeitig schauen dürfen, steht bei Ihrem Paket.'],
       ['Welche App empfiehlt IPTV Genuss?', 'Das richtet sich nach Ihrem Gerät. Nennen Sie uns Ihr Gerät, dann empfehlen wir Ihnen eine passende App und schicken die Anleitung mit.'],
     ],
-    related: ['/iptv-geraete/', '/iptv-geraete/', '/xtream-codes/', '/m3u-playlist/', '/iptv-kaufen/', '/#kontakt'],
+    related: ['/iptv-geraete/', '/ibo-player/', '/xtream-codes/', '/m3u-playlist/', '/iptv-testen/', '/#kontakt'],
     keywords: ['iptvapp', 'app iptv', 'ip tv app', 'iptv app', 'beste iptv app', 'bester iptv player', 'best iptv player', 'best player iptv', 'beste iptv player android', 'iptv player android', 'application iptv android', 'bester iptv player für fire tv stick kostenlos deutsch', 'smart player tv', 'ip tv smart player', 'iptv streamplayer', 'iptvpro', 'pro iptv', 'implayer', 'iptv ibo', 'gseiptv', 'ott navigator premium', 'iptvx', 'iptvx android', 'iptvx apple tv', 'perfect iptv', 'duplecast', 'duplecast iptv', 'iptv downloader', 'iptv web', 'iptv browser', 'iptv web browser', 'iptv programa', 'iptv dvr', 'iptv vod', 'iptv series'],
   },
 
@@ -115,7 +115,7 @@ export default [
       ['Kann ich IPTV Smarters Pro unter Windows nutzen?', 'Ja. Der Entwickler bietet Versionen für Windows und Mac auf seiner Website an.'],
       ['Wo bekomme ich ein Abo für IPTV Smarters Pro?', 'Die App selbst ist nur ein Player. Die Zugangsdaten bekommen Sie bei einem IPTV-Anbieter – zum Beispiel bei uns unter <a href="/iptv-kaufen/">IPTV kaufen</a>.'],
     ],
-    related: ['/iptv-apps/', '/tivimate/', '/xciptv/', '/iptv-fire-tv-stick/', '/iptv-apple-tv/', '/iptv-pc/'],
+    related: ['/iptv-apps/', '/tivimate/', '/xciptv/', '/iptv-fire-tv-stick/', '/iptv-downloader/', '/iptv-apple-tv/', '/iptv-pc/'],
     keywords: ['iptv smarters pro', 'ip tv smarters pro', 'iptv smarters', 'smarters iptv', 'smarters iptv pro', 'smarters pro', 'smarterspro', 'smarters pro iptv', 'ip tv smarters', 'ip tv smarter pro', 'ip smarter pro', 'iptv smarter pro', 'ip tv smart pro', 'iptv smart pro', 'smarters tv', 'smarters tv pro', 'tv smarters', 'tv smarters pro', 'iptv smarters lite', 'smarters iptv lite', 'smarters lite', 'iptv smarters pro android', 'iptv smarters pro fire tv stick', 'iptv smarters pro premium', 'iptv smarters pro samsung tv', 'iptv smarters downloader', 'iptv smarters pro windows download', 'iptv smarters android', 'iptv smarters apple tv', 'iptv smarters chromecast', 'iptv smarters com', 'iptv smarters fire stick', 'iptv smarters firestick', 'iptv smarters free', 'iptv smarters iphone', 'iptv smarters lg', 'iptv smarters lg tv', 'iptv smarters mac', 'iptv smarters on firestick', 'iptv smarters online', 'iptv smarters premium', 'iptv smarters pro android tv', 'iptv smarters pro apple tv', 'iptv smarters pro fire stick', 'iptv smarters pro firestick', 'iptv smarters pro google play', 'iptv smarters pro iphone', 'iptv smarters pro lg', 'iptv smarters pro live', 'iptv smarters pro mac', 'iptv smarters pro macbook', 'iptv smarters pro pc', 'iptv smarters pro price', 'iptv smarters pro roku', 'iptv smarters pro subscription', 'iptv smarters reddit', 'iptv smarters samsung', 'iptv smarters samsung tv', 'iptv smarters subscription', 'iptv smarters web', 'smarters pro firestick', 'smarters pro pc'],
   },
 
@@ -155,7 +155,7 @@ export default [
       ['Wie viele Geräte kann ich mit TiviMate Premium nutzen?', 'Ein Premium-Konto lässt sich auf mehreren Geräten nutzen; die aktuelle Höchstzahl nennt der Entwickler in der Companion-App. Wie viele Geräte gleichzeitig IPTV schauen dürfen, regelt Ihr IPTV-Paket.'],
       ['Kann ich mit TiviMate aufnehmen?', 'Ja, mit TiviMate Premium – auf den internen Speicher oder einen angeschlossenen USB-Datenträger.'],
     ],
-    related: ['/iptv-apps/', '/iptv-fire-tv-stick/', '/iptv-android/', '/iptv-box/', '/iptv-smarters-pro/', '/xtream-codes/'],
+    related: ['/iptv-apps/', '/iptv-fire-tv-stick/', '/iptv-android/', '/iptv-chromecast/', '/iptv-smarters-pro/', '/iptv-vod/'],
     keywords: ['tivimate', 'tivi mate', 'tivimate premium', 'tivi mate premium', 'tivimate account', 'tivimate apple tv', 'tivimate com', 'tivimate fire tv', 'tivimate fire tv stick', 'tivimate iptv', 'tivimate kosten', 'tivimate pro', 'tivimate samsung tv', 'firestick tivimate', 'tivimate android tv', 'tivimate chromecast', 'tivimate companion iphone', 'tivimate firestick', 'tivimate for firestick', 'tivimate for pc', 'tivimate m3u', 'tivimate mac', 'tivimate on firestick', 'tivimate pc', 'tivimate premium account', 'tivimate premium cost', 'tivimate premium price', 'tivimate premium subscription', 'tivimate price', 'tivimate reddit', 'tivimate subscription', 'tivimate website'],
   },
 
@@ -421,7 +421,7 @@ export default [
       { id: 'sicherheit', h: 'Nur offizielle Add-ons verwenden', html: `
 <p>Kodi selbst ist legal und enthält keine Inhalte. Vorsicht bei Add-ons aus inoffiziellen Quellen, die „kostenlose Sender“ versprechen: Sie verbreiten meist Inhalte ohne Rechte und können Schadsoftware enthalten. Der PVR IPTV Simple Client stammt aus dem offiziellen Repository.</p>` },
       { id: 'jellyfin-plex', h: 'IPTV in Jellyfin und Plex', html: `
-<p><strong>Jellyfin</strong> unterstützt Live-TV mit M3U-Tuner und XMLTV-Programmführer direkt in den Server-Einstellungen. <strong>Plex</strong> setzt für Live-TV einen unterstützten TV-Tuner voraus; M3U-Listen lassen sich dort nur über Zusatzsoftware einbinden. Für die meisten Nutzer ist Kodi oder ein reiner ${L('/iptv-apps/', 'IPTV-Player')} der einfachere Weg.</p>` },
+<p><strong>Jellyfin</strong> unterstützt Live-TV mit M3U-Tuner und XMLTV-Programmführer direkt in den Server-Einstellungen. <strong>Plex</strong> setzt für Live-TV einen unterstützten TV-Tuner voraus; M3U-Listen lassen sich dort nur über Zusatzsoftware einbinden. Die Schritte zeigt ${L('/plex-jellyfin-iptv/', 'IPTV mit Plex und Jellyfin')}. Für die meisten Nutzer ist Kodi oder ein reiner ${L('/iptv-apps/', 'IPTV-Player')} der einfachere Weg.</p>` },
       { id: 'fehler', h: 'Kodi zeigt keine Sender?', html: `
 <ul>
   <li>Prüfen Sie, ob der M3U-Link vollständig ist – Details unter ${L('/m3u-playlist/', 'M3U-Playlist')}.</li>
@@ -436,7 +436,7 @@ export default [
       ['Funktioniert Kodi IPTV auf dem Fire TV Stick?', 'Ja, auf Fire-TV-Geräten mit Fire OS. Geräte mit Vega OS unterstützen keine Android-Apps.'],
       ['Kann ich IPTV in Plex schauen?', 'Plex benötigt für Live-TV einen unterstützten TV-Tuner. Jellyfin unterstützt M3U-Listen dagegen direkt.'],
     ],
-    related: ['/vlc-iptv/', '/m3u-playlist/', '/iptv-pc/', '/iptv-fire-tv-stick/', '/iptv-apps/', '/iptv-box/'],
+    related: ['/vlc-iptv/', '/m3u-playlist/', '/plex-jellyfin-iptv/', '/iptv-pc/', '/iptv-fire-tv-stick/', '/iptv-apps/'],
     keywords: ['kodi iptv', 'kodi ip tv', 'kodi live tv', 'kodinerds iptv', 'kodi xbmc iptv', 'cody iptv', 'plex iptv', 'jellyfin iptv'],
   },
 

@@ -3,6 +3,7 @@ import { site, plans, included, nav, euro, waHref, devicePrices, customerReviewG
 import { esc } from '../layout.mjs';
 import { icon as lineIcon } from '../icons.mjs';
 import { cardsFor } from '../topics/index.mjs';
+import { offerSchema } from '../topics/guides-more.mjs';
 
 const icons = {
   tv: '<rect x="3" y="6" width="42" height="28" rx="3"/><path d="M16 42h16M24 34v8M17 1l7 5 7-5"/>',
@@ -44,7 +45,7 @@ export default () => {
     __PLANS__: plans.map(p => `<article data-plan-id="${esc(p.id)}" ${p.trial ? 'data-trial-plan' : 'data-paid-plan'} class="plan${p.featured ? ' featured' : ''}${p.trial ? ' trial-plan' : ''}">${p.badge ? `<p class="plan-badge">${esc(p.badge)}</p>` : ''}<h3>${esc(p.label)}</h3><p class="plan-device"><span ${p.trial ? '' : 'data-device-label'}>${p.devices} Gerät ${p.trial ? 'zum Testen' : 'gleichzeitig'}</span></p><p class="plan-price"><b data-plan-price>${euro(p.price)}</b><span>${esc(p.priceNote)}</span></p><ul>${included.map(i => `<li>${esc(i)}</li>`).join('')}${p.bonus ? `<li class="plan-bonus">${esc(p.bonus)}</li>` : ''}</ul><a class="button ${p.featured ? 'button-yellow' : 'button-teal'}" href="#kontakt" ${p.trial ? `data-enquiry="${esc(p.enquiry)}"` : `data-plan="${esc(p.label)}" data-price="${euro(p.price)}" data-count="1"${p.bonusName ? ` data-bonus="${esc(p.bonusName)}"` : ''}`}>${esc(p.cta)} <span aria-hidden="true">→</span></a><p class="plan-renewal">${esc(p.footer)}</p></article>`).join(''),
     __PRICE_DATA__: JSON.stringify(devicePrices),
     __DEVICE_SWITCH__: Object.keys(devicePrices).map((n, i) => `<button type="button" data-devices="${n}" aria-pressed="${i === 0}">${n} ${i === 0 ? 'Gerät' : 'Geräte'}</button>`).join(''),
-    __GUIDES__: `<section class="section guides-home" id="ratgeber" aria-labelledby="ratgeber-title"><div class="container"><div class="section-heading"><p class="eyebrow">Ratgeber &amp; Anleitungen</p><h2 id="ratgeber-title">Schnell eingerichtet. Gut erklärt.</h2></div><ul class="topic-grid">${cardsFor(['/iptv-kaufen/', '/iptv-apps/', '/iptv-geraete/', '/iptv-smarters-pro/', '/tivimate/', '/iptv-fire-tv-stick/', '/iptv-samsung-tv/', '/m3u-playlist/']).map((t) => `<li><a class="topic" href="${t.path}"><span class="device-ico">${lineIcon[t.icon] || lineIcon.info}</span><span><span class="topic-name">${t.name}</span><span class="topic-text">${t.teaser}</span></span></a></li>`).join('')}</ul><p class="center-link"><a href="/ratgeber/">Alle Ratgeber ansehen →</a></p></div></section>`,
+    __GUIDES__: `<section class="section guides-home" id="ratgeber" aria-labelledby="ratgeber-title"><div class="container"><div class="section-heading"><p class="eyebrow">Ratgeber &amp; Anleitungen</p><h2 id="ratgeber-title">Schnell eingerichtet. Gut erklärt.</h2></div><ul class="topic-grid">${cardsFor(['/iptv-kaufen/', '/iptv-testen/', '/iptv-apps/', '/iptv-geraete/', '/iptv-smarters-pro/', '/ibo-player/', '/iptv-fire-tv-stick/', '/m3u-playlist/']).map((t) => `<li><a class="topic" href="${t.path}"><span class="device-ico">${lineIcon[t.icon] || lineIcon.info}</span><span><span class="topic-name">${t.name}</span><span class="topic-text">${t.teaser}</span></span></a></li>`).join('')}</ul><p class="center-link"><a href="/ratgeber/">Alle Ratgeber ansehen →</a></p></div></section>`,
     __REVIEWS_SECTION__: reviewSection,
     __REVIEWS_LINK__: reviewRows ? '<a href="#bewertungen">Kundenstimmen</a>' : '',
     __STEPS__: content.steps.map(([title, text], i) => `<li><span class="step-number">0${i + 1}</span><h3>${esc(title)}</h3><p>${esc(text)}</p></li>`).join(''),
@@ -57,7 +58,13 @@ export default () => {
     __FAQ__: content.faqs.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join(''),
     __CONTACT__: contacts || '<p class="contact-pending">Unsere Kontaktmöglichkeiten für Testanfragen und Bestellungen folgen in Kürze.</p>',
     __YEAR__: String(new Date().getFullYear()),
-    __SCHEMA__: JSON.stringify({'@context':'https://schema.org','@type':'WebSite',name:site.name,url:site.url,inLanguage:site.lang}).replaceAll('<', '\\u003c'),
+    __SCHEMA__: JSON.stringify({ '@context': 'https://schema.org', '@graph': [
+      { '@type': 'Organization', '@id': `${site.url}/#organization`, name: site.company.name || site.name, url: `${site.url}/`, logo: { '@type': 'ImageObject', url: `${site.url}/brand/icon-512.png`, width: 512, height: 512 }, ...(site.email && { email: site.email, contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', email: site.email, availableLanguage: ['de'], areaServed: ['DE', 'AT', 'CH'] } }) },
+      { '@type': 'WebSite', '@id': `${site.url}/#website`, name: site.name, url: `${site.url}/`, inLanguage: site.lang, publisher: { '@id': `${site.url}/#organization` } },
+      { '@type': 'WebPage', '@id': `${site.url}/#webpage`, url: `${site.url}/`, name: `${site.name} – Live-TV, Filme & Serien`, inLanguage: site.lang, isPartOf: { '@id': `${site.url}/#website` }, about: { '@id': `${site.url}/#iptv-abo` } },
+      offerSchema,
+      { '@type': 'FAQPage', '@id': `${site.url}/#faq`, mainEntity: content.faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+    ] }).replaceAll('<', '\\u003c'),
   };
   return {
     path: '/',
