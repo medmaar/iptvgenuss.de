@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { site, plans, included, nav, euro, waHref, devicePrices, customerReviewGroups, homeContent as content } from '../site.mjs';
+import { site, plans, included, nav, euro, waHref, devicePrices, customerReviewGroups, offer, homeContent as content } from '../site.mjs';
 import { esc } from '../layout.mjs';
 import { icon as lineIcon } from '../icons.mjs';
 import { cardsFor } from '../topics/index.mjs';
@@ -18,6 +18,30 @@ const icons = {
 const icon = name => `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name]}</svg>`;
 const template = readFileSync(new URL('./home.html', import.meta.url), 'utf8');
 
+const L = (href, label) => `<a href="${href}">${label}</a>`;
+
+// Supporting copy for the homepage: answers the main questions in plain text
+// and links every cluster (Ratgeber, apps, devices, purchase, help).
+const seoBlock = () => {
+  const paid = plans.filter((p) => !p.trial && p.price != null);
+  const from = paid.length ? euro(Math.min(...paid.map((p) => p.price))) : null;
+  const maxDevices = Math.max(...Object.keys(devicePrices).map(Number));
+  const bonus = plans.find((p) => p.bonus);
+  return `<section class="section home-seo" id="iptv-genuss" aria-labelledby="iptv-genuss-title"><div class="article">
+<p class="eyebrow">IPTV Genuss im Überblick</p>
+<h2 id="iptv-genuss-title">IPTV für Deutschland: Fernsehen über das Internet</h2>
+<p><strong>IPTV</strong> steht für <a href="https://de.wikipedia.org/wiki/Internet_Protocol_Television" rel="noopener" target="_blank">Internet Protocol Television</a> – Fernsehen, das über Ihre Internetleitung kommt statt über Satellit oder Kabel. Mit ${esc(site.name)} schauen Sie Live-TV, Filme und Serien in einer App auf dem Gerät, das Sie bereits besitzen. Wie das technisch funktioniert, erklärt unser Ratgeber ${L('/was-ist-iptv/', 'Was ist IPTV?')}; was speziell in Deutschland gilt, lesen Sie unter ${L('/iptv-deutschland/', 'IPTV in Deutschland')}.</p>
+<h3>So funktioniert IPTV Genuss</h3>
+<p>Sie wählen einen kostenlosen Test oder ein Paket, erhalten Ihre Zugangsdaten per E-Mail und tragen sie in eine IPTV-App ein – per ${L('/xtream-codes/', 'Xtream Codes')} oder ${L('/m3u-playlist/', 'M3U-Playlist')}. Welche App zu Ihrem Gerät passt, zeigt der ${L('/iptv-apps/', 'IPTV-App-Vergleich')}: von ${L('/iptv-smarters-pro/', 'IPTV Smarters Pro')} und ${L('/tivimate/', 'TiviMate')} bis zum ${L('/ibo-player/', 'IBO Player')}${bonus ? `, dessen Pro-Version im ${bonus.label === '1 Jahr' ? 'Jahrespaket' : `Paket „${esc(bonus.label)}“`} inklusive ist` : ''}.</p>
+<h3>Auf welchen Geräten läuft IPTV?</h3>
+<p>Auf fast allen Bildschirmen im Haushalt: ${L('/iptv-smart-tv/', 'Smart-TVs')} von ${L('/iptv-samsung-tv/', 'Samsung')} und ${L('/iptv-lg-tv/', 'LG')}, dem ${L('/iptv-fire-tv-stick/', 'Fire TV Stick')}, ${L('/iptv-android/', 'Android TV und Google TV')}, ${L('/iptv-apple-tv/', 'Apple TV, iPhone und iPad')}, dem ${L('/iptv-pc/', 'PC und Mac')} sowie auf ${L('/iptv-box/', 'IPTV-Boxen')} wie der ${L('/mag-box/', 'MAG-Box')}. Für HD empfehlen wir rund 10 Mbit/s, für ${L('/iptv-4k/', '4K')} rund 25 Mbit/s pro gleichzeitig genutztem Gerät. Alle Geräte im Überblick finden Sie unter ${L('/iptv-geraete/', 'IPTV-Geräte')}.</p>
+<h3>Was kostet IPTV bei IPTV Genuss?</h3>
+<p>${from ? `Die Pakete beginnen bei ${from} für einen Monat. ` : ''}Sie zahlen einmalig für die gewählte Laufzeit, es gibt keine automatische Verlängerung, und Sie entscheiden, ob Sie auf einem oder bis zu ${maxDevices} Geräten gleichzeitig schauen. Alle Pakete enthalten dieselben Leistungen. Bevor Sie sich entscheiden, können Sie ${L('/iptv-testen/', 'IPTV kostenlos testen')}. Worauf Sie beim ${L('/iptv-kaufen/', 'IPTV-Kauf')} und bei der Wahl eines ${L('/iptv-anbieter/', 'IPTV-Anbieters')} achten sollten, erklären unsere Ratgeber.</p>
+<h3>Hilfe, wenn etwas hakt</h3>
+<p>Ruckelt das Bild oder lädt eine App nicht, helfen die Schritt-für-Schritt-Lösungen unter ${L('/iptv-probleme/', 'IPTV-Probleme beheben')}. Und wenn Sie lieber persönlich fragen: Unser deutschsprachiger Support hilft Ihnen bei der Auswahl der App und der Einrichtung${site.email ? ` – schreiben Sie uns an <a href="mailto:${esc(site.email)}">${esc(site.email)}</a>` : ''}.</p>
+</div></section>`;
+};
+
 export default () => {
   const contacts = [
     ...(site.whatsapp ? [`<a class="button button-yellow" href="${esc(waHref('Guten Tag, ich interessiere mich für IPTV Genuss.'))}" target="_blank" rel="noopener">Per WhatsApp anfragen ↗</a>`] : []),
@@ -31,10 +55,16 @@ export default () => {
       <div class="review-platform-controls" data-review-controls hidden><div class="review-dots" data-review-dots role="group" aria-label="Bewertung auswählen"></div></div>
     </section>`).join('');
   const reviewSection = reviewRows ? `<section class="section platform-reviews" id="bewertungen" aria-labelledby="bewertungen-title"><div class="container"><div class="section-heading"><p class="eyebrow">Kundenstimmen</p><h2 id="bewertungen-title">Gute Unterhaltung.<br>Bleibt im Gespräch.</h2></div>${reviewRows}</div></section>` : '';
+  const paid = plans.filter((p) => !p.trial && p.price != null);
+  const from = paid.length ? euro(Math.min(...paid.map((p) => p.price))) : null;
+  const title = `${site.name} – IPTV mit Live-TV, Filmen & Serien`;
+  const description = `IPTV mit Genuss: Live-TV, Filme und Serien auf Smart-TV, Fire TV, Handy und PC.${from ? ` Ab ${from}, einmalig, ohne automatische Verlängerung.` : ''} Jetzt kostenlos testen.`;
   const values = {
-    __TITLE__: esc(`${site.name} – Live-TV, Filme & Serien`),
-    __DESCRIPTION__: esc('Fernsehen mit Genuss: Live-TV, Filme und Serien auf Smart-TV, Smartphone und Computer. Entdecken Sie unsere Pakete, Geräte und Hilfe zur Einrichtung.'),
-    __ROBOTS__: site.live ? 'index, follow' : 'noindex, nofollow',
+    __TITLE__: esc(title),
+    __DESCRIPTION__: esc(description),
+    __ROBOTS__: site.live ? 'index, follow, max-image-preview:large, max-snippet:-1' : 'noindex, nofollow',
+    __HERO_KICKER__: esc(content.heroKicker || 'IPTV für Deutschland'),
+    __SEO_BLOCK__: seoBlock(),
     __NAV__: nav.map(([href, text]) => `<a href="${href}">${esc(text)}</a>`).join(''),
     __HEADING__: esc(content.title),
     __LEAD__: esc(content.lead),
@@ -61,15 +91,17 @@ export default () => {
     __SCHEMA__: JSON.stringify({ '@context': 'https://schema.org', '@graph': [
       { '@type': 'Organization', '@id': `${site.url}/#organization`, name: site.company.name || site.name, url: `${site.url}/`, logo: { '@type': 'ImageObject', url: `${site.url}/brand/icon-512.png`, width: 512, height: 512 }, ...(site.email && { email: site.email, contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', email: site.email, availableLanguage: ['de'], areaServed: ['DE', 'AT', 'CH'] } }) },
       { '@type': 'WebSite', '@id': `${site.url}/#website`, name: site.name, url: `${site.url}/`, inLanguage: site.lang, publisher: { '@id': `${site.url}/#organization` } },
-      { '@type': 'WebPage', '@id': `${site.url}/#webpage`, url: `${site.url}/`, name: `${site.name} – Live-TV, Filme & Serien`, inLanguage: site.lang, isPartOf: { '@id': `${site.url}/#website` }, about: { '@id': `${site.url}/#iptv-abo` } },
+      { '@type': 'WebPage', '@id': `${site.url}/#webpage`, url: `${site.url}/`, name: title, description, inLanguage: site.lang, isPartOf: { '@id': `${site.url}/#website` }, about: { '@id': `${site.url}/#iptv-abo` }, primaryImageOfPage: { '@id': `${site.url}/#ogimage` } },
+      { '@type': 'ImageObject', '@id': `${site.url}/#ogimage`, url: `${site.url}${site.ogImage}`, width: 1200, height: 630, caption: `${site.name} – Fernsehen mit Genuss` },
+      { '@type': 'Service', '@id': `${site.url}/#service`, name: `${site.name} IPTV`, serviceType: 'IPTV – Fernsehen über das Internet', description: offer.summary, provider: { '@id': `${site.url}/#organization` }, areaServed: [{ '@type': 'Country', name: 'Deutschland' }, { '@type': 'Country', name: 'Österreich' }, { '@type': 'Country', name: 'Schweiz' }], availableLanguage: 'de', ...(site.email && { availableChannel: { '@type': 'ServiceChannel', name: 'E-Mail-Support', serviceUrl: `${site.url}/#kontakt` } }), offers: { '@id': `${site.url}/#iptv-abo` } },
       offerSchema,
       { '@type': 'FAQPage', '@id': `${site.url}/#faq`, mainEntity: content.faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
     ] }).replaceAll('<', '\\u003c'),
   };
   return {
     path: '/',
-    title: `${site.name} – Live-TV, Filme & Serien`,
-    description: 'Fernsehen mit Genuss: Live-TV, Filme und Serien auf Smart-TV, Smartphone und Computer. Entdecken Sie unsere Pakete, Geräte und Hilfe zur Einrichtung.',
+    title,
+    description,
     document: template.replace(/__[A-Z_]+__/g, token => values[token] ?? token),
   };
 };

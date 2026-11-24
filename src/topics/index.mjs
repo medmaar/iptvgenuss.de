@@ -7,25 +7,56 @@ import guidesMore from './guides-more.mjs';
 import appsMore from './apps-more.mjs';
 import devicesMore from './devices-more.mjs';
 import extend from './extend.mjs';
+import deepen from './deepen.mjs';
 
-// Merge the extra sections, FAQs and keywords from extend.mjs into a page.
+// Merge extra sections, FAQs, keywords, sources and schema from the extension
+// maps (extend.mjs, deepen.mjs) into a page. `sections` are inserted before the
+// section named in `before` (or appended), everything else is appended.
+const extensions = [extend, deepen];
 const withExtras = (t) => {
-  const x = extend[t.path];
-  if (!x) return t;
-  const sections = [...t.sections];
-  for (const s of x.sections || []) {
-    const i = s.before ? sections.findIndex((o) => o.id === s.before) : -1;
-    sections.splice(i < 0 ? sections.length : i, 0, s);
+  let page = t;
+  for (const ext of extensions) {
+    const x = ext[t.path];
+    if (!x) continue;
+    const sections = [...page.sections];
+    for (const s of x.sections || []) {
+      const i = s.before ? sections.findIndex((o) => o.id === s.before) : -1;
+      sections.splice(i < 0 ? sections.length : i, 0, s);
+    }
+    const drop = new Set(x.keywords?.remove || []);
+    const keywords = [...(page.keywords || []).filter((k) => !drop.has(k)), ...(x.keywords?.add || [])];
+    page = {
+      ...page,
+      sections,
+      faq: [...page.faq, ...(x.faq || [])],
+      keywords,
+      schema: [...(page.schema || []), ...(x.schema || [])],
+      sources: [...(page.sources || []), ...(x.sources || [])],
+      related: [...page.related, ...(x.related || [])],
+      ...(x.app && { app: x.app }),
+    };
   }
-  const drop = new Set(x.keywords?.remove || []);
-  const keywords = [...(t.keywords || []).filter((k) => !drop.has(k)), ...(x.keywords?.add || [])];
-  return { ...t, sections, faq: [...t.faq, ...(x.faq || [])], keywords, schema: [...(t.schema || []), ...(x.schema || [])] };
+  return page;
 };
 
 export const topics = [...guides, ...guidesMore, ...apps, ...appsMore, ...devices, ...devicesMore].map(withExtras);
 
-for (const path of Object.keys(extend)) {
-  if (!topics.some((t) => t.path === path)) throw new Error(`extend.mjs: unknown page ${path}`);
+for (const ext of extensions) {
+  for (const path of Object.keys(ext)) {
+    if (!topics.some((t) => t.path === path)) throw new Error(`Extension for unknown page ${path}`);
+  }
+}
+
+// Every FAQ question and every section id may appear only once per page.
+for (const t of topics) {
+  const seen = new Set();
+  for (const [q] of t.faq) {
+    const k = q.toLowerCase().replace(/[^a-z0-9äöüß]+/g, ' ').trim();
+    if (seen.has(k)) throw new Error(`${t.path}: duplicate FAQ question "${q}"`);
+    seen.add(k);
+  }
+  const ids = t.sections.map((x) => x.id);
+  if (new Set(ids).size !== ids.length) throw new Error(`${t.path}: duplicate section id`);
 }
 
 // Hubs: breadcrumb parent and the page that lists all children.

@@ -33,6 +33,8 @@ const warnings = [];
 const errors = [];
 
 const seen = new Set();
+const titles = new Map();
+const descriptions = new Map();
 const html = new Map();
 for (const p of pages) {
   if (seen.has(p.path)) errors.push(`Duplicate page path ${p.path}`);
@@ -40,8 +42,15 @@ for (const p of pages) {
   const doc = page(p).replaceAll('__V__', version);
   if ((doc.match(/<h1[\s>]/g) || []).length !== 1) errors.push(`${p.path}: needs exactly one <h1>`);
   if (!p.noindex) {
-    if (p.title.length > 65) warnings.push(`${p.path}: title is ${p.title.length} chars (aim for ≤ 65)`);
-    if (p.description.length < 110 || p.description.length > 160) warnings.push(`${p.path}: description is ${p.description.length} chars (aim for 110–160)`);
+    if (p.title.length > 60) warnings.push(`${p.path}: title is ${p.title.length} chars (aim for ≤ 60)`);
+    if (p.description.length < 120 || p.description.length > 160) warnings.push(`${p.path}: description is ${p.description.length} chars (aim for 120–160)`);
+    if (titles.has(p.title)) errors.push(`${p.path}: same <title> as ${titles.get(p.title)}`);
+    if (descriptions.has(p.description)) errors.push(`${p.path}: same meta description as ${descriptions.get(p.description)}`);
+    titles.set(p.title, p.path);
+    descriptions.set(p.description, p.path);
+  }
+  for (const tag of ['rel="canonical"', 'og:image"', 'twitter:card', 'hreflang="x-default"']) {
+    if (!doc.includes(tag)) errors.push(`${p.path}: missing ${tag}`);
   }
   for (const [, json] of doc.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) JSON.parse(json);
   html.set(p.path, doc);
@@ -61,9 +70,11 @@ for (const [path, doc] of html) {
 }
 
 const indexable = pages.filter((p) => !p.noindex);
+// Date of the last real content change (update when pages are revised).
+const lastmod = '2026-11-24';
 await writeFile(join(out, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${indexable.map((p) => `  <url><loc>${site.url}${p.path}</loc></url>`).join('\n')}
+${indexable.map((p) => `  <url><loc>${site.url}${p.path}</loc><lastmod>${p.lastmod || lastmod}</lastmod></url>`).join('\n')}
 </urlset>
 `);
 await writeFile(join(out, 'robots.txt'), site.live

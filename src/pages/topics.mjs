@@ -1,13 +1,26 @@
 // Topic pages (one per keyword cluster), the Ratgeber hub and their shared
 // shell. They use the homepage design system (public/css/home.css) and link
 // back to the homepage sections for prices, trial and contact.
-import { site, nav } from '../site.mjs';
+import { site, nav, plans, devicePrices, euro } from '../site.mjs';
 import { icon } from '../icons.mjs';
 import { esc } from '../layout.mjs';
 import { topics, hubs, cardsFor, childrenOf } from '../topics/index.mjs';
 import { stand } from '../topics/util.mjs';
 
 const reviewed = '2026-11-24';
+const published = '2026-11-24';
+const ogAlt = `${site.name} – Fernsehen mit Genuss`;
+const trustItems = () => {
+  const paid = plans.filter((p) => !p.trial && p.price != null);
+  const from = paid.length ? Math.min(...paid.map((p) => p.price)) : null;
+  return [
+    site.trial && 'Kostenloser Test vor dem Kauf',
+    from != null && `Pakete ab ${euro(from)}, einmal bezahlt`,
+    'Keine automatische Verlängerung',
+    `1 bis ${Math.max(...Object.keys(devicePrices).map(Number))} Geräte gleichzeitig`,
+    'Deutscher Support, persönlich per E-Mail',
+  ].filter(Boolean);
+};
 const text = (html) => html.replace(/<[^>]+>/g, '');
 const home = (href) => (href.startsWith('#') ? `/${href}` : href);
 
@@ -29,30 +42,28 @@ const organization = {
   }),
 };
 
-// Third-party apps get a SoftwareApplication node (no ratings or prices: those are the app makers').
-const appSchema = (t) => ({
-  '@type': 'SoftwareApplication',
-  name: t.app.name,
-  applicationCategory: 'MultimediaApplication',
-  operatingSystem: t.app.os,
-  url: `${site.url}${t.path}`,
-});
+// Third-party apps are described as the Article's subject (SoftwareApplication)
+// without ratings or prices: those are the app makers', not ours.
+const aboutFor = (t) => (t.app
+  ? { '@type': 'SoftwareApplication', name: t.app.name, applicationCategory: 'MultimediaApplication', operatingSystem: t.app.os }
+  : { '@type': 'Thing', name: text(t.name) });
 
 const faqSchema = (list) => ({
   '@type': 'FAQPage',
   mainEntity: list.map(([q, a]) => ({ '@type': 'Question', name: text(q), acceptedAnswer: { '@type': 'Answer', text: text(a) } })),
 });
 
-const cta = `<section class="section contact-section" aria-labelledby="cta-title"><div class="container"><p class="eyebrow">Lust auf mehr?</p><h2 id="cta-title">Erst testen. Dann genießen.</h2><p>Probieren Sie ${site.name} kostenlos auf Ihrem Gerät aus oder wählen Sie Ihr Paket.<br>Wir helfen Ihnen bei der Auswahl und bei der Einrichtung.</p><div class="button-row contact-actions"><a class="button button-yellow" href="/#kontakt">Kostenlos testen <span aria-hidden="true">→</span></a><a class="button button-outline" href="/#preise">Pakete ansehen</a></div></div></section>`;
+const cta = () => `<section class="section contact-section" aria-labelledby="cta-title"><div class="container"><p class="eyebrow">Lust auf mehr?</p><h2 id="cta-title">Erst testen. Dann genießen.</h2><p>Probieren Sie ${site.name} kostenlos auf Ihrem Gerät aus oder wählen Sie Ihr Paket.<br>Wir helfen Ihnen bei der Auswahl und bei der Einrichtung.</p><ul class="trust-list">${trustItems().map((i) => `<li>${esc(i)}</li>`).join('')}</ul><div class="button-row contact-actions"><a class="button button-yellow" href="/#kontakt">Kostenlos testen <span aria-hidden="true">→</span></a><a class="button button-outline" href="/#preise">Pakete ansehen</a></div>${site.email ? `<p class="cta-contact">Fragen vorab? Schreiben Sie uns an <a href="mailto:${esc(site.email)}">${esc(site.email)}</a>.</p>` : ''}</div></section>`;
 
 // Full HTML document in the homepage look: same header, footer and stylesheet.
-function shell({ path, title, description, crumb, parents = [], schema = [], body }) {
+function shell({ path, title, description, crumb, parents = [], schema = [], body, pageType = 'WebPage', ogType = 'article' }) {
   const url = site.url + path;
   const trail = [['Start', '/'], ...parents, [crumb, path]];
   const graph = [
     organization,
     { '@type': 'WebSite', '@id': `${site.url}/#website`, name: site.name, url: `${site.url}/`, inLanguage: site.lang, publisher: { '@id': `${site.url}/#organization` } },
-    { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: title, description, inLanguage: site.lang, isPartOf: { '@id': `${site.url}/#website` }, breadcrumb: { '@id': `${url}#breadcrumb` } },
+    { '@type': pageType, '@id': `${url}#webpage`, url, name: title, description, inLanguage: site.lang, isPartOf: { '@id': `${site.url}/#website` }, breadcrumb: { '@id': `${url}#breadcrumb` }, primaryImageOfPage: { '@id': `${site.url}/#ogimage` }, datePublished: published, dateModified: reviewed },
+    { '@type': 'ImageObject', '@id': `${site.url}/#ogimage`, url: `${site.url}${site.ogImage}`, width: 1200, height: 630, caption: ogAlt },
     { '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`, itemListElement: trail.map(([name, href], i) => ({ '@type': 'ListItem', position: i + 1, name: text(name), item: site.url + href })) },
     ...schema,
   ];
@@ -67,16 +78,27 @@ function shell({ path, title, description, crumb, parents = [], schema = [], bod
 <meta name="robots" content="${site.live ? 'index, follow, max-image-preview:large, max-snippet:-1' : 'noindex, nofollow'}">
 <meta name="theme-color" content="${site.themeColor}">
 <link rel="canonical" href="${url}">
-<meta property="og:type" content="article">
+<link rel="alternate" hreflang="de" href="${url}">
+<link rel="alternate" hreflang="x-default" href="${url}">
+<meta property="og:type" content="${ogType}">
 <meta property="og:site_name" content="${site.name}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${url}">
 <meta property="og:locale" content="${site.locale}">
 <meta property="og:image" content="${site.url}${site.ogImage}">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${esc(ogAlt)}">
+${ogType === 'article' ? `<meta property="article:published_time" content="${published}">\n<meta property="article:modified_time" content="${reviewed}">\n` : ''}<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(description)}">
 <meta name="twitter:image" content="${site.url}${site.ogImage}">
+<meta name="twitter:image:alt" content="${esc(ogAlt)}">
 <link rel="icon" href="/favicon.svg?v=__V__" type="image/svg+xml" sizes="any">
+<link rel="apple-touch-icon" href="/brand/icon-512.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="stylesheet" href="/css/home.css?v=__V__">
 <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replaceAll('<', '\\u003c')}</script>
 <script src="/js/menu.js?v=__V__" defer></script>
@@ -92,7 +114,7 @@ function shell({ path, title, description, crumb, parents = [], schema = [], bod
 </div>
 <main id="inhalt">
 ${body}
-${cta}
+${cta()}
 </main>
 <footer class="site-footer">
   <div class="container footer-columns">
@@ -117,6 +139,10 @@ const pageHero = ({ crumb, parents, kicker, h1, lead }) => `<section class="page
 <div class="button-row"><a class="button button-outline button-large" href="/#kontakt">Kostenlos testen <span aria-hidden="true">→</span></a><a class="hero-secondary" href="/#preise">Pakete ansehen <span aria-hidden="true">→</span></a></div>
 </div></section>`;
 
+const sourcesBox = (t) => !t.sources?.length ? '' : `<aside class="sources" aria-labelledby="quellen-h"><p class="toc-h" id="quellen-h">Quellen und weiterführende Informationen</p><ul>${t.sources.map(([label, href]) => `<li><a href="${esc(href)}" rel="noopener" target="_blank">${label}</a></li>`).join('')}</ul></aside>`;
+
+const editorial = `<aside class="editorial" aria-label="Über diesen Ratgeber"><p><strong>Redaktion ${site.name}</strong> · Zuletzt geprüft: ${stand}. Wir aktualisieren unsere Anleitungen, wenn sich Apps, Menüs oder Geräte ändern. Sie haben einen Fehler entdeckt oder eine Frage? Schreiben Sie uns${site.email ? ` an <a href="mailto:${site.email}">${site.email}</a>` : ''} – wir antworten persönlich und auf Deutsch.</p></aside>`;
+
 const factsTable = (t) => !t.facts ? '' : `<div class="table-wrap" role="region" aria-labelledby="fakten" tabindex="0"><table class="table">
 <caption id="fakten">${text(t.name)} auf einen Blick</caption>
 <tbody>${t.facts.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join('')}</tbody></table></div>`;
@@ -136,8 +162,7 @@ const render = (t) => {
     parents,
     schema: [
       faqSchema(t.faq),
-      { '@type': 'Article', headline: text(t.h1), description: t.description, inLanguage: site.lang, dateModified: reviewed, image: `${site.url}${site.ogImage}`, author: orgRef, publisher: orgRef, mainEntityOfPage: { '@id': `${site.url}${t.path}#webpage` }, about: { '@type': 'Thing', name: text(t.name) } },
-      ...(t.app ? [appSchema(t)] : []),
+      { '@type': 'Article', '@id': `${site.url}${t.path}#article`, headline: text(t.h1), description: t.description, inLanguage: site.lang, datePublished: published, dateModified: reviewed, image: { '@id': `${site.url}/#ogimage` }, author: { '@type': 'Organization', name: `Redaktion ${site.name}`, url: `${site.url}/ratgeber/` }, publisher: orgRef, mainEntityOfPage: { '@id': `${site.url}${t.path}#webpage` }, about: aboutFor(t), ...(t.keywords?.length && { keywords: t.keywords.slice(0, 8).join(', ') }), ...(t.sources?.length && { citation: t.sources.map(([name, url]) => ({ '@type': 'CreativeWork', name, url })) }) },
       ...(t.schema || []),
       ...(kids.length ? [{ '@type': 'ItemList', name: text(t.h1), itemListElement: kids.map((k, i) => ({ '@type': 'ListItem', position: i + 1, url: `${site.url}${k.path}`, name: text(k.name) })) }] : []),
     ],
@@ -147,6 +172,8 @@ ${t.hub ? `<p class="stand">Zuletzt geprüft: ${stand}</p>` : ''}
 ${toc(t)}
 ${factsTable(t)}
 ${t.sections.map((s) => `<h2 id="${s.id}">${s.h}</h2>${s.html}`).join('\n')}
+${sourcesBox(t)}
+${editorial}
 </div></section>
 ${kids.length ? `<section class="section related-section" aria-labelledby="alle-title"><div class="container"><div class="section-heading"><p class="eyebrow">${t.name}</p><h2 id="alle-title">Alle Anleitungen im Überblick</h2></div>${topicGrid(kids)}</div></section>` : ''}
 <section class="section related-section${kids.length ? ' related-section--plain' : ''}" aria-labelledby="passend-title"><div class="container"><div class="section-heading"><p class="eyebrow">Weiterlesen</p><h2 id="passend-title">Passend zum Thema</h2></div>${topicGrid(related)}</div></section>
@@ -169,7 +196,7 @@ const ratgeber = () => {
   return {
     path: '/ratgeber/', title, description,
     document: shell({
-      path: '/ratgeber/', title, description, crumb: 'Ratgeber',
+      path: '/ratgeber/', title, description, crumb: 'Ratgeber', pageType: 'CollectionPage', ogType: 'website',
       schema: [faqSchema(faq), { '@type': 'ItemList', name: 'IPTV-Ratgeber', itemListElement: topics.map((k, i) => ({ '@type': 'ListItem', position: i + 1, url: `${site.url}${k.path}`, name: text(k.name) })) }],
       body: `${pageHero({ crumb: 'Ratgeber', parents: [], kicker: 'Ratgeber', h1: 'IPTV-Ratgeber: Wissen, Apps und Geräte', lead: 'Alles, was Sie über IPTV wissen müssen – vom Kauf über die passende App bis zur Lösung, wenn etwas hakt. Sachlich erklärt und regelmäßig geprüft.' })}
 ${group('wissen', 'Kauf und Wissen', 'IPTV verstehen und richtig kaufen', cardsFor(['/iptv-kaufen/', ...childrenOf('ratgeber').map((t) => t.path)]), false)}

@@ -299,7 +299,6 @@ ${ol([
   '/ss-iptv/': {
     faq: [
       ['Ist SimpleIPTV dasselbe wie SS IPTV?', 'Ja. SS IPTV steht für Simple Smart IPTV; Schreibweisen wie „SimpleIPTV“ meinen dieselbe App.'],
-      ['Gibt es SS IPTV für Android?', 'Ja, neben Samsung und LG bietet der Anbieter eine Android-Version an. Die Einrichtung funktioniert dort genauso per Link oder Code.'],
       ['Wo lade ich meine SS-IPTV-Liste hoch?', 'Auf der offiziellen Website von SS IPTV im Bereich für Playlists – entweder als externer M3U-Link oder per Verbindungscode aus der App.'],
     ],
   },
@@ -319,8 +318,6 @@ ${ol([
   '/xciptv/': {
     faq: [
       ['Läuft XCIPTV auf dem Firestick?', 'Ja, auf Fire-TV-Geräten mit Fire OS. Ist die App nicht im Appstore, installieren Sie sie über die Downloader-App von der Website des Entwicklers.'],
-      ['Gibt es XCIPTV für Samsung oder LG?', 'XCIPTV ist eine Android-App. Für Samsung- und LG-Fernseher eignen sich Apps wie IBO Player, Flix IPTV oder SS IPTV.'],
-      ['Ist XCIPTV kostenlos?', 'Ja, die App selbst ist kostenlos. Inhalte erhalten Sie mit Ihrem IPTV-Zugang.'],
     ],
   },
 
@@ -398,13 +395,6 @@ ${ol([
   '/iptv-pc/': {
     faq: [
       ['Welcher IPTV-Player eignet sich für Windows?', 'VLC und Kodi sind kostenlos, IPTV Smarters Pro gibt es als Windows-Version, Perfect Player ebenfalls. Alle funktionieren auch auf dem Laptop.'],
-      ['Kann ich IPTV auf dem MacBook schauen?', 'Ja, zum Beispiel mit VLC, Kodi, IPTVX oder der Mac-Version von IPTV Smarters Pro.'],
-    ],
-  },
-
-  '/iptv-stick/': {
-    faq: [
-      ['Was ist ein IPTV-Stick?', 'Ein Streaming-Stick wie der Fire TV Stick oder Chromecast mit Google TV, auf dem eine IPTV-App läuft. Der Stick selbst enthält keine Sender.'],
     ],
   },
 
@@ -425,18 +415,6 @@ ${ol([
       ['Was kostet eine gute IPTV-Box?', 'Der IPTV-Box-Preis hängt von Leistung und Ausstattung ab: Zertifizierte Android-TV-Boxen und Streaming-Geräte gibt es im Handel in verschiedenen Preisklassen. Achten Sie mehr auf Google-Zertifizierung, HEVC und LAN als auf den Preis.'],
     ],
     keywords: { add: ['alibaba iptv', 'iptv aliexpress'] },
-  },
-
-  '/mag-box/': {
-    faq: [
-      ['Welche MAG-Box ist die beste für IPTV?', 'Aktuelle Modelle der MAG-Serie von Infomir mit HEVC und 4K, etwa MAG 420, MAG 424 oder MAG 524. Ältere Modelle wie die MAG 250 oder 254 sind veraltet.'],
-    ],
-  },
-
-  '/formuler/': {
-    faq: [
-      ['Welche Formuler-Box eignet sich für IPTV?', 'Alle aktuellen Formuler-Modelle wie Z8, Z10 oder Z11 unterstützen MyTVOnline. Für 4K und mehr Speicher eignen sich die Pro- und Max-Varianten.'],
-    ],
   },
 
   '/iptv-enigma2/': {

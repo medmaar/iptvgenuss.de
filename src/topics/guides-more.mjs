@@ -17,6 +17,8 @@ export const offerSchema = {
   name: `${site.name} IPTV-Abo`,
   description: offer.summary,
   brand: { '@type': 'Brand', name: site.name },
+  image: `${site.url}${site.ogImage}`,
+  url: `${site.url}/#preise`,
   offers: plans.map((p) => ({
     '@type': 'Offer',
     name: p.label,

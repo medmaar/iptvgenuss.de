@@ -102,3 +102,20 @@
 /chromecast              /iptv-chromecast/      301
 /google-tv-streamer      /iptv-chromecast/      301
 /google-tv               /iptv-android/         301
+
+# Trailing-slash variants of retired paths (SEO audit, November 2026).
+/geraete/                /iptv-geraete/         301
+/anleitung/              /#geraete              301
+/test/                   /iptv-testen/          301
+/preis/                  /#preise               301
+/ratgeber/iptv/          /ratgeber/             301
+/iptv/                   /was-ist-iptv/         301
+/iptv                    /was-ist-iptv/         301
+/iptv-erklaert           /was-ist-iptv/         301
+/iptv-legal              /iptv-anbieter/        301
+/iptv-preise             /#preise               301
+/iptv-guenstig           /iptv-kaufen/          301
+/iptv-4k-kaufen          /iptv-4k/              301
+/iptv-app-vergleich      /iptv-apps/            301
+/ibo-player-einrichten   /ibo-player/           301
+/smarters-einrichten     /iptv-smarters-pro/    301

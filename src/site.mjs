@@ -108,6 +108,7 @@ export function missing() {
 
 // Homepage copy uses the current offer and feature counts supplied by the owner.
 export const homeContent = {
+  heroKicker: 'IPTV für Deutschland – Ihr Fernsehen, Ihre Freiheit',
   title: 'Fernsehen mit Genuss.',
   lead: '50.000+ Live-Kanäle, +300.000 Filme & Serien und Fernsehen in 4K Ultra HD – auf all Ihren Geräten. Entdecken Sie Ihre Lieblingsprogramme mit IPTV Genuss.',
   billing: 'Einmal zahlen. Keine automatische Verlängerung.',
