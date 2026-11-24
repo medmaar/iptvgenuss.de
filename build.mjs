@@ -7,6 +7,7 @@ import { dirname, join } from 'node:path';
 import { page } from './src/layout.mjs';
 import { site, missing } from './src/site.mjs';
 import home from './src/pages/home.mjs';
+import topics from './src/pages/topics.mjs';
 
 const out = 'dist';
 await rm(out, { recursive: true, force: true });
@@ -23,10 +24,10 @@ await writeFile(join(out, 'css/site.css'), css
 
 // Cache-busting version from the asset contents.
 const hash = createHash('sha1');
-for (const f of ['public/css/home.css', 'public/js/home.js', 'public/brand/genuss-iptv.svg', 'public/favicon.svg', 'public/images/hero-goalkeeper.webp', 'public/images/flags/de.svg']) hash.update(await readFile(f));
+for (const f of ['public/css/home.css', 'public/js/home.js', 'public/brand/genuss-iptv.svg', 'public/favicon.svg', 'public/images/hero-goalkeeper.webp', 'public/images/flags/de.svg', 'public/js/menu.js']) hash.update(await readFile(f));
 const version = hash.digest('hex').slice(0, 10);
 
-const pages = [home()];
+const pages = [home(), ...topics()];
 const fileFor = (p) => (p.endsWith('.html') ? join(out, p) : join(out, p, 'index.html'));
 const warnings = [];
 const errors = [];

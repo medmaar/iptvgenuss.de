@@ -11,7 +11,7 @@ npm run build   # rebuilds dist/ and validates links, anchors, h1 and JSON-LD
 npm run dev     # builds and serves dist/ on port 8788
 ```
 
-The build publishes only the homepage. Earlier content modules remain in `src/`
+The build publishes the homepage plus the SEO Ratgeber pages: one page per keyword cluster (apps, devices, buying guides), defined in `src/topics/` and rendered by `src/pages/topics.mjs` in the homepage design (`home.css`, mobile menu in `public/js/menu.js`). Each has FAQPage, Article and BreadcrumbList JSON-LD and is added to the sitemap automatically; short aliases live in `public/_redirects`. Earlier content modules remain in `src/`
 for later work but are not built or included in the sitemap. Old service-page
 URLs redirect to the corresponding homepage sections via `public/_redirects`.
 `dist/` is committed so Cloudflare can deploy with or without a build step.

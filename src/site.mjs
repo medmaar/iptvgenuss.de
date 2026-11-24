@@ -84,6 +84,7 @@ export const nav = [
   ['#geraete', 'Geräte'],
   ['#preise', 'Preise'],
   ['#faq', 'FAQ'],
+  ['/ratgeber/', 'Ratgeber'],
 ];
 
 export const waHref = (text = '') =>
