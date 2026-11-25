@@ -17,6 +17,7 @@ import appsClusters from './apps-clusters.mjs';
 import appsSmarters from './apps-smarters.mjs';
 import appsTivimate from './apps-tivimate.mjs';
 import guidesGaps from './guides-gaps.mjs';
+import guidesBrands from './guides-brands.mjs';
 import links from './links.mjs';
 
 // Merge extra sections, FAQs, keywords, sources and schema from the extension
@@ -55,7 +56,7 @@ const withExtras = (t) => {
   return page;
 };
 
-export const topics = [...guides, ...guidesMore, ...apps, ...appsMore, ...appsPlayers, ...appsClusters, ...appsSmarters, ...appsTivimate, ...guidesGaps, ...devices, ...devicesMore, ...devicesTv, ...devicesStream, ...local].map(withExtras);
+export const topics = [...guides, ...guidesMore, ...apps, ...appsMore, ...appsPlayers, ...appsClusters, ...appsSmarters, ...appsTivimate, ...guidesGaps, ...guidesBrands, ...devices, ...devicesMore, ...devicesTv, ...devicesStream, ...local].map(withExtras);
 
 for (const ext of extensions) {
   for (const path of Object.keys(ext)) {

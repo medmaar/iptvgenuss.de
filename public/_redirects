@@ -275,3 +275,19 @@
 /vodafone-iptv                   /iptv-telekom-vodafone/              301
 /1und1-tv                        /iptv-telekom-vodafone/              301
 /o2-iptv                         /iptv-telekom-vodafone/              301
+
+# Sky, sport, streaming and provider-name pages (25 November 2026).
+/sky                             /sky-iptv/                 301
+/sky-ueber-iptv                  /sky-iptv/                 301
+/sky-q-iptv-box                  /sky-iptv/                 301
+/iptv-sky                        /sky-iptv/                 301
+/bundesliga                      /iptv-bundesliga/          301
+/bundesliga-iptv                 /iptv-bundesliga/          301
+/iptv-fussball                   /iptv-bundesliga/          301
+/iptv-champions-league           /iptv-bundesliga/          301
+/sport                           /iptv-sport/               301
+/iptv-live-sport                 /iptv-sport/               301
+/iptv-netflix                    /iptv-streamingdienste/    301
+/streamingdienste                /iptv-streamingdienste/    301
+/iptv-anbieter-a-z               /iptv-anbieter-liste/      301
+/anbieter-liste                  /iptv-anbieter-liste/      301

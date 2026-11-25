@@ -36,7 +36,7 @@ export default {
   },
   '/iptv-anbieter/': {
     updated,
-    relatedFirst: ['/iptv-reddit-forum/', '/iptv-12-monate/'],
+    relatedFirst: ['/iptv-reddit-forum/', '/iptv-anbieter-liste/', '/iptv-12-monate/'],
     keywords: { remove: ['iptv lifetime', 'lifetime iptv', 'best iptv reddit', 'best iptv provider reddit', 'reddit best iptv', 'iptv reddit', 'iptv forum', 'iptvforum', 'iptv anbieter forum', 'iptv trustpilot'] },
   },
   '/iptv-deutschland/': {
@@ -69,4 +69,8 @@ export default {
   '/iptv-testen/': { updated, relatedFirst: ['/iptv-12-monate/'] },
   '/ibo-player/': { updated, relatedFirst: ['/tivimate-alternativen/', '/iptv-12-monate/'] },
   '/was-ist-iptv/': { updated, relatedFirst: ['/iptv-telekom-vodafone/'] },
+  '/iptv-4k/': { updated, relatedFirst: ['/iptv-bundesliga/', '/iptv-sport/'] },
+  '/iptv-vod/': { updated, relatedFirst: ['/iptv-streamingdienste/', '/iptv-sport/'] },
+  '/weitere-iptv-player/': { updated, relatedFirst: ['/iptv-anbieter-liste/'] },
+  '/iptv-extreme/': { updated, relatedFirst: ['/iptv-anbieter-liste/'] },
 };
