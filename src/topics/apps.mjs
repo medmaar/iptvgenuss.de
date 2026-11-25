@@ -44,7 +44,8 @@ export default [
   <li><strong>iPhone, iPad, Apple TV:</strong> ${L('/iptv-smarters-pro/', 'IPTV Smarters Pro')} oder andere Xtream-fähige Apps aus dem App Store. Siehe ${L('/iptv-apple-tv/', 'IPTV auf Apple-Geräten')}.</li>
   <li><strong>Windows und Mac:</strong> ${L('/vlc-iptv/', 'VLC')}, ${L('/kodi-iptv/', 'Kodi')} oder ${L('/iptv-smarters-pro-pc/', 'Smarters für Windows und Mac')}. Siehe ${L('/iptv-pc/', 'IPTV am PC')} und – falls Sie ohne Installation schauen möchten – ${L('/iptv-im-browser/', 'IPTV im Browser')}.</li>
   <li><strong>Portal-Zugang wie bei der MAG-Box:</strong> ${L('/stbemu/', 'STBEmu')} auf Android.</li>
-</ul>` },
+</ul>
+<p>Kriterien, Vergleichstabelle und eine Entscheidungshilfe in drei Fragen: ${L('/beste-iptv-player/', 'Bester IPTV-Player 2026')}.</p>` },
       { id: 'weitere', h: 'Weitere IPTV-Apps', html: `
 <p>Neben den Apps oben gibt es viele weitere Player, die nach demselben Prinzip arbeiten – etwa ${L('/ibo-player/', 'IBO Player')} für Fernseher mit Aktivierung per MAC-Adresse, ${L('/implayer/', 'iMPlayer')} und ${L('/ott-navigator/', 'OTT Navigator')} für Android-Geräte, ${L('/gse-smart-iptv/', 'GSE Smart IPTV')} und ${L('/iptvx/', 'IPTVX')} vor allem für Apple-Geräte sowie <strong>MyIPTV Player</strong> für Windows. Entscheidend ist, dass die App <strong>Xtream Codes</strong> oder <strong>M3U</strong> unterstützt – dann funktioniert sie auch mit ${site.name}. Die Anmeldearten erklären wir unter ${L('/xtream-codes/', 'Xtream Codes')} und ${L('/m3u-playlist/', 'M3U-Playlist')}.</p>` },
       { id: 'ibo-player', h: 'IBO Player Pro im Jahrespaket', html: `

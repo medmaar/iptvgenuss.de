@@ -87,7 +87,7 @@ export default [
 <p>${priceText}</p>
 ${priceTable}
 <p>Alle Angebote enthalten dieselben Leistungen.${bonusPlan ? ` Nur beim Paket „${bonusPlan.label}“ ist zusätzlich das ${bonusPlan.bonus.replace(/ kostenlos inklusive$/, '')} kostenlos dabei.` : ''} Alle Beträge sind Gesamtpreise für die gewählte Laufzeit.</p>
-<p>Rechnen Sie außerdem mit diesen möglichen Nebenkosten:</p>
+<p>Rechenbeispiele für Single, Paar und Familie finden Sie unter ${L('/iptv-kosten/', 'IPTV Kosten')}. Rechnen Sie außerdem mit diesen möglichen Nebenkosten:</p>
 <ul>
   <li><strong>App:</strong> Einige Apps wie ${L('/tivimate/', 'TiviMate Premium')} oder ${L('/smart-iptv/', 'Smart IPTV')} kosten eine Gebühr des App-Anbieters. Kostenlose Alternativen finden Sie unter ${L('/iptv-apps/', 'IPTV-Apps')}.</li>
   <li><strong>Gerät:</strong> Nur nötig, wenn Ihr Fernseher keine passende App bietet – dann genügt meist ein ${L('/iptv-stick/', 'Streaming-Stick')}.</li>
@@ -323,7 +323,7 @@ http://server.example:8080/live/benutzer/passwort/1.ts</code></pre>
 <tr><th scope="row">Programmführer</th><td>Separate EPG-Adresse (XMLTV)</td><td>Wird automatisch geladen</td></tr>
 <tr><th scope="row">Geeignet für</th><td>VLC, Kodi, viele TV-Apps</td><td>Smarters, TiviMate, XCIPTV u. a.</td></tr>
 </tbody></table></div>
-<p><strong>M3U8</strong> ist dieselbe Liste in UTF-8-Kodierung, damit Umlaute korrekt angezeigt werden. Mehr zur Alternative unter ${L('/xtream-codes/', 'Xtream Codes')}.</p>` },
+<p><strong>M3U8</strong> ist dieselbe Liste in UTF-8-Kodierung, damit Umlaute korrekt angezeigt werden. Wann M3U8 eine Senderliste und wann ein HLS-Stream ist, erklärt ${L('/m3u8/', 'M3U8 erklärt')}. Mehr zur Alternative unter ${L('/xtream-codes/', 'Xtream Codes')}.</p>` },
       { id: 'nutzen', h: 'M3U-Playlist in einer App nutzen', html: `
 <p>So tragen Sie Ihren M3U-Link in den gängigen Apps ein:</p>
 <ul>

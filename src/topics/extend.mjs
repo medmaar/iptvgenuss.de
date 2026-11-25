@@ -408,7 +408,7 @@ ${ol([
   <li><strong>Zoll und Einfuhrumsatzsteuer:</strong> können den Preis deutlich erhöhen.</li>
   <li><strong>Vorinstallierte Inhalte:</strong> Boxen mit „Sendern inklusive“ sind in der Regel rechtswidrig.</li>
 </ul>
-<p>Eine zertifizierte Box aus dem deutschen Handel oder ein ${L('/iptv-stick/', 'Streaming-Stick')} ist meist die bessere Wahl. Set-Top-Boxen mit eigenem IPTV-System wie die TVIP S-Box (etwa TVIP 605) nutzen Portal- oder M3U-Zugänge ähnlich wie eine ${L('/mag-box/', 'MAG-Box')}.</p>` },
+<p>Eine zertifizierte Box aus dem deutschen Handel oder ein ${L('/iptv-stick/', 'Streaming-Stick')} ist meist die bessere Wahl – warum, zeigt ${L('/android-tv-box-iptv/', 'Android-TV-Box für IPTV')}; konkrete Modelle vergleicht ${L('/beste-iptv-box/', 'Beste IPTV-Box')}. Set-Top-Boxen mit eigenem IPTV-System wie die TVIP S-Box (etwa TVIP 605) nutzen Portal- oder M3U-Zugänge ähnlich wie eine ${L('/mag-box/', 'MAG-Box')}.</p>` },
     ],
     faq: [
       ['Was ist eine IPTV-Set-Top-Box?', 'Ein Zusatzgerät am Fernseher, auf dem eine IPTV-App oder ein Portal läuft – etwa eine Android-TV-Box, MAG, Formuler oder TVIP S-Box.'],

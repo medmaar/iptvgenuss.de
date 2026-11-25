@@ -18,12 +18,14 @@ import appsSmarters from './apps-smarters.mjs';
 import appsTivimate from './apps-tivimate.mjs';
 import guidesGaps from './guides-gaps.mjs';
 import guidesBrands from './guides-brands.mjs';
+import guidesRound2 from './guides-round2.mjs';
+import round2 from './round2.mjs';
 import links from './links.mjs';
 
 // Merge extra sections, FAQs, keywords, sources and schema from the extension
 // maps (extend.mjs, deepen.mjs) into a page. `sections` are inserted before the
 // section named in `before` (or appended), everything else is appended.
-const extensions = [extend, deepen, models, links];
+const extensions = [extend, deepen, models, links, round2];
 const withExtras = (t) => {
   let page = t;
   for (const ext of extensions) {
@@ -56,7 +58,7 @@ const withExtras = (t) => {
   return page;
 };
 
-export const topics = [...guides, ...guidesMore, ...apps, ...appsMore, ...appsPlayers, ...appsClusters, ...appsSmarters, ...appsTivimate, ...guidesGaps, ...guidesBrands, ...devices, ...devicesMore, ...devicesTv, ...devicesStream, ...local].map(withExtras);
+export const topics = [...guides, ...guidesMore, ...apps, ...appsMore, ...appsPlayers, ...appsClusters, ...appsSmarters, ...appsTivimate, ...guidesGaps, ...guidesBrands, ...guidesRound2, ...devices, ...devicesMore, ...devicesTv, ...devicesStream, ...local].map(withExtras);
 
 for (const ext of extensions) {
   for (const path of Object.keys(ext)) {

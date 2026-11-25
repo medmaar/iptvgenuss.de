@@ -291,3 +291,21 @@
 /streamingdienste                /iptv-streamingdienste/    301
 /iptv-anbieter-a-z               /iptv-anbieter-liste/      301
 /anbieter-liste                  /iptv-anbieter-liste/      301
+
+# Keyword-gap pass 4: costs, best player/box, Android box, M3U8, reseller (25 November 2026).
+/kosten                          /iptv-kosten/              301
+/was-kostet-iptv                 /iptv-kosten/              301
+/iptv-kosten-monat               /iptv-kosten/              301
+/bester-iptv-player              /beste-iptv-player/        301
+/beste-iptv-app                  /beste-iptv-player/        301
+/iptv-player-vergleich           /beste-iptv-player/        301
+/beste-iptv-box-2026             /beste-iptv-box/           301
+/iptv-box-test                   /beste-iptv-box/           301
+/iptv-box-kaufen                 /beste-iptv-box/           301
+/android-box                     /android-tv-box-iptv/      301
+/android-tv-box                  /android-tv-box-iptv/      301
+/iptv-android-box                /android-tv-box-iptv/      301
+/m3u8-liste                      /m3u8/                     301
+/iptv-m3u8                       /m3u8/                     301
+/reseller                        /iptv-reseller/            301
+/iptv-reseller-panel             /iptv-reseller/            301
