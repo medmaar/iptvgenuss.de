@@ -63,7 +63,7 @@ export default {
 <tr><th scope="row">Testline</th><td>Ein kostenloser, zeitlich begrenzter Zugang zum Ausprobieren – siehe ${L('/iptv-testen/', 'IPTV kostenlos testen')}.</td></tr>
 </tbody></table></div>` },
       { id: 'angebote', before: 'ablauf', h: 'IPTV-Angebote: 1 Monat oder 12 Monate?', html: `
-<p>Das Jahrespaket ist die günstigste Art, IPTV zu kaufen: ${year ? `${euro(year.price)} für 12 Monate entsprechen rund ${perMonth(year)} pro Monat` : ''}${month ? ` – gegenüber ${euro(month.price)} beim Monatspaket` : ''}. ${year?.bonus ? `Zusätzlich ist beim Jahrespaket das ${L('/ibo-player/', year.bonusName)}-Abo kostenlos dabei.` : ''} Das Monatspaket lohnt sich, wenn Sie flexibel bleiben oder IPTV nur für eine bestimmte Zeit nutzen möchten.</p>
+<p>Das Jahrespaket ist die günstigste Art, IPTV zu kaufen: ${year ? `${euro(year.price)} für 12 Monate entsprechen rund ${perMonth(year)} pro Monat` : ''}${month ? ` – gegenüber ${euro(month.price)} beim Monatspaket` : ''}. ${year?.bonus ? `Zusätzlich ist beim Jahrespaket das ${L('/ibo-player/', year.bonusName)}-Abo kostenlos dabei.` : ''} Das Monatspaket lohnt sich, wenn Sie flexibel bleiben oder IPTV nur für eine bestimmte Zeit nutzen möchten. Preise nach Geräteanzahl und alle Details: ${L('/iptv-12-monate/', 'IPTV 12 Monate')}.</p>
 <p>Seien Sie skeptisch bei IPTV-Deals, Sale- oder Promotion-Angeboten mit sehr langen Laufzeiten zum Spottpreis oder bei „Lifetime“-Zugängen: Dauerhafte Leistung zu einem Einmalpreis ist wirtschaftlich nicht darstellbar. Mehr Warnzeichen unter ${L('/iptv-anbieter/', 'IPTV-Anbieter wählen')}.</p>` },
     ],
     faq: [
@@ -88,7 +88,7 @@ ${ol([
 <p>Ein reiner IPTV-Preisvergleich greift zu kurz: Ein günstiger Zugang, der abends ruckelt, ist teurer als ein fairer, der stabil läuft.</p>` },
       { id: 'warnzeichen', before: 'test', h: 'Lifetime-IPTV, Paysafecard & Co.: typische Warnzeichen', html: `
 <ul>
-  <li><strong>„Lifetime IPTV“ / IPTV Lifetime-Zugang:</strong> Ein Zugang auf Lebenszeit für einen Einmalpreis kann nicht dauerhaft finanziert werden. Solche Angebote verschwinden oft samt Geld.</li>
+  <li><strong>„Lifetime IPTV“ / IPTV Lifetime-Zugang:</strong> Ein Zugang auf Lebenszeit für einen Einmalpreis kann nicht dauerhaft finanziert werden. Solche Angebote verschwinden oft samt Geld. Warum wir stattdessen feste Laufzeiten anbieten, steht unter ${L('/iptv-12-monate/', 'IPTV 12 Monate')}.</li>
   <li><strong>Zahlung nur per Paysafecard, Gutscheinkarte oder Kryptowährung:</strong> Diese Zahlungswege lassen sich kaum zurückholen. Seriöse Anbieter nennen nachvollziehbare Zahlungswege und ein Impressum.</li>
   <li><strong>IPTV-Websites ohne Impressum:</strong> Wer nicht sagt, wer er ist, ist bei Problemen nicht greifbar.</li>
   <li><strong>Versprechen wie „alle Sender der Welt“ oder „8K“:</strong> siehe ${L('/iptv-4k/', 'IPTV in 4K')} und ${L('/iptv-senderliste/', 'IPTV-Senderliste')}.</li>
@@ -106,7 +106,7 @@ ${ol([
   '/iptv-deutschland/': {
     sections: [
       { id: 'netzbetreiber', before: 'leitung', h: 'IPTV von Telekom, Vodafone, 1&amp;1 und O2', html: `
-<p>Wer nach „Fernsehen über Telekom“, „Vodafone IPTV“ oder „1&amp;1 TV-Pakete“ sucht, meint das TV-Angebot seines Internetanbieters. Diese Produkte laufen über den eigenen Anschluss des Anbieters, meist mit dessen Receiver oder App, und sind häufig an den Internetvertrag gekoppelt. Inhalte, Preise und Bedingungen legt der jeweilige Anbieter fest.</p>
+<p>Wer nach „Fernsehen über Telekom“, „Vodafone IPTV“ oder „1&amp;1 TV-Pakete“ sucht, meint das TV-Angebot seines Internetanbieters. Diese Produkte laufen über den eigenen Anschluss des Anbieters, meist mit dessen Receiver oder App, und sind häufig an den Internetvertrag gekoppelt. Inhalte, Preise und Bedingungen legt der jeweilige Anbieter fest. Den ausführlichen Vergleich finden Sie unter ${L('/iptv-telekom-vodafone/', 'Fernsehen über Telekom, Vodafone, 1&amp;1 und o2')}.</p>
 <div class="table-wrap" role="region" aria-labelledby="netz-tab" tabindex="0"><table class="table">
 <caption id="netz-tab">TV vom Internetanbieter oder App-IPTV – worauf es ankommt</caption>
 <thead><tr><th scope="col">Frage</th><th scope="col">TV vom Internetanbieter</th><th scope="col">App-IPTV wie ${site.name}</th></tr></thead>
@@ -286,7 +286,7 @@ ${ol([
 </tbody></table></div>
 <p>Laden Sie Smart IPTV nur aus dem Store Ihres Fernsehers oder von der offiziellen Website des Anbieters (siptv.app) herunter.</p>` },
       { id: 'my-list', before: 'samsung', h: 'SIPTV „My List“: Playlist hochladen und verwalten', html: `
-<p>Auf der Seite <strong>siptv.app/mylist</strong> verknüpfen Sie Ihren M3U-Link mit der MAC-Adresse der App. Sie können dort Playlists hinzufügen, ersetzen und – wichtig bei mehreren Listen – die alte Liste löschen, bevor Sie eine neue hochladen. Wählen Sie bei der Option zum Speichern der Liste die Variante, die den Link regelmäßig neu lädt; dann bleiben Senderänderungen automatisch aktuell.</p>` },
+<p>Auf der Seite <strong>siptv.app/mylist</strong> verknüpfen Sie Ihren M3U-Link mit der MAC-Adresse der App. Sie können dort Playlists hinzufügen, ersetzen und – wichtig bei mehreren Listen – die alte Liste löschen, bevor Sie eine neue hochladen. Wählen Sie bei der Option zum Speichern der Liste die Variante, die den Link regelmäßig neu lädt; dann bleiben Senderänderungen automatisch aktuell. Die komplette Anleitung mit allen Optionen und Fehlermeldungen: ${L('/smart-iptv-playlist-hochladen/', 'My SIPTV: Playlist hochladen')}.</p>` },
     ],
     faq: [
       ['Kann ich Smart IPTV kaufen, ohne zu testen?', 'Der App-Anbieter gewährt zuerst eine Testphase. Nutzen Sie sie zusammen mit unserem kostenlosen IPTV-Test, bevor Sie die App aktivieren.'],

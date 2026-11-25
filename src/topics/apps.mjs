@@ -39,10 +39,10 @@ export default [
 <p class="muted">${thirdParty}</p>` },
       { id: 'empfehlung', h: 'Bester IPTV-Player für jedes Gerät', html: `
 <ul>
-  <li><strong>Fire TV Stick, Android TV, Google TV:</strong> ${L('/tivimate/', 'TiviMate')} für die komfortabelste TV-Oberfläche; kostenlos und auf Deutsch nutzbar sind ${L('/xciptv/', 'XCIPTV')} oder ${L('/iptv-smarters-pro/', 'IPTV Smarters Pro')}. Siehe ${L('/iptv-fire-tv-stick/', 'IPTV auf dem Fire TV Stick')}.</li>
+  <li><strong>Fire TV Stick, Android TV, Google TV:</strong> ${L('/tivimate/', 'TiviMate')} für die komfortabelste TV-Oberfläche; kostenlos und auf Deutsch nutzbar sind ${L('/xciptv/', 'XCIPTV')} oder ${L('/iptv-smarters-pro/', 'IPTV Smarters Pro')}. Siehe ${L('/iptv-fire-tv-stick/', 'IPTV auf dem Fire TV Stick')} und ${L('/iptv-player-android/', 'die besten IPTV-Player für Android')}.</li>
   <li><strong>Samsung- und LG-Fernseher:</strong> ${L('/smart-iptv/', 'Smart IPTV')}, ${L('/ss-iptv/', 'SS IPTV')}, ${L('/flix-iptv/', 'Flix IPTV')} oder ${L('/set-iptv/', 'Set IPTV')}. Siehe ${L('/iptv-samsung-tv/', 'Samsung TV')} und ${L('/iptv-lg-tv/', 'LG TV')}.</li>
   <li><strong>iPhone, iPad, Apple TV:</strong> ${L('/iptv-smarters-pro/', 'IPTV Smarters Pro')} oder andere Xtream-fähige Apps aus dem App Store. Siehe ${L('/iptv-apple-tv/', 'IPTV auf Apple-Geräten')}.</li>
-  <li><strong>Windows und Mac:</strong> ${L('/vlc-iptv/', 'VLC')}, ${L('/kodi-iptv/', 'Kodi')} oder Smarters für Desktop. Siehe ${L('/iptv-pc/', 'IPTV am PC')}.</li>
+  <li><strong>Windows und Mac:</strong> ${L('/vlc-iptv/', 'VLC')}, ${L('/kodi-iptv/', 'Kodi')} oder ${L('/iptv-smarters-pro-pc/', 'Smarters für Windows und Mac')}. Siehe ${L('/iptv-pc/', 'IPTV am PC')} und – falls Sie ohne Installation schauen möchten – ${L('/iptv-im-browser/', 'IPTV im Browser')}.</li>
   <li><strong>Portal-Zugang wie bei der MAG-Box:</strong> ${L('/stbemu/', 'STBEmu')} auf Android.</li>
 </ul>` },
       { id: 'weitere', h: 'Weitere IPTV-Apps', html: `
@@ -106,6 +106,7 @@ export default [
 </ul>` },
       { id: 'alternativen', h: 'Alternativen zu IPTV Smarters Pro', html: `
 <p>Auf Fire TV und Android TV bietet ${L('/tivimate/', 'TiviMate')} eine klassischere TV-Oberfläche, ${L('/xciptv/', 'XCIPTV')} ist eine kostenlose Alternative. Alle Optionen im ${L('/iptv-apps/', 'IPTV-App-Vergleich')}.</p>
+<p><strong>Schritt-für-Schritt-Anleitungen nach Gerät:</strong> ${L('/iptv-smarters-pro-fire-tv-stick/', 'IPTV Smarters Pro auf dem Fire TV Stick')}, ${L('/iptv-smarters-pro-samsung-tv/', 'auf dem Samsung TV')}, ${L('/iptv-smarters-pro-lg-tv/', 'auf dem LG TV')}, ${L('/iptv-smarters-pro-pc/', 'für Windows und Mac')}, ${L('/iptv-smarters-pro-iphone-apple-tv/', 'auf iPhone und Apple TV')} sowie ${L('/iptv-smarters-pro-android/', 'auf Android und Android TV')}.</p>
 <p class="muted">${thirdParty}</p>` },
     ],
     faq: [
@@ -133,7 +134,7 @@ export default [
     facts: [['Geräte', 'Fire TV, Android TV, Google TV, Android-TV-Boxen'], ['Nicht verfügbar für', 'Samsung/LG-Fernseher (Tizen/webOS), iPhone, iPad, Apple TV, Windows, Mac'], ['Anmeldung', 'Xtream Codes, M3U-Link'], ['Kosten', 'Basis kostenlos, Premium als Abo oder Einmalkauf']],
     sections: [
       { id: 'installieren', h: 'TiviMate installieren', html: `
-<p>Auf <strong>Android TV und Google TV</strong> finden Sie „TiviMate IPTV Player“ im Google Play Store. Auf dem <strong>Fire TV Stick</strong> ist TiviMate nicht immer im Amazon Appstore gelistet; wie Sie Apps dann installieren, zeigt ${L('/iptv-fire-tv-stick/', 'IPTV auf dem Fire TV Stick')}. Wichtig: Fire-TV-Geräte mit dem neuen Betriebssystem Vega OS unterstützen keine Android-Apps – dort läuft TiviMate nicht.</p>` },
+<p>Auf <strong>Android TV und Google TV</strong> finden Sie „TiviMate IPTV Player“ im Google Play Store. Auf dem <strong>Fire TV Stick</strong> ist TiviMate nicht immer im Amazon Appstore gelistet; wie Sie TiviMate dann installieren, zeigt ${L('/tivimate-fire-tv-stick/', 'TiviMate auf dem Fire TV Stick')}. Wichtig: Fire-TV-Geräte mit dem neuen Betriebssystem Vega OS unterstützen keine Android-Apps – dort läuft TiviMate nicht.</p>` },
       { id: 'einrichten', h: 'TiviMate einrichten mit Xtream Codes', html: ol([
         'Starten Sie TiviMate und wählen Sie <strong>„Playlist hinzufügen“</strong>.',
         'Wählen Sie <strong>„Xtream Codes“</strong>.',
@@ -143,9 +144,9 @@ export default [
       ]) + `<p>Mit M3U wählen Sie in Schritt 2 „M3U-Playlist“ und fügen den Link ein; den Programmführer tragen Sie dann unter Einstellungen › EPG ein. Mehr unter ${L('/m3u-playlist/', 'M3U-Playlist')}.</p>` },
       { id: 'premium', h: 'TiviMate Premium: Was es kostet und bietet', html: `
 <p>Premium schaltet unter anderem mehrere Playlists, Favoriten-Verwaltung, Aufnahmen, Catch-up (falls vom Anbieter unterstützt), eigene Senderreihenfolge und automatische Programmführer-Updates frei. Gekauft wird Premium über die App <strong>„TiviMate Companion“</strong> auf einem Android-Smartphone; danach melden Sie sich mit demselben Konto in TiviMate auf dem Fernseher an. Ein Premium-Konto lässt sich auf mehreren Geräten nutzen.</p>
-<p>Die aktuellen Preise für Abo und Einmalkauf nennt der Entwickler in der Companion-App. Kaufen Sie Premium nur dort – „TiviMate Premium Accounts“ von Dritten sind nicht offiziell und werden oft gesperrt.</p>` },
+<p>Die aktuellen Preise für Abo und Einmalkauf nennt der Entwickler in der Companion-App. Kaufen Sie Premium nur dort – „TiviMate Premium Accounts“ von Dritten sind nicht offiziell und werden oft gesperrt. Alles zu Funktionen, Kauf und Konto: ${L('/tivimate-premium/', 'TiviMate Premium')}.</p>` },
       { id: 'geraete', h: 'TiviMate auf Apple TV, Samsung oder PC?', html: `
-<p>TiviMate gibt es nur für Android-basierte TV-Geräte. Auf ${L('/iptv-apple-tv/', 'Apple TV und iPhone')} nutzen Sie stattdessen zum Beispiel IPTV Smarters Pro, auf ${L('/iptv-samsung-tv/', 'Samsung-Fernsehern')} Smart IPTV oder SS IPTV, am ${L('/iptv-pc/', 'PC')} VLC oder Kodi. Die TiviMate Companion-App ist für Android-Smartphones gedacht.</p>
+<p>TiviMate gibt es nur für Android-basierte TV-Geräte. Auf ${L('/iptv-apple-tv/', 'Apple TV und iPhone')} nutzen Sie stattdessen zum Beispiel IPTV Smarters Pro, auf ${L('/iptv-samsung-tv/', 'Samsung-Fernsehern')} Smart IPTV oder SS IPTV, am ${L('/iptv-pc/', 'PC')} VLC oder Kodi. Die TiviMate Companion-App ist für Android-Smartphones gedacht. Die beste Alternative für jedes Gerät zeigt ${L('/tivimate-alternativen/', 'TiviMate-Alternativen')}.</p>
 <p class="muted">${thirdParty}</p>` },
     ],
     faq: [

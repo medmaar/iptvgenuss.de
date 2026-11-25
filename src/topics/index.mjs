@@ -14,11 +14,15 @@ import devicesTv from './devices-tv.mjs';
 import devicesStream from './devices-stream.mjs';
 import appsPlayers from './apps-players.mjs';
 import appsClusters from './apps-clusters.mjs';
+import appsSmarters from './apps-smarters.mjs';
+import appsTivimate from './apps-tivimate.mjs';
+import guidesGaps from './guides-gaps.mjs';
+import links from './links.mjs';
 
 // Merge extra sections, FAQs, keywords, sources and schema from the extension
 // maps (extend.mjs, deepen.mjs) into a page. `sections` are inserted before the
 // section named in `before` (or appended), everything else is appended.
-const extensions = [extend, deepen, models];
+const extensions = [extend, deepen, models, links];
 const withExtras = (t) => {
   let page = t;
   for (const ext of extensions) {
@@ -38,14 +42,20 @@ const withExtras = (t) => {
       keywords,
       schema: [...(page.schema || []), ...(x.schema || [])],
       sources: [...(page.sources || []), ...(x.sources || [])],
-      related: [...page.related, ...(x.related || [])],
+      related: [...(x.relatedFirst || []), ...page.related, ...(x.related || [])],
+      ...(x.children && { children: x.children }),
       ...(x.app && { app: x.app }),
+      ...(x.title && { title: x.title }),
+      ...(x.description && { description: x.description }),
+      ...(x.h1 && { h1: x.h1 }),
+      ...(x.teaser && { teaser: x.teaser }),
+      ...(x.updated && { updated: x.updated }),
     };
   }
   return page;
 };
 
-export const topics = [...guides, ...guidesMore, ...apps, ...appsMore, ...appsPlayers, ...appsClusters, ...devices, ...devicesMore, ...devicesTv, ...devicesStream, ...local].map(withExtras);
+export const topics = [...guides, ...guidesMore, ...apps, ...appsMore, ...appsPlayers, ...appsClusters, ...appsSmarters, ...appsTivimate, ...guidesGaps, ...devices, ...devicesMore, ...devicesTv, ...devicesStream, ...local].map(withExtras);
 
 for (const ext of extensions) {
   for (const path of Object.keys(ext)) {
@@ -71,6 +81,16 @@ export const hubs = {
   geraete: { label: 'IPTV-Geräte', path: '/iptv-geraete/' },
   ratgeber: { label: 'Ratgeber', path: '/ratgeber/' },
   regionen: { label: 'IPTV in Ihrer Region', path: '/iptv-regionen/' },
+  // App pillars with their own device guides (breadcrumb: Apps › App › Gerät).
+  smarters: { label: 'IPTV Smarters Pro', path: '/iptv-smarters-pro/', parent: 'apps' },
+  tivimate: { label: 'TiviMate', path: '/tivimate/', parent: 'apps' },
+  siptv: { label: 'Smart IPTV', path: '/smart-iptv/', parent: 'apps' },
+};
+// Breadcrumb trail of a hub, outermost first.
+export const hubTrail = (key) => {
+  const out = [];
+  for (let h = hubs[key]; h; h = hubs[h.parent]) out.unshift([h.label, h.path]);
+  return out;
 };
 
 const core = [
