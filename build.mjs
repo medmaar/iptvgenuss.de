@@ -22,6 +22,15 @@ await writeFile(join(out, 'css/site.css'), css
   .replace(/;}/g, '}')
   .trim() + '\n');
 
+// Minify the homepage stylesheet the same way (it is the only render-blocking CSS).
+const homeCss = await readFile('public/css/home.css', 'utf8');
+await writeFile(join(out, 'css/home.css'), homeCss
+  .replace(/\/\*[\s\S]*?\*\//g, '')
+  .replace(/\s+/g, ' ')
+  .replace(/\s*([{};,>])\s*/g, '$1')
+  .replace(/;}/g, '}')
+  .trim() + '\n');
+
 // Cache-busting version from the asset contents.
 const hash = createHash('sha1');
 for (const f of ['public/css/home.css', 'public/js/home.js', 'public/brand/genuss-iptv.svg', 'public/favicon.svg', 'public/images/hero-goalkeeper.webp', 'public/images/flags/de.svg', 'public/js/menu.js']) hash.update(await readFile(f));
@@ -42,8 +51,8 @@ for (const p of pages) {
   const doc = page(p).replaceAll('__V__', version);
   if ((doc.match(/<h1[\s>]/g) || []).length !== 1) errors.push(`${p.path}: needs exactly one <h1>`);
   if (!p.noindex) {
-    if (p.title.length > 60) warnings.push(`${p.path}: title is ${p.title.length} chars (aim for ≤ 60)`);
-    if (p.description.length < 120 || p.description.length > 160) warnings.push(`${p.path}: description is ${p.description.length} chars (aim for 120–160)`);
+    if (p.title.length < 50 || p.title.length > 60) warnings.push(`${p.path}: title is ${p.title.length} chars (aim for 50–60)`);
+    if (p.description.length < 120 || p.description.length > 155) warnings.push(`${p.path}: description is ${p.description.length} chars (aim for 120–155)`);
     if (titles.has(p.title)) errors.push(`${p.path}: same <title> as ${titles.get(p.title)}`);
     if (descriptions.has(p.description)) errors.push(`${p.path}: same meta description as ${descriptions.get(p.description)}`);
     titles.set(p.title, p.path);
@@ -52,6 +61,7 @@ for (const p of pages) {
   for (const tag of ['rel="canonical"', 'og:image"', 'twitter:card', 'hreflang="x-default"']) {
     if (!doc.includes(tag)) errors.push(`${p.path}: missing ${tag}`);
   }
+  if (!/"@type":"FAQPage"/.test(doc)) errors.push(`${p.path}: missing FAQPage schema`);
   for (const [, json] of doc.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) JSON.parse(json);
   html.set(p.path, doc);
   const file = fileFor(p.path);

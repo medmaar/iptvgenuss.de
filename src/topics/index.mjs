@@ -21,11 +21,16 @@ import guidesBrands from './guides-brands.mjs';
 import guidesRound2 from './guides-round2.mjs';
 import round2 from './round2.mjs';
 import links from './links.mjs';
+import auditApps from './audit-apps.mjs';
+import auditDevices from './audit-devices.mjs';
+import auditGuides from './audit-guides.mjs';
 
 // Merge extra sections, FAQs, keywords, sources and schema from the extension
 // maps (extend.mjs, deepen.mjs) into a page. `sections` are inserted before the
 // section named in `before` (or appended), everything else is appended.
-const extensions = [extend, deepen, models, links, round2];
+// The November 2026 audit revised every page it extends: mark them as updated.
+const audited = (ext) => Object.fromEntries(Object.entries(ext).map(([k, v]) => [k, { updated: '2026-11-25', ...v }]));
+const extensions = [extend, deepen, models, links, round2, audited(auditApps), audited(auditDevices), audited(auditGuides)];
 const withExtras = (t) => {
   let page = t;
   for (const ext of extensions) {
@@ -44,7 +49,7 @@ const withExtras = (t) => {
       faq: [...page.faq, ...(x.faq || [])],
       keywords,
       schema: [...(page.schema || []), ...(x.schema || [])],
-      sources: [...(page.sources || []), ...(x.sources || [])],
+      sources: [...(page.sources || []), ...(x.sources || [])].filter(([, u], i, a) => a.findIndex(([, v]) => v === u) === i),
       related: [...(x.relatedFirst || []), ...page.related, ...(x.related || [])],
       ...(x.children && { children: x.children }),
       ...(x.app && { app: x.app }),

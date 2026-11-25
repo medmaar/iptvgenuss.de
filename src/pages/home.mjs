@@ -57,7 +57,7 @@ export default () => {
   const reviewSection = reviewRows ? `<section class="section platform-reviews" id="bewertungen" aria-labelledby="bewertungen-title"><div class="container"><div class="section-heading"><p class="eyebrow">Kundenstimmen</p><h2 id="bewertungen-title">Gute Unterhaltung.<br>Bleibt im Gespräch.</h2></div>${reviewRows}</div></section>` : '';
   const paid = plans.filter((p) => !p.trial && p.price != null);
   const from = paid.length ? euro(Math.min(...paid.map((p) => p.price))) : null;
-  const title = `${site.name} – IPTV mit Live-TV, Filmen & Serien`;
+  const title = `IPTV für Deutschland: Live-TV, Filme & Serien | ${site.name}`;
   const description = `IPTV mit Genuss: Live-TV, Filme und Serien auf Smart-TV, Fire TV, Handy und PC.${from ? ` Ab ${from}, einmalig, ohne automatische Verlängerung.` : ''} Jetzt kostenlos testen.`;
   const values = {
     __TITLE__: esc(title),

@@ -9,6 +9,7 @@ import { site, plans, devicePrices, euro, homeContent } from '../site.mjs';
 import { L, ol, stand } from './util.mjs';
 import cities from './local-cities.mjs';
 import regions from './local-regions.mjs';
+import tips from './local-tips.mjs';
 
 const paid = plans.filter((p) => !p.trial);
 const month = paid.find((p) => p.months === 1);
@@ -73,12 +74,26 @@ const buy = (e) => `
   `Ein seriöses Angebot erkennen Sie an nachvollziehbaren Preisen, einem Test vor dem Kauf und einem Ansprechpartner, der auf Fragen antwortet. Mehr dazu lesen Sie unter ${L('/iptv-anbieter/', 'IPTV-Anbieter wählen')}; wie die Bestellung abläuft, zeigt ${L('/iptv-kaufen/', 'IPTV kaufen')}.`,
 ], 4)}</p>`;
 
-const steps = (e) => ol([
-  `Fordern Sie über das ${L('/#kontakt', 'Kontaktformular')} Ihren ${trialPlan ? 'kostenlosen Testzugang' : 'Zugang'} an und nennen Sie Ihr Gerät.`,
-  `Installieren Sie die passende App – etwa ${L('/iptv-smarters-pro/', 'IPTV Smarters Pro')}, ${L('/tivimate/', 'TiviMate')} oder ${L('/ibo-player/', 'IBO Player')}. Welche App zu welchem Gerät passt, zeigt ${L('/iptv-geraete/', 'IPTV-Geräte')}.`,
-  'Tragen Sie die Zugangsdaten aus unserer E-Mail ein (Xtream Codes, M3U-Link oder MAC-Adresse, je nach App).',
-  `Warten Sie, bis Senderliste und Programmführer geladen sind, und schauen Sie los. Hakt etwas, hilft ${L('/iptv-probleme/', 'IPTV-Probleme beheben')} – oder schreiben Sie uns.`,
-]);
+const steps = (e) => ol(pick(e, [
+  [
+    `Fordern Sie über das ${L('/#kontakt', 'Kontaktformular')} Ihren ${trialPlan ? 'kostenlosen Testzugang' : 'Zugang'} an und nennen Sie Ihr Gerät.`,
+    `Installieren Sie die passende App – etwa ${L('/iptv-smarters-pro/', 'IPTV Smarters Pro')}, ${L('/tivimate/', 'TiviMate')} oder ${L('/ibo-player/', 'IBO Player')}. Welche App zu welchem Gerät passt, zeigt ${L('/iptv-geraete/', 'IPTV-Geräte')}.`,
+    'Tragen Sie die Zugangsdaten aus unserer E-Mail ein (Xtream Codes, M3U-Link oder MAC-Adresse, je nach App).',
+    `Warten Sie, bis Senderliste und Programmführer geladen sind, und schauen Sie los. Hakt etwas, hilft ${L('/iptv-probleme/', 'IPTV-Probleme beheben')} – oder schreiben Sie uns.`,
+  ],
+  [
+    `Schreiben Sie uns über das ${L('/#kontakt', 'Kontaktformular')}, welches Gerät Sie nutzen – Sie erhalten ${trialPlan ? 'Ihren Testzugang' : 'Ihre Zugangsdaten'} per E-Mail.`,
+    `Laden Sie eine IPTV-App aus dem Store Ihres Geräts, zum Beispiel ${L('/tivimate/', 'TiviMate')} für Android TV oder den ${L('/ibo-player/', 'IBO Player')} für Samsung und LG. Den Überblick bietet ${L('/iptv-apps/', 'IPTV-Apps')}.`,
+    `Melden Sie sich in der App mit ${L('/xtream-codes/', 'Xtream Codes')} an oder fügen Sie den ${L('/m3u-playlist/', 'M3U-Link')} ein.`,
+    `Lassen Sie Sender und Programmführer laden und legen Sie Ihre Favoriten an. Bei Fragen hilft unser Support per E-Mail.`,
+  ],
+  [
+    `${trialPlan ? 'Testzugang' : 'Zugang'} anfragen: Über das ${L('/#kontakt', 'Kontaktformular')} genügt eine kurze Nachricht mit Ihrem Gerät.`,
+    `App wählen und installieren: Für Fire TV und Android eignet sich ${L('/iptv-smarters-pro/', 'IPTV Smarters Pro')}, für Smart-TVs von Samsung und LG der ${L('/ibo-player/', 'IBO Player')}. Weitere Geräte finden Sie unter ${L('/iptv-geraete/', 'IPTV-Geräte')}.`,
+    'Anmelden: Server-URL, Benutzername und Passwort aus unserer E-Mail eintragen oder die MAC-Adresse Ihrer App an uns senden.',
+    `Losschauen: Nach dem ersten Laden startet die App schneller. Läuft das Bild nicht rund, lesen Sie ${L('/iptv-probleme/', 'IPTV-Probleme beheben')}.`,
+  ],
+], 5));
 
 const nearby = (e) => {
   const list = (e.near || []).map((s) => bySlug.get(s)).filter(Boolean);
@@ -93,20 +108,23 @@ const genericFaq = (e) => [
 ];
 
 const toPage = (e) => {
+  if (!tips[e.slug]) throw new Error(`local-tips.mjs: no tip for ${e.slug}`);
   const path = pathOf(e.slug);
-  const titles = [`IPTV ${e.name}: Anbieter, Abo & kaufen | ${site.name}`, `IPTV ${e.name}: Abo & Anbieter | ${site.name}`, `IPTV ${e.name} kaufen | ${site.name}`, `IPTV ${e.name} | ${site.name}`];
-  const title = titles.find((t) => t.length <= 60) || titles[titles.length - 1];
+  // Title 50–60 characters, keyword first: take the first variant that fits.
+  const titles = [`IPTV ${e.name}: Anbieter, Abo & kostenlos testen | ${site.name}`, `IPTV ${e.name}: Anbieter, Abo & Test | ${site.name}`, `IPTV ${e.name}: Anbieter, Abo & kaufen | ${site.name}`, `IPTV ${e.name}: Abo & Anbieter | ${site.name}`, `IPTV ${e.name} kaufen | ${site.name}`, `IPTV ${e.name} | ${site.name}`];
+  const title = titles.find((t) => t.length >= 50 && t.length <= 60) || titles.find((t) => t.length <= 60) || titles[titles.length - 1];
   const descs = [
     `IPTV ${inName(e)}: Abo ab ${euro(from)} kaufen, ${trialPlan ? 'kostenlos testen' : 'schnell starten'} und einfach einrichten. Mit Tipps zu Internet, Glasfaser und Anbietern ${inName(e)}.`,
     `IPTV ${inName(e)}: Abo ab ${euro(from)} kaufen, ${trialPlan ? 'kostenlos testen' : 'einfach starten'} und einrichten. Mit Tipps zu Internet und Anbietern ${inName(e)}.`,
     `IPTV ${inName(e)}: Abo ab ${euro(from)}, ${trialPlan ? 'kostenloser Test' : 'schneller Start'} und Einrichtung. Tipps zum Internet ${inName(e)}.`,
     `IPTV ${inName(e)} kaufen: Abo ab ${euro(from)}, ${trialPlan ? 'Test gratis' : 'schnell startklar'}.`,
   ];
-  const description = descs.find((d) => d.length <= 160) || descs[descs.length - 1];
+  const description = descs.find((d) => d.length >= 120 && d.length <= 155) || descs.find((d) => d.length <= 155) || descs[descs.length - 1];
   const faq = [...(e.faq || []), ...genericFaq(e)];
   return {
     path,
     hub: 'regionen',
+    updated: '2026-11-25',
     name: `IPTV ${e.name}`,
     teaser: e.teaser || `IPTV-Abo, kostenloser Test und Internet-Tipps für ${e.name}.`,
     icon: 'wifi',
@@ -126,6 +144,7 @@ const toPage = (e) => {
       { id: 'so-funktionierts', h: `So funktioniert IPTV ${inName(e)}`, html: howItWorks(e) },
       { id: 'internet', h: `Internet ${inName(e)}: Reicht Ihr Anschluss für IPTV?`, html: `${e.net}${speed(e)}` },
       { id: 'lokal', h: e.local.h, html: e.local.html },
+      { id: 'praxistipp', h: tips[e.slug][0], html: `<p>${tips[e.slug][1]}</p>` },
       { id: 'kaufen', h: `IPTV kaufen ${inName(e)}: Abo, Preise und Test`, html: buy(e) },
       { id: 'einrichten', h: `IPTV ${inName(e)} einrichten in vier Schritten`, html: `${steps(e)}${nearby(e)}<p class="muted">Angaben zu Netzbetreibern und Anschlussarten sind Beispiele ohne Gewähr; maßgeblich ist die Verfügbarkeit an Ihrer Adresse (Stand: ${stand}).</p>` },
     ],
